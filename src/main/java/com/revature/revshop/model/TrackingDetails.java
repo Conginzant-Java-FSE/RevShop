@@ -1,4 +1,5 @@
 package com.revature.revshop.model;
+
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
@@ -20,45 +21,55 @@ public class TrackingDetails {
     @CreationTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    public TrackingDetails() {
+
+    public TrackingDetails(){
     }
     public TrackingDetails(Integer trackingId, Orders order, String status, String description,
-            LocalDateTime updatedAt)
-    {
+            LocalDateTime updatedAt) {
         this.trackingId = trackingId;
         this.order = order;
         this.status = status;
         this.description = description;
         this.updatedAt = updatedAt;
     }
-    public Integer getTrackingId(){
+    public Integer getTrackingId()
+    {
         return trackingId;
     }
-    public void setTrackingId(Integer trackingId){
+    public void setTrackingId(Integer trackingId)
+    {
         this.trackingId = trackingId;
     }
-    public Orders getOrder(){
+    public Orders getOrder()
+    {
         return order;
     }
-    public void setOrder(Orders order){
+    public void setOrder(Orders order)
+    {
         this.order = order;
     }
-    public String getStatus(){
+    public String getStatus()
+    {
         return status;
     }
-    public void setStatus(String status){
+    public void setStatus(String status)
+    {
         this.status = status;
     }
-    public String getDescription(){
+    public String getDescription()
+    {
         return description;
     }
-    public void setDescription(String description){
+    public void setDescription(String description)
+    {
         this.description = description;
     }
-    public LocalDateTime getUpdatedAt(){
+    public LocalDateTime getUpdatedAt()
+    {
         return updatedAt;
     }
-    public void setUpdatedAt(LocalDateTime updatedAt){
+    public void setUpdatedAt(LocalDateTime updatedAt)
+    {
         this.updatedAt = updatedAt;
     }
 }
