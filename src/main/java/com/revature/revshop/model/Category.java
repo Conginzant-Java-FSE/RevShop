@@ -18,9 +18,8 @@ public class Category {
     private String description;
 
     @OneToMany(mappedBy = "category")
-    private List<Product> products;
 
-    // Getters and Setters
+    private List<Product> products;
 
     public Integer getCategoryId() {
         return categoryId;
@@ -54,4 +53,3 @@ public class Category {
         this.products = products;
     }
 }
-
