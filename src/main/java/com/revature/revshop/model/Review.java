@@ -1,11 +1,6 @@
 package com.revature.revshop.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,23 +11,30 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Integer reviewId;
-    @Column(name = "product_id", nullable = false) // references products table
-    private Integer productId;
-    @Column(name = "user_id", nullable = false) // references users table
-    private Integer userId;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @Column(nullable = false)
     private Integer rating;
+
     @Column(name = "review_text", columnDefinition = "TEXT")
     private String reviewText;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     public Review() {
     }
 
-    public Review(Integer productId, Integer userId, Integer rating, String reviewText) {
-        this.productId = productId;
-        this.userId = userId;
+    public Review(Product product, User user, Integer rating, String reviewText) {
+        this.product = product;
+        this.user = user;
         this.rating = rating;
         this.reviewText = reviewText;
         this.createdAt = LocalDateTime.now();
@@ -46,20 +48,20 @@ public class Review {
         this.reviewId = reviewId;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getRating() {

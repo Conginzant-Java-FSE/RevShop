@@ -1,12 +1,7 @@
 package com.revature.revshop.model;
 
 import java.time.LocalDateTime;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cart_items")
@@ -16,21 +11,27 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_item_id")
     private Integer cartItemId;
-    @Column(name = "cart_id", nullable = false) // references carts table
-    private Integer cartId;
-    @Column(name = "product_id", nullable = false) // references products table
-    private Integer productId;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
     @Column(nullable = false)
     private Integer quantity;
+
     @Column(name = "added_at")
     private LocalDateTime addedAt;
 
     public CartItem() {
     }
 
-    public CartItem(Integer cartId, Integer productId, Integer quantity) {
-        this.cartId = cartId;
-        this.productId = productId;
+    public CartItem(Cart cart, Product product, Integer quantity) {
+        this.cart = cart;
+        this.product = product;
         this.quantity = quantity;
         this.addedAt = LocalDateTime.now();
     }
@@ -43,20 +44,20 @@ public class CartItem {
         this.cartItemId = cartItemId;
     }
 
-    public Integer getCartId() {
-        return cartId;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setCartId(Integer cartId) {
-        this.cartId = cartId;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Integer getQuantity() {
