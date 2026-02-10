@@ -7,19 +7,20 @@ import jakarta.persistence.*;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "address_id")
     private Long addressId;
 
     @Column(name = "address_line", nullable = false)
     private String addressLine;
 
-    @Column(nullable = true, length = 100)
+    @Column(nullable = false, length = 100)
     private String city;
 
-    @Column(nullable = true, length = 100)
+    @Column(nullable = false, length = 100)
     private String state;
 
     @Column(nullable = false, length = 100)
-    private String country = "India";
+    private String country;
 
     @Column(name = "zip_code", length = 20)
     private String zipCode;
