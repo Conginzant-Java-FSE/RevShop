@@ -1,23 +1,22 @@
 package com.revature.revshop.model;
 
-
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, length = 100, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -29,9 +28,6 @@ public class User {
 
     @Column(length = 15)
     private String phone;
-
-    @Column(name = "business_name")
-    private String businessName;
 
     @Column(name = "security_question")
     private String securityQuestion;
@@ -45,23 +41,34 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Buyer buyerProfile;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Seller sellerProfile;
+
 
     public User() {
     }
 
-    public User(Long userId, String name, String email, String password, Role role, String phone, String businessName, String securityQuestion, String securityAnswer, LocalDateTime updatedAt, LocalDateTime createdAt) {
+
+    public User(Long userId, String name, String email, String password, Role role, String phone,
+                String securityQuestion, String securityAnswer, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
         this.phone = phone;
-        this.businessName = businessName;
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
-        this.updatedAt = updatedAt;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
+
 
     public Long getUserId() {
         return userId;
@@ -111,14 +118,6 @@ public class User {
         this.phone = phone;
     }
 
-    public String getBusinessName() {
-        return businessName;
-    }
-
-    public void setBusinessName(String businessName) {
-        this.businessName = businessName;
-    }
-
     public String getSecurityQuestion() {
         return securityQuestion;
     }
@@ -149,6 +148,30 @@ public class User {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    public Buyer getBuyerProfile() {
+        return buyerProfile;
+    }
+
+    public void setBuyerProfile(Buyer buyerProfile) {
+        this.buyerProfile = buyerProfile;
+    }
+
+    public Seller getSellerProfile() {
+        return sellerProfile;
+    }
+
+    public void setSellerProfile(Seller sellerProfile) {
+        this.sellerProfile = sellerProfile;
     }
 
 }
