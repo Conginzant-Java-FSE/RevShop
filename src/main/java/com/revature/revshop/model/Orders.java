@@ -3,6 +3,7 @@ package com.revature.revshop.model;
 import jakarta.persistence.*;
 
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,18 +15,23 @@ public class Orders {
     @Column(name = "order_id")
     private Long orderId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(name = "total_amount")
+    @Column(name = "order_number")
     private String orderNumber;
 
-    @Column(name = "shipping_address_id")
-    private Integer shippingAddressId;
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
 
+    @ManyToOne
+    @Column(name = "shipping_address_id")
+    private Address shippingAddressId;
+
+    @ManyToOne
     @Column(name = "billing_address_id")
-    private Integer billingAddressId;
+    private Address billingAddressId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -43,15 +49,19 @@ public class Orders {
         CANCELLED
     }
 
-//    public Orders(Long orderId, User userId, String orderNumber, Integer shippingAddressId, Integer billingAddressId, OrderStatus status, LocalDateTime orderDate) {
-//        this.orderId = orderId;
-//        this.userId = userId;
-//        this.orderNumber = orderNumber;
-//        this.shippingAddressId = shippingAddressId;
-//        this.billingAddressId = billingAddressId;
-//        this.status = status;
-//        this.orderDate = orderDate;
-//    }
+    public Orders() {
+    }
+
+
+    public Orders(Long orderId, User user, String orderNumber, Address shippingAddressId, Address billingAddressId, OrderStatus status, LocalDateTime orderDate) {
+        this.orderId = orderId;
+        this.user = user;
+        this.orderNumber = orderNumber;
+        this.shippingAddressId = shippingAddressId;
+        this.billingAddressId = billingAddressId;
+        this.status = status;
+        this.orderDate = orderDate;
+    }
 
     public Long getOrderId() {
         return orderId;
@@ -61,13 +71,21 @@ public class Orders {
         this.orderId = orderId;
     }
 
-//    public User getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(User userId) {
-//        this.userId = userId;
-//    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 
     public String getOrderNumber() {
         return orderNumber;
@@ -77,19 +95,19 @@ public class Orders {
         this.orderNumber = orderNumber;
     }
 
-    public Integer getShippingAddressId() {
+    public Address getShippingAddressId() {
         return shippingAddressId;
     }
 
-    public void setShippingAddressId(Integer shippingAddressId) {
+    public void setShippingAddressId(Address shippingAddressId) {
         this.shippingAddressId = shippingAddressId;
     }
 
-    public Integer getBillingAddressId() {
+    public Address getBillingAddressId() {
         return billingAddressId;
     }
 
-    public void setBillingAddressId(Integer billingAddressId) {
+    public void setBillingAddressId(Address billingAddressId) {
         this.billingAddressId = billingAddressId;
     }
 
