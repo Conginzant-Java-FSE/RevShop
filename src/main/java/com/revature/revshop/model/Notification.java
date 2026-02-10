@@ -1,13 +1,11 @@
 package com.revature.revshop.model;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "notifications")
 public class Notification {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")
@@ -15,7 +13,7 @@ public class Notification {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User recipient;
 
     @Column(nullable = false, length = 200)
     private String title;
@@ -29,13 +27,14 @@ public class Notification {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-
     public Notification() {
+        this.isRead = false;
     }
 
-    public Notification(Long notificationId, User user, String title, String message, Boolean isRead, LocalDateTime createdAt) {
+    public Notification(Long notificationId, User recipient, String title, String message, Boolean isRead,
+                        LocalDateTime createdAt) {
         this.notificationId = notificationId;
-        this.user = user;
+        this.recipient = recipient;
         this.title = title;
         this.message = message;
         this.isRead = isRead;
@@ -50,12 +49,12 @@ public class Notification {
         this.notificationId = notificationId;
     }
 
-    public User getUser() {
-        return user;
+    public User getRecipient() {
+        return recipient;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setRecipient(User recipient) {
+        this.recipient = recipient;
     }
 
     public String getTitle() {
@@ -74,12 +73,12 @@ public class Notification {
         this.message = message;
     }
 
-    public Boolean getRead() {
+    public Boolean getIsRead() {
         return isRead;
     }
 
-    public void setRead(Boolean read) {
-        isRead = read;
+    public void setIsRead(Boolean isRead) {
+        this.isRead = isRead;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -91,5 +90,3 @@ public class Notification {
     }
 
 }
-
-

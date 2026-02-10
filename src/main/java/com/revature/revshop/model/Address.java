@@ -3,24 +3,19 @@ package com.revature.revshop.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "address")
+@Table(name = "addresses")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
     private Long addressId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 
     @Column(name = "address_line", nullable = false)
     private String addressLine;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String city;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String state;
 
     @Column(nullable = false, length = 100)
@@ -32,18 +27,19 @@ public class Address {
     @Column(name = "is_default")
     private Boolean isDefault = false;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Address() {
     }
 
-    public Address(Long addressId, User user, String addressLine, String city, String state, String country, String zipCode, Boolean isDefault) {
-        this.addressId = addressId;
-        this.user = user;
+    public Address(String addressLine, String city, String state, String country, String zipCode) {
         this.addressLine = addressLine;
         this.city = city;
         this.state = state;
         this.country = country;
         this.zipCode = zipCode;
-        this.isDefault = isDefault;
     }
 
     public Long getAddressId() {
@@ -52,14 +48,6 @@ public class Address {
 
     public void setAddressId(Long addressId) {
         this.addressId = addressId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public String getAddressLine() {
@@ -102,11 +90,19 @@ public class Address {
         this.zipCode = zipCode;
     }
 
-    public Boolean getDefault() {
+    public Boolean getIsDefault() {
         return isDefault;
     }
 
-    public void setDefault(Boolean aDefault) {
-        isDefault = aDefault;
+    public void setIsDefault(Boolean isDefault) {
+        this.isDefault = isDefault;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
