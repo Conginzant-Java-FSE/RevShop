@@ -15,11 +15,11 @@ public class OrderItems {
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    private Orders orderId;
+    private Orders order;
 
-//    @ManyToOne
-//    @JoinColumn(name = "product_id", nullable = false)
-//    private Product productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
@@ -27,13 +27,13 @@ public class OrderItems {
     @Column(name = "price_at_purchase")
     private BigDecimal priceAtPurchase;
 
-//    public OrderItems(Integer orderItemId, Orders orderId, Product productId, Integer quantity, BigDecimal priceAtPurchase) {
-//        this.orderItemId = orderItemId;
-//        this.orderId = orderId;
-//        this.productId = productId;
-//        this.quantity = quantity;
-//        this.priceAtPurchase = priceAtPurchase;
-//    }
+    public OrderItems(Integer orderItemId, Orders order, Product product, Integer quantity, BigDecimal priceAtPurchase) {
+        this.orderItemId = orderItemId;
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.priceAtPurchase = priceAtPurchase;
+    }
 
     public Integer getOrderItemId() {
         return orderItemId;
@@ -43,21 +43,21 @@ public class OrderItems {
         this.orderItemId = orderItemId;
     }
 
-    public Orders getOrderId() {
-        return orderId;
+    public Orders getOrder() {
+        return order;
     }
 
-    public void setOrderId(Orders orderId) {
-        this.orderId = orderId;
+    public void setOrder(Orders order) {
+        this.order = order;
     }
 
-//    public Product getProductId() {
-//        return productId;
-//    }
-//
-//    public void setProductId(Product productId) {
-//        this.productId = productId;
-//    }
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public Integer getQuantity() {
         return quantity;
