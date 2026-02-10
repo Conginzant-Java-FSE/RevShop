@@ -3,7 +3,7 @@ package com.revature.revshop.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "addresses")
+@Table(name = "address")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
