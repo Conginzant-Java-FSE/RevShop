@@ -14,8 +14,9 @@ public class Favorite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer favoriteId;
 
-    @Column(nullable = false)
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Buyer buyer;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
@@ -28,7 +29,7 @@ public class Favorite {
         this.addedAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
+
 
     public Integer getFavoriteId() {
         return favoriteId;
@@ -38,12 +39,12 @@ public class Favorite {
         this.favoriteId = favoriteId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Buyer getBuyer() {
+        return buyer;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setBuyer(Buyer buyer) {
+        this.buyer = buyer;
     }
 
     public Product getProduct() {
@@ -57,9 +58,4 @@ public class Favorite {
     public LocalDateTime getAddedAt() {
         return addedAt;
     }
-
-    public void setAddedAt(LocalDateTime addedAt) {
-        this.addedAt = addedAt;
-    }
 }
-

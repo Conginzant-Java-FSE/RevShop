@@ -1,10 +1,9 @@
 package com.revature.revshop.model;
 
 import jakarta.persistence.*;
-import org.apache.catalina.User;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "products")
@@ -14,10 +13,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productId;
 
-
-//    @ManyToOne
-//    @JoinColumn(name = "seller_id", nullable = false)
-    //private User seller;
+    @ManyToOne
+    @JoinColumn(name = "seller_id", nullable = false)
+    private Seller seller;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -57,7 +55,6 @@ public class Product {
         this.updatedAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
 
     public Integer getProductId() {
         return productId;
@@ -67,13 +64,13 @@ public class Product {
         this.productId = productId;
     }
 
-//    public User getSeller() {
-//        return seller;
-//    }
-//
-//    public void setSeller(User seller) {
-//        this.seller = seller;
-//    }
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
 
     public Category getCategory() {
         return category;
@@ -143,16 +140,7 @@ public class Product {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }
-
