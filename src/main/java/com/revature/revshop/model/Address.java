@@ -28,7 +28,7 @@ public class Address {
     @Column(name = "is_default")
     private Boolean isDefault = false;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
