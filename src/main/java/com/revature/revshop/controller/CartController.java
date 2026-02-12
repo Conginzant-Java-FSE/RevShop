@@ -26,72 +26,72 @@ import com.revature.revshop.service.CartItemService;
 import com.revature.revshop.service.CartService;
 
 @RestController
-@RequestMapping("/api/cart")
+@RequestMapping("/api/carts")
 public class CartController {
 
-    private final CartService cartService;
-    private final CartItemService cartItemService;
-    private final UserRepository userRepository;
-    private final ProductRepository productRepository;
+        private final CartService cartService;
+        private final CartItemService cartItemService;
+        private final UserRepository userRepository;
+        private final ProductRepository productRepository;
 
-    @Autowired
-    public CartController(CartService cartService, CartItemService cartItemService, UserRepository userRepository,
-            ProductRepository productRepository) {
-        this.cartService = cartService;
-        this.cartItemService = cartItemService;
-        this.userRepository = userRepository;
-        this.productRepository = productRepository;
-    }
+        @Autowired
+        public CartController(CartService cartService, CartItemService cartItemService, UserRepository userRepository,
+                        ProductRepository productRepository) {
+                this.cartService = cartService;
+                this.cartItemService = cartItemService;
+                this.userRepository = userRepository;
+                this.productRepository = productRepository;
+        }
 
-    @PostMapping("/add")
-    public ResponseEntity<CartItem> addItemToCart(@RequestParam Long userId, @RequestBody CartItemDTO request) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        Product product = productRepository.findById(request.getProductId())
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        Cart cart = cartService.findOrCreateCart(user);
-        CartItem item = cartItemService.addItemToCart(cart, product, request.getQuantity());
-        return ResponseEntity.ok(item);
-    }
+        @PostMapping("/add")
+        public ResponseEntity<CartItem> addItemToCart(@RequestParam Long userId, @RequestBody CartItemDTO request) {
+                User user = userRepository.findById(userId)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
+                Product product = productRepository.findById(request.getProductId())
+                                .orElseThrow(() -> new RuntimeException("Product not found"));
+                Cart cart = cartService.findOrCreateCart(user);
+                CartItem item = cartItemService.addItemToCart(cart, product, request.getQuantity());
+                return ResponseEntity.ok(item);
+        }
 
-    @GetMapping
-    public ResponseEntity<CartDTO> getCart(@RequestParam Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        return cartService.getCartByUser(user)
-                .map(this::convertToDto)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+        @GetMapping
+        public ResponseEntity<CartDTO> getCart(@RequestParam Long userId) {
+                User user = userRepository.findById(userId)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
+                return cartService.getCartByUser(user)
+                                .map(this::convertToDto)
+                                .map(ResponseEntity::ok)
+                                .orElse(ResponseEntity.notFound().build());
+        }
 
-    @DeleteMapping("/clear")
-    public ResponseEntity<Void> clearCart(@RequestParam Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        Cart cart = cartService.getCartByUser(user)
-                .orElseThrow(() -> new RuntimeException("Cart not found"));
-        cartItemService.clearCart(cart);
-        return ResponseEntity.ok().build();
-    }
+        @DeleteMapping("/clear")
+        public ResponseEntity<Void> clearCart(@RequestParam Long userId) {
+                User user = userRepository.findById(userId)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
+                Cart cart = cartService.getCartByUser(user)
+                                .orElseThrow(() -> new RuntimeException("Cart not found"));
+                cartItemService.clearCart(cart);
+                return ResponseEntity.ok().build();
+        }
 
-    private CartDTO convertToDto(Cart cart) {
-        CartDTO dto = new CartDTO();
-        dto.setCartId(cart.getCartId());
+        private CartDTO convertToDto(Cart cart) {
+                CartDTO dto = new CartDTO();
+                dto.setCartId(cart.getCartId());
 
-        List<CartItemDTO> itemDtos = cart.getCartItems().stream()
-                .map(item -> new CartItemDTO(
-                        item.getProduct().getProductId(),
-                        item.getQuantity(),
-                        item.getProduct().getName(),
-                        item.getProduct().getSellingPrice()))
-                .collect(Collectors.toList());
-        dto.setItems(itemDtos);
+                List<CartItemDTO> itemDtos = cart.getCartItems().stream()
+                                .map(item -> new CartItemDTO(
+                                                item.getProduct().getProductId(),
+                                                item.getQuantity(),
+                                                item.getProduct().getName(),
+                                                item.getProduct().getSellingPrice()))
+                                .collect(Collectors.toList());
+                dto.setItems(itemDtos);
 
-        BigDecimal total = itemDtos.stream()
-                .map(item -> item.getPrice().multiply(new BigDecimal(item.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        dto.setTotalPrice(total);
+                BigDecimal total = itemDtos.stream()
+                                .map(item -> item.getPrice().multiply(new BigDecimal(item.getQuantity())))
+                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                dto.setTotalPrice(total);
 
-        return dto;
-    }
+                return dto;
+        }
 }
