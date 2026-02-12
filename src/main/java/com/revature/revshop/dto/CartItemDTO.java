@@ -9,13 +9,11 @@ public class CartItemDTO {
     public CartItemDTO() {
     }
 
-    // Constructor for Request
     public CartItemDTO(Integer productId, Integer quantity) {
         this.productId = productId;
         this.quantity = quantity;
     }
 
-    // Constructor for Response
     public CartItemDTO(Integer productId, Integer quantity, String productName, java.math.BigDecimal price) {
         this.productId = productId;
         this.quantity = quantity;
