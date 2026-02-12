@@ -1,54 +1,49 @@
-package com.revature.revshop.model;
+package com.revature.revshop.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "address")
-public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
-    private Long addressId;
-
-    @Column(name = "address_line", nullable = false)
+public class AddressDTO {
+    @NotBlank(message = "address line is required")
     private String addressLine;
 
-    @Column(nullable = false, length = 100)
+    @NotBlank(message = "City is required")
     private String city;
 
-    @Column(nullable = false, length = 100)
+    @NotBlank(message = "State is required")
     private String state;
 
-    @Column(nullable = false, length = 100)
     private String country;
 
-    @Column(name = "zip_code", length = 20)
+    @NotBlank(message = "Zip code is required")
     private String zipCode;
 
-    @Column(name = "is_default")
-    private Boolean isDefault = false;
+    private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Boolean isDefault;
 
-    public Address() {
+
+    public AddressDTO() {
     }
 
-    public Address(String addressLine, String city, String state, String country, String zipCode) {
+
+    public AddressDTO(Long userId, String addressLine, String city, String state, String country, String zipCode,
+                      Boolean isDefault) {
+        this.userId = userId;
         this.addressLine = addressLine;
         this.city = city;
         this.state = state;
         this.country = country;
         this.zipCode = zipCode;
+        this.isDefault = isDefault;
     }
 
-    public Long getAddressId() {
-        return addressId;
+
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setAddressId(Long addressId) {
-        this.addressId = addressId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getAddressLine() {
@@ -97,13 +92,5 @@ public class Address {
 
     public void setIsDefault(Boolean isDefault) {
         this.isDefault = isDefault;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

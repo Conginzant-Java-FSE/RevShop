@@ -29,6 +29,9 @@ public class User {
     @Column(length = 15)
     private String phone;
 
+    @Column
+    private Integer age;
+
     @Column(name = "security_question")
     private String securityQuestion;
 
@@ -55,7 +58,7 @@ public class User {
     }
 
 
-    public User(Long userId, String name, String email, String password, Role role, String phone,
+    public User(Long userId, String name, String email, String password, Role role, String phone, Integer age,
                 String securityQuestion, String securityAnswer, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.userId = userId;
         this.name = name;
@@ -116,6 +119,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public String getSecurityQuestion() {
