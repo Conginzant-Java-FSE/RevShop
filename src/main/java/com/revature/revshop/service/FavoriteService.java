@@ -1,10 +1,8 @@
 package com.revature.revshop.service;
 
-import com.revature.revshop.model.Buyer;
-import com.revature.revshop.model.Favorite;
-import com.revature.revshop.model.Product;
-import com.revature.revshop.repository.FavoriteRepository;
-import com.revature.revshop.repository.ProductRepository;
+import com.revature.revshop.dto.FavoriteDTO;
+import com.revature.revshop.model.*;
+import com.revature.revshop.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,18 +15,20 @@ public class FavoriteService {
 
     private final FavoriteRepository favoriteRepository;
     private final ProductRepository productRepository;
+    private final BuyerRepository buyerRepository;
 
     public FavoriteService(FavoriteRepository favoriteRepository,
-                           ProductRepository productRepository) {
+                           ProductRepository productRepository,
+                           BuyerRepository buyerRepository) {
         this.favoriteRepository = favoriteRepository;
         this.productRepository = productRepository;
+        this.buyerRepository = buyerRepository;
     }
 
-    public void addToFavorite(Buyer buyer, Integer productId) {
+    public void addToFavorite(Long buyerId, Integer productId) {
 
-        if (buyer == null) {
-            throw new RuntimeException("Buyer cannot be null");
-        }
+        Buyer buyer = buyerRepository.findById(buyerId)
+                .orElseThrow(() -> new RuntimeException("Buyer not found"));
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -44,11 +44,10 @@ public class FavoriteService {
         favoriteRepository.save(favorite);
     }
 
-    public void removeFromFavorite(Buyer buyer, Integer productId) {
+    public void removeFromFavorite(Long buyerId, Integer productId) {
 
-        if (buyer == null) {
-            throw new RuntimeException("Buyer cannot be null");
-        }
+        Buyer buyer = buyerRepository.findById(buyerId)
+                .orElseThrow(() -> new RuntimeException("Buyer not found"));
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -56,15 +55,17 @@ public class FavoriteService {
         favoriteRepository.deleteByBuyerAndProduct(buyer, product);
     }
 
-    public List<Product> getBuyerFavorites(Buyer buyer) {
+    public List<FavoriteDTO> getBuyerFavorites(Long buyerId) {
 
-        if (buyer == null) {
-            throw new RuntimeException("Buyer cannot be null");
-        }
+        Buyer buyer = buyerRepository.findById(buyerId)
+                .orElseThrow(() -> new RuntimeException("Buyer not found"));
 
         return favoriteRepository.findByBuyer(buyer)
                 .stream()
-                .map(Favorite::getProduct)
+                .map(fav -> new FavoriteDTO(
+                        fav.getProduct().getProductId(),
+                        fav.getProduct().getName()
+                ))
                 .collect(Collectors.toList());
     }
 }
