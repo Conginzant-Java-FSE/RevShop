@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -26,11 +27,11 @@ public class Orders {
     private BigDecimal totalAmount;
 
     @ManyToOne
-    @Column(name = "shipping_address_id")
+    @JoinColumn(name = "shipping_address_id", nullable = false)
     private Address shippingAddressId;
 
     @ManyToOne
-    @Column(name = "billing_address_id")
+    @JoinColumn(name = "billing_address_id",nullable = false)
     private Address billingAddressId;
 
     @Enumerated(EnumType.STRING)
@@ -39,6 +40,10 @@ public class Orders {
 
     @Column(name = "order_date")
     private LocalDateTime orderDate;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItems> orderItems;
+
 
 
     public enum OrderStatus{
@@ -125,6 +130,14 @@ public class Orders {
 
     public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public List<OrderItems> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItems> orderItems) {
+        this.orderItems = orderItems;
     }
 }
 
