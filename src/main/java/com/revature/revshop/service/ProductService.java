@@ -1,13 +1,13 @@
 package com.revature.revshop.service;
 
-import com.revature.revshop.model.Category;
-import com.revature.revshop.model.Product;
-import com.revature.revshop.repository.CategoryRepository;
-import com.revature.revshop.repository.ProductRepository;
+import com.revature.revshop.dto.ProductDTO;
+import com.revature.revshop.model.*;
+import com.revature.revshop.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -15,67 +15,57 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final SellerRepository sellerRepository;
 
     public ProductService(ProductRepository productRepository,
-                          CategoryRepository categoryRepository) {
+                          CategoryRepository categoryRepository,
+                          SellerRepository sellerRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.sellerRepository = sellerRepository;
     }
 
-    public Product createProduct(Product product) {
+    public ProductDTO createProduct(ProductDTO dto) {
 
-        if (product == null) {
-            throw new RuntimeException("Product cannot be null");
-        }
-
-        if (product.getCategory() == null ||
-                product.getCategory().getCategoryId() == null) {
-            throw new RuntimeException("Valid category is required");
-        }
-
-        Category category = categoryRepository.findById(
-                        product.getCategory().getCategoryId())
+        Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
+        Seller seller = sellerRepository.findById(dto.getSellerId())
+                .orElseThrow(() -> new RuntimeException("Seller not found"));
+
+        Product product = new Product();
+        product.setName(dto.getName());
+        product.setDescription(dto.getDescription());
+        product.setMrp(dto.getMrp());
+        product.setSellingPrice(dto.getSellingPrice());
+        product.setStockQuantity(dto.getStockQuantity());
+        product.setThresholdQuantity(dto.getThresholdQuantity());
+        product.setIsActive(dto.getIsActive());
         product.setCategory(category);
+        product.setSeller(seller);
 
-        return productRepository.save(product);
+        return convertToDTO(productRepository.save(product));
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<ProductDTO> searchProducts(String keyword) {
+        return productRepository.findByNameContainingIgnoreCase(keyword)
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    public Product getProductById(Integer productId) {
-
-        return productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + productId));
-    }
-
-    public List<Product> getActiveProducts() {
-        return productRepository.findByIsActiveTrue();
-    }
-
-    public List<Product> getProductsByCategory(Integer categoryId) {
-
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-
-        return productRepository.findByCategory(category);
-    }
-
-    public List<Product> searchProducts(String keyword) {
-
-        if (keyword == null || keyword.trim().isEmpty()) {
-            throw new RuntimeException("Search keyword is required");
-        }
-
-        return productRepository.findByNameContainingIgnoreCase(keyword);
-    }
-
-    public void deleteProduct(Integer productId) {
-
-        Product product = getProductById(productId);
-        productRepository.delete(product);
+    private ProductDTO convertToDTO(Product product) {
+        ProductDTO dto = new ProductDTO();
+        dto.setProductId(product.getProductId());
+        dto.setName(product.getName());
+        dto.setDescription(product.getDescription());
+        dto.setMrp(product.getMrp());
+        dto.setSellingPrice(product.getSellingPrice());
+        dto.setStockQuantity(product.getStockQuantity());
+        dto.setThresholdQuantity(product.getThresholdQuantity());
+        dto.setIsActive(product.getIsActive());
+        dto.setCategoryId(product.getCategory().getCategoryId());
+        dto.setSellerId(product.getSeller().getUserId());
+        return dto;
     }
 }
