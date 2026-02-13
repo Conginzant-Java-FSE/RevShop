@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
+public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
 
 
     List<Favorite> findByBuyer(Buyer buyer);

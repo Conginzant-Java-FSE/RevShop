@@ -6,22 +6,24 @@ import java.time.LocalDateTime;
 @Entity
 @Table(
         name = "favorites",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "product_id"})
+        uniqueConstraints = @UniqueConstraint(columnNames = {"buyer_id", "product_id"})
 )
 public class Favorite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer favoriteId;
+    @Column(name = "favorite_id")
+    private Long favoriteId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "buyer_id", nullable = false)
     private Buyer buyer;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @Column(name = "added_at", updatable = false)
     private LocalDateTime addedAt;
 
     @PrePersist
@@ -29,13 +31,13 @@ public class Favorite {
         this.addedAt = LocalDateTime.now();
     }
 
+    public Favorite() {}
 
-
-    public Integer getFavoriteId() {
+    public Long getFavoriteId() {
         return favoriteId;
     }
 
-    public void setFavoriteId(Integer favoriteId) {
+    public void setFavoriteId(Long favoriteId) {
         this.favoriteId = favoriteId;
     }
 

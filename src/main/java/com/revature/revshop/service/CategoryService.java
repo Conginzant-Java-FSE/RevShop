@@ -1,11 +1,13 @@
 package com.revature.revshop.service;
 
+import com.revature.revshop.dto.CategoryDTO;
 import com.revature.revshop.model.Category;
 import com.revature.revshop.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -17,32 +19,43 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Category createCategory(Category category) {
+    public CategoryDTO createCategory(CategoryDTO dto) {
 
-        if (category == null || category.getName() == null || category.getName().trim().isEmpty()) {
-            throw new RuntimeException("Category name is required");
-        }
-
-        if (categoryRepository.existsByName(category.getName())) {
+        if (categoryRepository.existsByName(dto.getName())) {
             throw new RuntimeException("Category already exists");
         }
 
-        return categoryRepository.save(category);
+        Category category = new Category();
+        category.setName(dto.getName());
+        category.setDescription(dto.getDescription());
+
+        Category saved = categoryRepository.save(category);
+
+        return convertToDTO(saved);
     }
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> getAllCategories() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    public Category getCategoryById(Integer categoryId) {
+    public CategoryDTO getCategoryById(Long id) {
 
-        return categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        return convertToDTO(category);
     }
 
-    public void deleteCategory(Integer categoryId) {
+    private CategoryDTO convertToDTO(Category category) {
 
-        Category category = getCategoryById(categoryId);
-        categoryRepository.delete(category);
+        CategoryDTO dto = new CategoryDTO();
+        dto.setCategoryId(category.getCategoryId());
+        dto.setName(category.getName());
+        dto.setDescription(category.getDescription());
+
+        return dto;
     }
 }
