@@ -27,6 +27,9 @@ public class OrderItems {
     @Column(name = "price_at_purchase")
     private BigDecimal priceAtPurchase;
 
+    public OrderItems() {}
+
+
     public OrderItems(Integer orderItemId, Orders order, Product product, Integer quantity, BigDecimal priceAtPurchase) {
         this.orderItemId = orderItemId;
         this.order = order;
