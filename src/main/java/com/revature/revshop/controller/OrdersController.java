@@ -1,0 +1,49 @@
+package com.revature.revshop.controller;
+
+import com.revature.revshop.service.OrdersService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/orders")
+public class OrdersController {
+
+    private final OrdersService ordersService;
+
+    public OrdersController(OrdersService ordersService) {
+        this.ordersService = ordersService;
+    }
+
+    @PostMapping("/place")
+    public ResponseEntity<OrderResponseDTO> placeOrder(
+            @RequestParam Long userId,
+            @Valid @RequestBody OrderRequestDTO request) {
+
+        OrderResponseDTO response =
+                ordersService.placeOrder(userId, request);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<OrderResponseDTO>> getUserOrders(
+            @PathVariable Long userId) {
+
+        List<OrderResponseDTO> orders =
+                ordersService.getOrdersByUser(userId);
+
+        return ResponseEntity.ok(orders);
+    }
+
+    @PutMapping("/{orderId}/cancel")
+    public ResponseEntity<String> cancelOrder(
+            @PathVariable Long orderId,
+            @RequestParam Long userId) {
+
+        ordersService.cancelOrder(orderId, userId);
+
+        return ResponseEntity.ok("Order cancelled successfully");
+    }
+
+}
