@@ -29,7 +29,9 @@ public class CategoryService {
         category.setName(dto.getName());
         category.setDescription(dto.getDescription());
 
-        return convertToDTO(categoryRepository.save(category));
+        Category saved = categoryRepository.save(category);
+
+        return convertToDTO(saved);
     }
 
     public List<CategoryDTO> getAllCategories() {
@@ -39,17 +41,21 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-    public CategoryDTO getCategoryById(Integer id) {
-        return categoryRepository.findById(id)
-                .map(this::convertToDTO)
+    public CategoryDTO getCategoryById(Long id) {
+
+        Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        return convertToDTO(category);
     }
 
     private CategoryDTO convertToDTO(Category category) {
+
         CategoryDTO dto = new CategoryDTO();
         dto.setCategoryId(category.getCategoryId());
         dto.setName(category.getName());
         dto.setDescription(category.getDescription());
+
         return dto;
     }
 }

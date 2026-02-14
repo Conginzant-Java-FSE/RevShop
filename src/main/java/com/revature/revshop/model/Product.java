@@ -3,7 +3,8 @@ package com.revature.revshop.model;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "products")
@@ -11,7 +12,8 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer productId;
+    @Column(name = "product_id")
+    private Long productId;
 
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
@@ -42,6 +44,9 @@ public class Product {
     @Column(nullable = false)
     private Boolean isActive = true;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Favorite> favorites = new ArrayList<>();
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -55,12 +60,13 @@ public class Product {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public Product() {}
 
-    public Integer getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 

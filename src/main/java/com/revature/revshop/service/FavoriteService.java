@@ -1,8 +1,12 @@
 package com.revature.revshop.service;
 
 import com.revature.revshop.dto.FavoriteDTO;
-import com.revature.revshop.model.*;
-import com.revature.revshop.repository.*;
+import com.revature.revshop.model.Buyer;
+import com.revature.revshop.model.Favorite;
+import com.revature.revshop.model.Product;
+import com.revature.revshop.repository.BuyerRepository;
+import com.revature.revshop.repository.FavoriteRepository;
+import com.revature.revshop.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +29,7 @@ public class FavoriteService {
         this.buyerRepository = buyerRepository;
     }
 
-    public void addToFavorite(Long buyerId, Integer productId) {
+    public void addToFavorite(Long buyerId, Long productId) {
 
         Buyer buyer = buyerRepository.findById(buyerId)
                 .orElseThrow(() -> new RuntimeException("Buyer not found"));
@@ -44,7 +48,7 @@ public class FavoriteService {
         favoriteRepository.save(favorite);
     }
 
-    public void removeFromFavorite(Long buyerId, Integer productId) {
+    public void removeFromFavorite(Long buyerId, Long productId) {
 
         Buyer buyer = buyerRepository.findById(buyerId)
                 .orElseThrow(() -> new RuntimeException("Buyer not found"));
