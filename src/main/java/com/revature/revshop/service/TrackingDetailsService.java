@@ -1,0 +1,59 @@
+package com.revature.revshop.service;
+
+import com.revature.revshop.model.Orders;
+import com.revature.revshop.model.TrackingDetails;
+import com.revature.revshop.repository.OrdersRepository;
+import com.revature.revshop.repository.TrackingDetailsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class TrackingDetailsService {
+
+    private final TrackingDetailsRepository trackingDetailsRepository;
+    private final OrdersRepository ordersRepository;
+
+    @Autowired
+    public TrackingDetailsService(TrackingDetailsRepository trackingDetailsRepository,
+                                  OrdersRepository ordersRepository) {
+        this.trackingDetailsRepository = trackingDetailsRepository;
+        this.ordersRepository = ordersRepository;
+    }
+
+    public TrackingDetails addTrackingDetail(TrackingDetails trackingDetails, Long orderId) {
+        Orders order = ordersRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        trackingDetails.setOrder(order);
+        return trackingDetailsRepository.save(trackingDetails);
+    }
+
+    public Optional<TrackingDetails> getTrackingById(Integer trackingId) {
+        return trackingDetailsRepository.findById(trackingId);
+    }
+
+    public List<TrackingDetails> getTrackingByOrderId(Long orderId) {
+        return trackingDetailsRepository.findByOrder_OrderId(orderId);
+    }
+
+    public List<TrackingDetails> getAllTrackingDetails() {
+        return trackingDetailsRepository.findAll();
+    }
+
+    public TrackingDetails updateTrackingStatus(Integer trackingId, String status, String description) {
+        TrackingDetails tracking = trackingDetailsRepository.findById(trackingId)
+                .orElseThrow(() -> new RuntimeException("Tracking detail not found"));
+        tracking.setStatus(status);
+        tracking.setDescription(description);
+        return trackingDetailsRepository.save(tracking);
+    }
+
+    public void deleteTracking(Integer trackingId) {
+        if (!trackingDetailsRepository.existsById(trackingId)) {
+            throw new RuntimeException("Tracking detail not found");
+        }
+        trackingDetailsRepository.deleteById(trackingId);
+    }
+}
