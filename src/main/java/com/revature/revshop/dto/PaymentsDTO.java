@@ -1,11 +1,12 @@
 package com.revature.revshop.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class PaymentsDTO {
     private Integer paymentId;
     private Integer orderId;
-    private Double amount;
+    private BigDecimal amount;
     private String paymentMethod;
     private String paymentStatus;
     private String transactionId;
@@ -14,8 +15,8 @@ public class PaymentsDTO {
     public PaymentsDTO() {
     }
 
-    public PaymentsDTO(Integer paymentId, Integer orderId, Double amount, String paymentMethod,
-                       String paymentStatus, String transactionId, LocalDateTime paymentDate) {
+    public PaymentsDTO(Integer paymentId, Integer orderId, BigDecimal amount, String paymentMethod,
+            String paymentStatus, String transactionId, LocalDateTime paymentDate) {
         this.paymentId = paymentId;
         this.orderId = orderId;
         this.amount = amount;
@@ -41,11 +42,11 @@ public class PaymentsDTO {
         this.orderId = orderId;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

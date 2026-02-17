@@ -27,10 +27,10 @@ public class OrdersService {
     private final ProductRepository productRepository;
 
     public OrdersService(OrdersRepository ordersRepository,
-                         OrderItemsRepository orderItemsRepository,
-                         UserRepository userRepository,
-                         AddressRepository addressRepository,
-                         ProductRepository productRepository) {
+            OrderItemsRepository orderItemsRepository,
+            UserRepository userRepository,
+            AddressRepository addressRepository,
+            ProductRepository productRepository) {
         this.ordersRepository = ordersRepository;
         this.orderItemsRepository = orderItemsRepository;
         this.userRepository = userRepository;
@@ -38,14 +38,13 @@ public class OrdersService {
         this.productRepository = productRepository;
     }
 
-
     public OrderResponseDTO placeOrder(Long userId, OrderRequestDTO request) {
 
-        //Validate User
+        // Validate User
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        //Validate Addresses
+        // Validate Addresses
         Address shippingAddress = addressRepository.findById(request.getShippingAddressId())
                 .orElseThrow(() -> new RuntimeException("Shipping address not found"));
 
@@ -62,15 +61,15 @@ public class OrdersService {
 
         Orders order = new Orders();
         order.setUser(user);
-        order.setShippingAddressId(shippingAddress);
-        order.setBillingAddressId(billingAddress);
+        order.setShippingAddress(shippingAddress);
+        order.setBillingAddress(billingAddress);
 
         Orders savedOrder = ordersRepository.save(order);
 
         BigDecimal totalAmount = BigDecimal.ZERO;
         List<OrderItemResponseDTO> responseItems = new ArrayList<>();
 
-        //Process-Items
+        // Process-Items
         for (OrderItemRequestDTO itemDTO : request.getItems()) {
 
             Product product = productRepository.findById(itemDTO.getProductId())
@@ -88,7 +87,6 @@ public class OrdersService {
             BigDecimal price = product.getSellingPrice();
             BigDecimal subtotal = price.multiply(BigDecimal.valueOf(itemDTO.getQuantity()));
 
-
             OrderItems orderItem = new OrderItems();
             orderItem.setOrder(savedOrder);
             orderItem.setProduct(product);
@@ -105,15 +103,11 @@ public class OrdersService {
                             product.getName(),
                             itemDTO.getQuantity(),
                             price,
-                            subtotal
-                    )
-            );
+                            subtotal));
         }
-
 
         savedOrder.setTotalAmount(totalAmount);
         Orders finalOrder = ordersRepository.save(savedOrder);
-
 
         return new OrderResponseDTO(
                 finalOrder.getOrderId(),
@@ -121,10 +115,8 @@ public class OrdersService {
                 finalOrder.getTotalAmount(),
                 finalOrder.getStatus().name(),
                 finalOrder.getOrderDate(),
-                responseItems
-        );
+                responseItems);
     }
-
 
     public List<OrderResponseDTO> getOrdersByUser(Long userId) {
 
@@ -146,8 +138,7 @@ public class OrdersService {
                         item.getProduct().getName(),
                         item.getQuantity(),
                         item.getPriceAtPurchase(),
-                        subtotal
-                ));
+                        subtotal));
             }
 
             responseList.add(new OrderResponseDTO(
@@ -156,13 +147,11 @@ public class OrdersService {
                     order.getTotalAmount(),
                     order.getStatus().name(),
                     order.getOrderDate(),
-                    items
-            ));
+                    items));
         }
 
         return responseList;
     }
-
 
     public void cancelOrder(Long orderId, Long userId) {
 

@@ -1,6 +1,7 @@
 package com.revature.revshop.model;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,7 +18,7 @@ public class Payments {
     private Orders order;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private Double amount;
+    private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_method", nullable = false)
@@ -44,7 +45,7 @@ public class Payments {
     public Payments() {
     }
 
-    public Payments(Integer paymentId, Orders order, Double amount, PaymentMethod paymentMethod,
+    public Payments(Integer paymentId, Orders order, BigDecimal amount, PaymentMethod paymentMethod,
             PaymentStatus paymentStatus, String transactionId, LocalDateTime paymentDate) {
         this.paymentId = paymentId;
         this.order = order;
@@ -71,11 +72,11 @@ public class Payments {
         this.order = order;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

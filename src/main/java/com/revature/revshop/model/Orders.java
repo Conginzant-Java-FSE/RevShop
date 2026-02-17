@@ -2,7 +2,6 @@ package com.revature.revshop.model;
 
 import jakarta.persistence.*;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,11 +27,11 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "shipping_address_id", nullable = false)
-    private Address shippingAddressId;
+    private Address shippingAddress;
 
     @ManyToOne
-    @JoinColumn(name = "billing_address_id",nullable = false)
-    private Address billingAddressId;
+    @JoinColumn(name = "billing_address_id", nullable = false)
+    private Address billingAddress;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -44,9 +43,7 @@ public class Orders {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItems> orderItems;
 
-
-
-    public enum OrderStatus{
+    public enum OrderStatus {
         PENDING,
         PROCESSING,
         SHIPPED,
@@ -57,13 +54,13 @@ public class Orders {
     public Orders() {
     }
 
-
-    public Orders(Long orderId, User user, String orderNumber, Address shippingAddressId, Address billingAddressId, OrderStatus status, LocalDateTime orderDate) {
+    public Orders(Long orderId, User user, String orderNumber, Address shippingAddress, Address billingAddress,
+            OrderStatus status, LocalDateTime orderDate) {
         this.orderId = orderId;
         this.user = user;
         this.orderNumber = orderNumber;
-        this.shippingAddressId = shippingAddressId;
-        this.billingAddressId = billingAddressId;
+        this.shippingAddress = shippingAddress;
+        this.billingAddress = billingAddress;
         this.status = status;
         this.orderDate = orderDate;
     }
@@ -100,20 +97,20 @@ public class Orders {
         this.orderNumber = orderNumber;
     }
 
-    public Address getShippingAddressId() {
-        return shippingAddressId;
+    public Address getShippingAddress() {
+        return shippingAddress;
     }
 
-    public void setShippingAddressId(Address shippingAddressId) {
-        this.shippingAddressId = shippingAddressId;
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 
-    public Address getBillingAddressId() {
-        return billingAddressId;
+    public Address getBillingAddress() {
+        return billingAddress;
     }
 
-    public void setBillingAddressId(Address billingAddressId) {
-        this.billingAddressId = billingAddressId;
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
     }
 
     public OrderStatus getStatus() {
@@ -140,5 +137,3 @@ public class Orders {
         this.orderItems = orderItems;
     }
 }
-
-
