@@ -18,7 +18,7 @@ public class CartItemController {
     }
 
     @PutMapping("/{cartItemId}")
-    public ResponseEntity<CartItem> updateItemQuantity(@PathVariable Integer cartItemId,
+    public ResponseEntity<CartItem> updateItemQuantity(@PathVariable Long cartItemId,
             @RequestParam Integer quantity) {
         CartItem item = cartItemService.updateItemQuantity(cartItemId, quantity);
         if (item != null) {
@@ -28,7 +28,7 @@ public class CartItemController {
     }
 
     @DeleteMapping("/{cartItemId}")
-    public ResponseEntity<Void> removeItemFromCart(@PathVariable Integer cartItemId) {
+    public ResponseEntity<Void> removeItemFromCart(@PathVariable Long cartItemId) {
         cartItemService.removeItemFromCart(cartItemId);
         return ResponseEntity.ok().build();
     }

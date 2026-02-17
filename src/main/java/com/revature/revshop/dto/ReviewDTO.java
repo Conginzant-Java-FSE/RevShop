@@ -1,24 +1,24 @@
 package com.revature.revshop.dto;
 
 public class ReviewDTO {
-    private Integer productId;
+    private Long productId;
     private Integer rating;
     private String reviewText;
 
     public ReviewDTO() {
     }
 
-    public ReviewDTO(Integer productId, Integer rating, String reviewText) {
+    public ReviewDTO(Long productId, Integer rating, String reviewText) {
         this.productId = productId;
         this.rating = rating;
         this.reviewText = reviewText;
     }
 
-    public Integer getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 

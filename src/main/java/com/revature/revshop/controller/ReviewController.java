@@ -49,7 +49,7 @@ public class ReviewController {
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<List<Review>> getReviewsByProduct(@PathVariable Integer productId) {
+    public ResponseEntity<List<Review>> getReviewsByProduct(@PathVariable Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         return ResponseEntity.ok(reviewService.getReviewsByProduct(product));

@@ -10,7 +10,7 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_item_id")
-    private Integer cartItemId;
+    private Long cartItemId;
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
@@ -36,11 +36,11 @@ public class CartItem {
         this.addedAt = LocalDateTime.now();
     }
 
-    public Integer getCartItemId() {
+    public Long getCartItemId() {
         return cartItemId;
     }
 
-    public void setCartItemId(Integer cartItemId) {
+    public void setCartItemId(Long cartItemId) {
         this.cartItemId = cartItemId;
     }
 

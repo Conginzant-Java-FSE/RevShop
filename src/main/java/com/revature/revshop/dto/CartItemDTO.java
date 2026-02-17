@@ -1,7 +1,7 @@
 package com.revature.revshop.dto;
 
 public class CartItemDTO {
-    private Integer productId;
+    private Long productId;
     private Integer quantity;
     private String productName;
     private java.math.BigDecimal price;
@@ -9,23 +9,23 @@ public class CartItemDTO {
     public CartItemDTO() {
     }
 
-    public CartItemDTO(Integer productId, Integer quantity) {
+    public CartItemDTO(Long productId, Integer quantity) {
         this.productId = productId;
         this.quantity = quantity;
     }
 
-    public CartItemDTO(Integer productId, Integer quantity, String productName, java.math.BigDecimal price) {
+    public CartItemDTO(Long productId, Integer quantity, String productName, java.math.BigDecimal price) {
         this.productId = productId;
         this.quantity = quantity;
         this.productName = productName;
         this.price = price;
     }
 
-    public Integer getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 

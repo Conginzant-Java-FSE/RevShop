@@ -32,7 +32,7 @@ public class CartItemService {
         }
     }
 
-    public CartItem updateItemQuantity(Integer cartItemId, Integer quantity) {
+    public CartItem updateItemQuantity(Long cartItemId, Integer quantity) {
         return cartItemRepository.findById(cartItemId)
                 .map(item -> {
                     item.setQuantity(quantity);
@@ -40,7 +40,7 @@ public class CartItemService {
                 }).orElse(null);
     }
 
-    public void removeItemFromCart(Integer cartItemId) {
+    public void removeItemFromCart(Long cartItemId) {
         cartItemRepository.deleteById(cartItemId);
     }
 

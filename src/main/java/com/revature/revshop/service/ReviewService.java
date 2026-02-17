@@ -31,7 +31,7 @@ public class ReviewService {
         return reviewRepository.findByUser(user);
     }
 
-    public Optional<Review> getReviewById(Integer reviewId) {
+    public Optional<Review> getReviewById(Long reviewId) {
         return reviewRepository.findById(reviewId);
     }
 

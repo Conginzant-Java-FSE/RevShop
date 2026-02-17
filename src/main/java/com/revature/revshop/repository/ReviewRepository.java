@@ -8,7 +8,7 @@ import com.revature.revshop.model.User;
 import java.util.List;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Integer> {
+public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByProduct(Product product);
 
     List<Review> findByUser(User user);

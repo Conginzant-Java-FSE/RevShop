@@ -1,9 +1,12 @@
 package com.revature.revshop.controller;
 
+import com.revature.revshop.dto.OrderRequestDTO;
+import com.revature.revshop.dto.OrderResponseDTO;
 import com.revature.revshop.service.OrdersService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -20,8 +23,7 @@ public class OrdersController {
             @RequestParam Long userId,
             @Valid @RequestBody OrderRequestDTO request) {
 
-        OrderResponseDTO response =
-                ordersService.placeOrder(userId, request);
+        OrderResponseDTO response = ordersService.placeOrder(userId, request);
 
         return ResponseEntity.ok(response);
     }
@@ -30,8 +32,7 @@ public class OrdersController {
     public ResponseEntity<List<OrderResponseDTO>> getUserOrders(
             @PathVariable Long userId) {
 
-        List<OrderResponseDTO> orders =
-                ordersService.getOrdersByUser(userId);
+        List<OrderResponseDTO> orders = ordersService.getOrdersByUser(userId);
 
         return ResponseEntity.ok(orders);
     }
