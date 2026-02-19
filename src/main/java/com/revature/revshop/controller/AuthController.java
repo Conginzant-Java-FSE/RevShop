@@ -41,6 +41,8 @@ public class AuthController {
         user.setPassword(buyerDTO.getPassword());
         user.setPhone(buyerDTO.getPhone());
         user.setAge(buyerDTO.getAge());
+        user.setSecurityQuestion(buyerDTO.getSecurityQuestion());
+        user.setSecurityAnswer(buyerDTO.getSecurityAnswer());
         user.setAddresses(mapAddressesToUser(buyerDTO.getAddresses(), user));
 
         Buyer buyer = buyerService.registerBuyer(user);
@@ -70,6 +72,8 @@ public class AuthController {
         user.setPhone(sellerDTO.getPhone());
         user.setAge(sellerDTO.getAge());
         user.setPassword(sellerDTO.getPassword());
+        user.setSecurityQuestion(sellerDTO.getSecurityQuestion());
+        user.setSecurityAnswer(sellerDTO.getSecurityAnswer());
         user.setAddresses(mapAddressesToUser(sellerDTO.getAddresses(), user));
 
         Seller seller = sellerService.registerSeller(user, sellerDTO.getBusinessName(),

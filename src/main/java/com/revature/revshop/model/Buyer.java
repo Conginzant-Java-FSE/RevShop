@@ -21,10 +21,19 @@ public class Buyer {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
     public Buyer() {
     }
-
 
     public Buyer(User user) {
         this.user = user;
@@ -32,7 +41,6 @@ public class Buyer {
             this.userId = user.getUserId();
         }
     }
-
 
     public Long getUserId() {
         return userId;
