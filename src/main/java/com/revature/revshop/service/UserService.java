@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -17,6 +18,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
     }
@@ -24,7 +29,6 @@ public class UserService {
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-
 
     public User updateUser(Long userId, User updatedUser) {
         User existingUser = userRepository.findById(userId)
@@ -54,14 +58,12 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-
     public User updateName(Long userId, String name) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         user.setName(name);
         return userRepository.save(user);
     }
-
 
     public User updateEmail(Long userId, String email) {
 
@@ -79,7 +81,6 @@ public class UserService {
 
     }
 
-
     public User updatePhone(Long userId, String phone) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -87,14 +88,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
     public User updateAge(Long userId, Integer age) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         user.setAge(age);
         return userRepository.save(user);
     }
-
 
     public User updatePassword(Long userId, String oldPassword, String newPassword) {
         User user = userRepository.findById(userId)
