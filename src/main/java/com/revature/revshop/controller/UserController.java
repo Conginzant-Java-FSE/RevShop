@@ -7,28 +7,43 @@ import com.revature.revshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return ResponseEntity.ok(convertToDTO(user));
+    }
+
     @PutMapping("/{id}/profile")
-    public ResponseEntity<UserDTO> updateProfile(@PathVariable Long id, @RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> updateProfile(@PathVariable Long id, @RequestBody UserDTO userDTO) {
         User user = convertToEntity(userDTO);
         User updatedUser = userService.updateUser(id, user);
         return ResponseEntity.ok(convertToDTO(updatedUser));
     }
 
     @PutMapping("/{id}/password")
-    public ResponseEntity<String> updatePassword(@PathVariable Long id, @RequestBody PasswordUpdateRequest request){
+    public ResponseEntity<String> updatePassword(@PathVariable Long id, @RequestBody PasswordUpdateRequest request) {
         userService.updatePassword(id, request.getOldPassword(), request.getNewPassword());
         return ResponseEntity.ok("Password updated successfully");
     }
@@ -57,8 +72,8 @@ public class UserController {
         return ResponseEntity.ok(convertToDTO(updatedUser));
     }
 
-
-    // DTO Conversion Methods - instead of the repeating same code everytime (to reduce BoilerPlate Code)
+    // DTO Conversion Methods - instead of the repeating same code everytime (to
+    // reduce BoilerPlate Code)
     private User convertToEntity(UserDTO dto) {
         User user = new User();
         user.setName(dto.getName());
@@ -80,7 +95,5 @@ public class UserController {
         }
         return dto;
     }
-
-
 
 }

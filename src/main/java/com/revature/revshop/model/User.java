@@ -44,6 +44,17 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
 
@@ -53,13 +64,11 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Seller sellerProfile;
 
-
     public User() {
     }
 
-
     public User(Long userId, String name, String email, String password, Role role, String phone, Integer age,
-                String securityQuestion, String securityAnswer, LocalDateTime createdAt, LocalDateTime updatedAt) {
+            String securityQuestion, String securityAnswer, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -71,7 +80,6 @@ public class User {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-
 
     public Long getUserId() {
         return userId;

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -19,6 +20,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
     }
@@ -26,7 +31,6 @@ public class UserService {
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-
 
     public User updateUser(Long userId, User updatedUser) {
         User existingUser = userRepository.findById(userId)
@@ -56,14 +60,12 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-
     public User updateName(Long userId, String name) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
         user.setName(name);
         return userRepository.save(user);
     }
-
 
     public User updateEmail(Long userId, String email) {
 
@@ -81,14 +83,12 @@ public class UserService {
 
     }
 
-
     public User updatePhone(Long userId, String phone) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
         user.setPhone(phone);
         return userRepository.save(user);
     }
-
 
     public User updateAge(Long userId, Integer age) {
         User user = userRepository.findById(userId)
@@ -97,17 +97,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
     public User updatePassword(Long userId, String oldPassword, String newPassword) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        // verify old password
         if (!user.getPassword().equals(oldPassword)) {
             throw new InvalidInputException("Invalid old password");
         }
 
-        // update to new password
+
         user.setPassword(newPassword);
         return userRepository.save(user);
     }

@@ -21,13 +21,13 @@ public class AddressDTO {
 
     private Boolean isDefault;
 
+    private String addressType;
 
     public AddressDTO() {
     }
 
-
     public AddressDTO(Long userId, String addressLine, String city, String state, String country, String zipCode,
-                      Boolean isDefault) {
+            Boolean isDefault) {
         this.userId = userId;
         this.addressLine = addressLine;
         this.city = city;
@@ -36,7 +36,6 @@ public class AddressDTO {
         this.zipCode = zipCode;
         this.isDefault = isDefault;
     }
-
 
     public Long getUserId() {
         return userId;
@@ -92,5 +91,13 @@ public class AddressDTO {
 
     public void setIsDefault(Boolean isDefault) {
         this.isDefault = isDefault;
+    }
+
+    public String getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(String addressType) {
+        this.addressType = addressType;
     }
 }

@@ -6,6 +6,7 @@ import com.revature.revshop.model.User;
 import com.revature.revshop.repository.SellerRepository;
 import com.revature.revshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,11 +16,14 @@ public class SellerService {
 
     private final SellerRepository sellerRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SellerService(SellerRepository sellerRepository, UserRepository userRepository) {
+    public SellerService(SellerRepository sellerRepository, UserRepository userRepository,
+            PasswordEncoder passwordEncoder) {
         this.sellerRepository = sellerRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Seller registerSeller(User user, String businessName, String businessDescription, String taxId) {
@@ -43,12 +47,12 @@ public class SellerService {
     public Optional<Seller> loginSeller(String email, String password) {
         return userRepository.findByEmail(email)
                 .filter(user -> com.revature.revshop.model.Role.SELLER.equals(user.getRole()))
-                .filter(user -> user.getPassword().equals(password))
+                .filter(user -> passwordEncoder.matches(password, user.getPassword()))
                 .map(User::getSellerProfile);
     }
 
     public Seller updateSellerProfile(Long sellerId, User updatedUserData, String businessName,
-                                      String businessDescription, String taxId) {
+            String businessDescription, String taxId) {
         User existingUser = userRepository.findById(sellerId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
@@ -56,9 +60,11 @@ public class SellerService {
         existingUser.setPhone(updatedUserData.getPhone());
 
         Seller sellerProfile = existingUser.getSellerProfile();
-        sellerProfile.setBusinessName(businessName);
-        sellerProfile.setBusinessDescription(businessDescription);
-        sellerProfile.setTaxId(taxId);
+        if (sellerProfile != null) {
+            sellerProfile.setBusinessName(businessName);
+            sellerProfile.setBusinessDescription(businessDescription);
+            sellerProfile.setTaxId(taxId);
+        }
 
         if (updatedUserData.getAddresses() != null) {
             existingUser.getAddresses().clear();

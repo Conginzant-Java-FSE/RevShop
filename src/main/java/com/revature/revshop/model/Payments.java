@@ -34,6 +34,23 @@ public class Payments {
     @Column(name = "payment_date", nullable = false)
     private LocalDateTime paymentDate;
 
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
     public enum PaymentMethod {
         CREDIT_CARD, DEBIT_CARD, NET_BANKING, UPI, WALLET
     }
@@ -46,7 +63,7 @@ public class Payments {
     }
 
     public Payments(Integer paymentId, Orders order, BigDecimal amount, PaymentMethod paymentMethod,
-            PaymentStatus paymentStatus, String transactionId, LocalDateTime paymentDate) {
+                    PaymentStatus paymentStatus, String transactionId, LocalDateTime paymentDate) {
         this.paymentId = paymentId;
         this.order = order;
         this.amount = amount;
@@ -111,4 +128,21 @@ public class Payments {
     public void setPaymentDate(LocalDateTime paymentDate) {
         this.paymentDate = paymentDate;
     }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 }

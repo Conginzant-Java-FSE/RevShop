@@ -1,7 +1,6 @@
 package com.revature.revshop.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,19 +22,33 @@ public class TrackingDetails {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
     public TrackingDetails() {
     }
 
     public TrackingDetails(Integer trackingId, Orders order, String status, String description,
-            LocalDateTime updatedAt) {
+                           LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.trackingId = trackingId;
         this.order = order;
         this.status = status;
         this.description = description;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
@@ -69,6 +82,14 @@ public class TrackingDetails {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public LocalDateTime getUpdatedAt() {
