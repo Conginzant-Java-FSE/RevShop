@@ -3,12 +3,14 @@ package com.revature.revshop.controller;
 import com.revature.revshop.dto.CategoryDTO;
 import com.revature.revshop.service.CategoryService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -18,17 +20,18 @@ public class CategoryController {
     }
 
     @PostMapping
-    public CategoryDTO create(@Valid @RequestBody CategoryDTO dto) {
-        return categoryService.createCategory(dto);
+    public ResponseEntity<CategoryDTO> create(@Valid @RequestBody CategoryDTO dto) {
+        CategoryDTO saved = categoryService.createCategory(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @GetMapping
-    public List<CategoryDTO> getAll() {
-        return categoryService.getAllCategories();
+    public ResponseEntity<List<CategoryDTO>> getAll() {
+        return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
     @GetMapping("/{id}")
-    public CategoryDTO getById(@PathVariable Long id) {
-        return categoryService.getCategoryById(id);
+    public ResponseEntity<CategoryDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 }
