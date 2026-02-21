@@ -1,5 +1,7 @@
 package com.revature.revshop.service;
 
+import com.revature.revshop.exception.InvalidInputException;
+import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class UserService {
 
     public User updateUser(Long userId, User updatedUser) {
         User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         // update all fields except password
         if (updatedUser.getName() != null) {
@@ -39,7 +41,7 @@ public class UserService {
             // check if email is already taken by another user
             Optional<User> userWithEmail = userRepository.findByEmail(updatedUser.getEmail());
             if (userWithEmail.isPresent() && !userWithEmail.get().getUserId().equals(userId)) {
-                throw new RuntimeException("Email already exists");
+                throw new InvalidInputException("Email already exists");
             }
             existingUser.setEmail(updatedUser.getEmail());
 
@@ -57,7 +59,7 @@ public class UserService {
 
     public User updateName(Long userId, String name) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         user.setName(name);
         return userRepository.save(user);
     }
@@ -66,12 +68,12 @@ public class UserService {
     public User updateEmail(Long userId, String email) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         // check if email is already taken
         Optional<User> userWithEmail = userRepository.findByEmail(email);
         if (userWithEmail.isPresent() && !userWithEmail.get().getUserId().equals(userId)) {
-            throw new RuntimeException("Email already exists");
+            throw new InvalidInputException("Email already exists");
         }
 
         user.setEmail(email);
@@ -82,7 +84,7 @@ public class UserService {
 
     public User updatePhone(Long userId, String phone) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         user.setPhone(phone);
         return userRepository.save(user);
     }
@@ -90,7 +92,7 @@ public class UserService {
 
     public User updateAge(Long userId, Integer age) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         user.setAge(age);
         return userRepository.save(user);
     }
@@ -98,11 +100,11 @@ public class UserService {
 
     public User updatePassword(Long userId, String oldPassword, String newPassword) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         // verify old password
         if (!user.getPassword().equals(oldPassword)) {
-            throw new RuntimeException("Invalid old password");
+            throw new InvalidInputException("Invalid old password");
         }
 
         // update to new password

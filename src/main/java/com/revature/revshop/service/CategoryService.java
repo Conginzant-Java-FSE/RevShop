@@ -1,6 +1,8 @@
 package com.revature.revshop.service;
 
 import com.revature.revshop.dto.CategoryDTO;
+import com.revature.revshop.exception.InvalidInputException;
+import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.model.Category;
 import com.revature.revshop.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,7 @@ public class CategoryService {
     public CategoryDTO createCategory(CategoryDTO dto) {
 
         if (categoryRepository.existsByName(dto.getName())) {
-            throw new RuntimeException("Category already exists");
+            throw new InvalidInputException("Category already exists");
         }
 
         Category category = new Category();
@@ -44,7 +46,7 @@ public class CategoryService {
     public CategoryDTO getCategoryById(Long id) {
 
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         return convertToDTO(category);
     }

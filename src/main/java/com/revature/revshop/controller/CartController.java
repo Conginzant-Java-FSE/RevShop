@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.revature.revshop.exception.ProductNotFoundException;
+import com.revature.revshop.exception.ResourceNotFoundException;
+import com.revature.revshop.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,9 +49,9 @@ public class CartController {
         @PostMapping("/add")
         public ResponseEntity<CartItem> addItemToCart(@RequestParam Long userId, @RequestBody CartItemDTO request) {
                 User user = userRepository.findById(userId)
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new UserNotFoundException("User not found"));
                 Product product = productRepository.findById(request.getProductId())
-                                .orElseThrow(() -> new RuntimeException("Product not found"));
+                                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
                 Cart cart = cartService.findOrCreateCart(user);
                 CartItem item = cartItemService.addItemToCart(cart, product, request.getQuantity());
                 return ResponseEntity.ok(item);
@@ -57,7 +60,7 @@ public class CartController {
         @GetMapping
         public ResponseEntity<CartDTO> getCart(@RequestParam Long userId) {
                 User user = userRepository.findById(userId)
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new UserNotFoundException("User not found"));
                 return cartService.getCartByUser(user)
                                 .map(this::convertToDto)
                                 .map(ResponseEntity::ok)
@@ -67,9 +70,9 @@ public class CartController {
         @DeleteMapping("/clear")
         public ResponseEntity<Void> clearCart(@RequestParam Long userId) {
                 User user = userRepository.findById(userId)
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new UserNotFoundException("User not found"));
                 Cart cart = cartService.getCartByUser(user)
-                                .orElseThrow(() -> new RuntimeException("Cart not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
                 cartItemService.clearCart(cart);
                 return ResponseEntity.ok().build();
         }

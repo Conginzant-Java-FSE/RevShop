@@ -1,5 +1,6 @@
 package com.revature.revshop.service;
 
+import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.Buyer;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.BuyerRepository;
@@ -45,7 +46,7 @@ public class BuyerService {
 
     public Buyer updateBuyerProfile(Long buyerId, User updatedUserData) {
         User existingUser = userRepository.findById(buyerId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         existingUser.setName(updatedUserData.getName());
         existingUser.setPhone(updatedUserData.getPhone());

@@ -2,6 +2,8 @@ package com.revature.revshop.controller;
 
 import java.util.List;
 
+import com.revature.revshop.exception.ProductNotFoundException;
+import com.revature.revshop.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,9 +41,9 @@ public class ReviewController {
     @PostMapping
     public ResponseEntity<Review> addReview(@RequestParam Long userId, @RequestBody ReviewDTO request) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         Product product = productRepository.findById(request.getProductId())
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
         Review review = new Review(product, user, request.getRating(), request.getReviewText());
         Review savedReview = reviewService.addReview(review);
@@ -51,14 +53,14 @@ public class ReviewController {
     @GetMapping("/product/{productId}")
     public ResponseEntity<List<Review>> getReviewsByProduct(@PathVariable Long productId) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
         return ResponseEntity.ok(reviewService.getReviewsByProduct(product));
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Review>> getReviewsByUser(@PathVariable Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         return ResponseEntity.ok(reviewService.getReviewsByUser(user));
     }
 }

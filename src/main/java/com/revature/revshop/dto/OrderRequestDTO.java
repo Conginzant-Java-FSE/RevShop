@@ -1,5 +1,6 @@
 package com.revature.revshop.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,6 +18,7 @@ public class OrderRequestDTO {
     private Long billingAddressId;
 
     @NotEmpty(message = "Order must contain at least one item")
+    @Valid
     private List<OrderItemRequestDTO> items;
 
     public OrderRequestDTO() {
