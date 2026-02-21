@@ -2,6 +2,7 @@ package com.revature.revshop.dto;
 
 public class ReviewDTO {
     private Long productId;
+    private Long userId;
     private Integer rating;
     private String reviewText;
 
@@ -36,5 +37,13 @@ public class ReviewDTO {
 
     public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
