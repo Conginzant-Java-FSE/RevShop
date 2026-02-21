@@ -1,5 +1,6 @@
 package com.revature.revshop.controller;
 
+import com.revature.revshop.dto.CancelOrderRequestDTO;
 import com.revature.revshop.dto.OrderRequestDTO;
 import com.revature.revshop.dto.OrderResponseDTO;
 import com.revature.revshop.service.OrdersService;
@@ -20,10 +21,10 @@ public class OrdersController {
 
     @PostMapping("/place")
     public ResponseEntity<OrderResponseDTO> placeOrder(
-            @RequestParam Long userId,
             @Valid @RequestBody OrderRequestDTO request) {
 
-        OrderResponseDTO response = ordersService.placeOrder(userId, request);
+        OrderResponseDTO response =
+                ordersService.placeOrder(request.getUserId(), request);
 
         return ResponseEntity.ok(response);
     }
@@ -32,7 +33,8 @@ public class OrdersController {
     public ResponseEntity<List<OrderResponseDTO>> getUserOrders(
             @PathVariable Long userId) {
 
-        List<OrderResponseDTO> orders = ordersService.getOrdersByUser(userId);
+        List<OrderResponseDTO> orders =
+                ordersService.getOrdersByUser(userId);
 
         return ResponseEntity.ok(orders);
     }
@@ -40,9 +42,9 @@ public class OrdersController {
     @PutMapping("/{orderId}/cancel")
     public ResponseEntity<String> cancelOrder(
             @PathVariable Long orderId,
-            @RequestParam Long userId) {
+            @Valid @RequestBody CancelOrderRequestDTO request) {
 
-        ordersService.cancelOrder(orderId, userId);
+        ordersService.cancelOrder(orderId, request.getUserId());
 
         return ResponseEntity.ok("Order cancelled successfully");
     }

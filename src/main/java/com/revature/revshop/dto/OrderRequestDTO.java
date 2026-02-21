@@ -6,6 +6,10 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public class OrderRequestDTO {
+
+    @NotNull(message = "User ID is required")
+    private Long userId;
+
     @NotNull(message = "Shipping address ID is required")
     private Long shippingAddressId;
 
@@ -18,12 +22,22 @@ public class OrderRequestDTO {
     public OrderRequestDTO() {
     }
 
-    public OrderRequestDTO(Long shippingAddressId,
+    public OrderRequestDTO(Long userId,
+                           Long shippingAddressId,
                            Long billingAddressId,
                            List<OrderItemRequestDTO> items) {
+        this.userId = userId;
         this.shippingAddressId = shippingAddressId;
         this.billingAddressId = billingAddressId;
         this.items = items;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getShippingAddressId() {
