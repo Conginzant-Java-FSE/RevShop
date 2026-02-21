@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/cart-items")
 public class CartItemController {
@@ -19,7 +21,13 @@ public class CartItemController {
 
     @PutMapping("/{cartItemId}")
     public ResponseEntity<CartItem> updateItemQuantity(@PathVariable Long cartItemId,
-            @RequestParam Integer quantity) {
+            @RequestBody Map<String, Integer> request) {
+
+        Integer quantity = request.get("quantity");
+        if (quantity == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         CartItem item = cartItemService.updateItemQuantity(cartItemId, quantity);
         if (item != null) {
             return ResponseEntity.ok(item);

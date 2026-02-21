@@ -2,7 +2,11 @@ package com.revature.revshop.dto;
 
 public class CartItemDTO {
     private Long productId;
+
+    @jakarta.validation.constraints.NotNull(message = "Quantity is required")
+    @jakarta.validation.constraints.Min(value = 1, message = "Quantity must be at least 1")
     private Integer quantity;
+
     private String productName;
     private java.math.BigDecimal price;
 
