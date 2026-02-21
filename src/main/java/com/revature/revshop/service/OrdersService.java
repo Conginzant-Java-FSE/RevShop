@@ -4,8 +4,10 @@ import com.revature.revshop.dto.OrderItemRequestDTO;
 import com.revature.revshop.dto.OrderItemResponseDTO;
 import com.revature.revshop.dto.OrderRequestDTO;
 import com.revature.revshop.dto.OrderResponseDTO;
+import com.revature.revshop.exception.*;
 import com.revature.revshop.model.*;
 import com.revature.revshop.repository.*;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,23 +42,22 @@ public class OrdersService {
 
     public OrderResponseDTO placeOrder(Long userId, OrderRequestDTO request) {
 
-        // Validate User
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Validate Addresses
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));;
+
         Address shippingAddress = addressRepository.findById(request.getShippingAddressId())
-                .orElseThrow(() -> new RuntimeException("Shipping address not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Shipping address not found"));
 
         Address billingAddress = addressRepository.findById(request.getBillingAddressId())
-                .orElseThrow(() -> new RuntimeException("Billing address not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Billing address not found"));
 
         if (!shippingAddress.getUser().getUserId().equals(userId)) {
-            throw new RuntimeException("Shipping address does not belong to user");
+            throw new InvalidInputException("Shipping address does not belong to user");
         }
 
         if (!billingAddress.getUser().getUserId().equals(userId)) {
-            throw new RuntimeException("Billing address does not belong to user");
+            throw new InvalidInputException("Billing address does not belong to user");
         }
 
         Orders order = new Orders();
@@ -64,23 +65,26 @@ public class OrdersService {
         order.setShippingAddress(shippingAddress);
         order.setBillingAddress(billingAddress);
 
+        order.setOrderDate(LocalDateTime.now());
+        order.setStatus(Orders.OrderStatus.PENDING);
+        order.setOrderNumber("ORD-" + System.currentTimeMillis());
+        order.setTotalAmount(BigDecimal.ZERO);
+
         Orders savedOrder = ordersRepository.save(order);
 
         BigDecimal totalAmount = BigDecimal.ZERO;
         List<OrderItemResponseDTO> responseItems = new ArrayList<>();
 
-        // Process-Items
         for (OrderItemRequestDTO itemDTO : request.getItems()) {
 
             Product product = productRepository.findById(itemDTO.getProductId())
-                    .orElseThrow(() -> new RuntimeException("Product not found"));
+                    .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
-            // Stock-validation
+
             if (product.getStockQuantity() < itemDTO.getQuantity()) {
-                throw new RuntimeException("Insufficient stock for product: " + product.getName());
+                throw new InvalidInputException("Insufficient stock for product: " + product.getName());
             }
 
-            // Deduct-stock
             product.setStockQuantity(product.getStockQuantity() - itemDTO.getQuantity());
             productRepository.save(product);
 
@@ -156,15 +160,15 @@ public class OrdersService {
     public void cancelOrder(Long orderId, Long userId) {
 
         Orders order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new OrderNotFoundException("Order not found"));
 
         if (!order.getUser().getUserId().equals(userId)) {
-            throw new RuntimeException("You are not authorized to cancel this order");
+            throw new AccessDeniedException("You are not authorized to cancel this order");
         }
 
         if (order.getStatus() == Orders.OrderStatus.SHIPPED ||
                 order.getStatus() == Orders.OrderStatus.DELIVERED) {
-            throw new RuntimeException("Order cannot be cancelled");
+            throw new InvalidOrderStateException("Order cannot be cancelled");
         }
 
         order.setStatus(Orders.OrderStatus.CANCELLED);

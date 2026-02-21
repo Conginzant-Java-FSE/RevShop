@@ -1,5 +1,7 @@
 package com.revature.revshop.service;
 
+import com.revature.revshop.exception.ResourceNotFoundException;
+import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.Address;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.AddressRepository;
@@ -24,7 +26,7 @@ public class AddressService {
 
     public Address addAddress(Address address, Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         address.setUser(user);
         return addressRepository.save(address);
     }
@@ -35,13 +37,13 @@ public class AddressService {
 
     public List<Address> getAddressesByUserId(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
         return user.getAddresses();
     }
 
     public Address updateAddress(Long addressId, Address updatedAddress) {
         Address existingAddress = addressRepository.findById(addressId)
-                .orElseThrow(() -> new RuntimeException("Address not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
 
         existingAddress.setAddressLine(updatedAddress.getAddressLine());
         existingAddress.setCity(updatedAddress.getCity());
@@ -55,7 +57,7 @@ public class AddressService {
 
     public void deleteAddress(Long addressId) {
         if (!addressRepository.existsById(addressId)) {
-            throw new RuntimeException("Address not found");
+            throw new ResourceNotFoundException("Address not found");
         }
         addressRepository.deleteById(addressId);
     }

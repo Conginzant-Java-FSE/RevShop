@@ -1,6 +1,9 @@
 package com.revature.revshop.service;
 
 import com.revature.revshop.dto.FavoriteDTO;
+import com.revature.revshop.exception.InvalidInputException;
+import com.revature.revshop.exception.ProductNotFoundException;
+import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.Buyer;
 import com.revature.revshop.model.Favorite;
 import com.revature.revshop.model.Product;
@@ -32,13 +35,13 @@ public class FavoriteService {
     public void addToFavorite(Long buyerId, Long productId) {
 
         Buyer buyer = buyerRepository.findById(buyerId)
-                .orElseThrow(() -> new RuntimeException("Buyer not found"));
+                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
 
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
         if (favoriteRepository.findByBuyerAndProduct(buyer, product).isPresent()) {
-            throw new RuntimeException("Product already in favorites");
+            throw new InvalidInputException("Product already in favorites");
         }
 
         Favorite favorite = new Favorite();
@@ -51,10 +54,10 @@ public class FavoriteService {
     public void removeFromFavorite(Long buyerId, Long productId) {
 
         Buyer buyer = buyerRepository.findById(buyerId)
-                .orElseThrow(() -> new RuntimeException("Buyer not found"));
+                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
 
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
         favoriteRepository.deleteByBuyerAndProduct(buyer, product);
     }
@@ -62,7 +65,7 @@ public class FavoriteService {
     public List<FavoriteDTO> getBuyerFavorites(Long buyerId) {
 
         Buyer buyer = buyerRepository.findById(buyerId)
-                .orElseThrow(() -> new RuntimeException("Buyer not found"));
+                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
 
         return favoriteRepository.findByBuyer(buyer)
                 .stream()

@@ -1,6 +1,7 @@
 package com.revature.revshop.controller;
 
 import com.revature.revshop.dto.TrackingDetailsDTO;
+import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.model.TrackingDetails;
 import com.revature.revshop.service.TrackingDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class TrackingController {
     @GetMapping("/{id}")
     public ResponseEntity<TrackingDetailsDTO> getTrackingById(@PathVariable Integer id) {
         TrackingDetails tracking = trackingDetailsService.getTrackingById(id)
-                .orElseThrow(() -> new RuntimeException("Tracking detail not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Tracking detail not found"));
         return ResponseEntity.ok(convertToDTO(tracking));
     }
 

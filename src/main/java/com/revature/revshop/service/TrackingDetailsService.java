@@ -1,5 +1,7 @@
 package com.revature.revshop.service;
 
+import com.revature.revshop.exception.OrderNotFoundException;
+import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.model.Orders;
 import com.revature.revshop.model.TrackingDetails;
 import com.revature.revshop.repository.OrdersRepository;
@@ -25,7 +27,7 @@ public class TrackingDetailsService {
 
     public TrackingDetails addTrackingDetail(TrackingDetails trackingDetails, Long orderId) {
         Orders order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new OrderNotFoundException("Order not found"));
         trackingDetails.setOrder(order);
         return trackingDetailsRepository.save(trackingDetails);
     }
@@ -44,7 +46,7 @@ public class TrackingDetailsService {
 
     public TrackingDetails updateTrackingStatus(Integer trackingId, String status, String description) {
         TrackingDetails tracking = trackingDetailsRepository.findById(trackingId)
-                .orElseThrow(() -> new RuntimeException("Tracking detail not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Tracking detail not found"));
         tracking.setStatus(status);
         tracking.setDescription(description);
         return trackingDetailsRepository.save(tracking);
@@ -52,7 +54,7 @@ public class TrackingDetailsService {
 
     public void deleteTracking(Integer trackingId) {
         if (!trackingDetailsRepository.existsById(trackingId)) {
-            throw new RuntimeException("Tracking detail not found");
+            throw new ResourceNotFoundException("Tracking detail not found");
         }
         trackingDetailsRepository.deleteById(trackingId);
     }

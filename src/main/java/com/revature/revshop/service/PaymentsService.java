@@ -1,5 +1,7 @@
 package com.revature.revshop.service;
 
+import com.revature.revshop.exception.OrderNotFoundException;
+import com.revature.revshop.exception.PaymentFailedException;
 import com.revature.revshop.model.Orders;
 import com.revature.revshop.model.Payments;
 import com.revature.revshop.repository.OrdersRepository;
@@ -25,7 +27,7 @@ public class PaymentsService {
 
     public Payments createPayment(Payments payment, Long orderId) {
         Orders order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new OrderNotFoundException("Order not found"));
         payment.setOrder(order);
         if (payment.getPaymentDate() == null) {
             payment.setPaymentDate(LocalDateTime.now());
@@ -58,14 +60,14 @@ public class PaymentsService {
 
     public Payments updatePaymentStatus(Integer paymentId, Payments.PaymentStatus status) {
         Payments payment = paymentsRepository.findById(paymentId)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
+                .orElseThrow(() -> new PaymentFailedException("Payment not found"));
         payment.setPaymentStatus(status);
         return paymentsRepository.save(payment);
     }
 
     public void deletePayment(Integer paymentId) {
         if (!paymentsRepository.existsById(paymentId)) {
-            throw new RuntimeException("Payment not found");
+            throw new PaymentFailedException("Payment not found");
         }
         paymentsRepository.deleteById(paymentId);
     }
