@@ -99,12 +99,11 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // verify old password
         if (!user.getPassword().equals(oldPassword)) {
             throw new RuntimeException("Invalid old password");
         }
 
-        // update to new password
+
         user.setPassword(newPassword);
         return userRepository.save(user);
     }
