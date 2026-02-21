@@ -74,6 +74,7 @@ public class TrackingController {
         dto.setStatus(tracking.getStatus());
         dto.setDescription(tracking.getDescription());
         dto.setUpdatedAt(tracking.getUpdatedAt());
+        dto.setCreatedAt(tracking.getCreatedAt());
         return dto;
     }
 

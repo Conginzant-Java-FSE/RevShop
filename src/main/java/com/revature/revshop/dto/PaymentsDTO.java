@@ -11,6 +11,9 @@ public class PaymentsDTO {
     private String paymentStatus;
     private String transactionId;
     private LocalDateTime paymentDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
 
     public PaymentsDTO() {
     }
@@ -77,6 +80,22 @@ public class PaymentsDTO {
     public LocalDateTime getPaymentDate() {
         return paymentDate;
     }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 
     public void setPaymentDate(LocalDateTime paymentDate) {
         this.paymentDate = paymentDate;

@@ -80,6 +80,9 @@ public class PaymentsController {
         }
         dto.setTransactionId(payment.getTransactionId());
         dto.setPaymentDate(payment.getPaymentDate());
+        dto.setCreatedAt(payment.getCreatedAt());
+        dto.setUpdatedAt(payment.getUpdatedAt());
+
         return dto;
     }
 

@@ -1,5 +1,4 @@
 
-
 package com.revature.revshop.dto;
 
 import java.time.LocalDateTime;
@@ -10,6 +9,7 @@ public class TrackingDetailsDTO {
     private String status;
     private String description;
     private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
 
     public TrackingDetailsDTO() {
     }
@@ -61,5 +61,13 @@ public class TrackingDetailsDTO {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
