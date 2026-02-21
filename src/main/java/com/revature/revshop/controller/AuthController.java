@@ -29,8 +29,19 @@ public class AuthController {
     @Autowired
     private SellerService sellerService;
 
+    @Autowired
+    private org.springframework.security.authentication.AuthenticationManager authenticationManager;
+
+    @Autowired
+    private com.revature.revshop.security.JwtUtil jwtUtil;
+
+    @Autowired
+    private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private com.revature.revshop.security.CustomUserDetailsService userDetailsService;
+
     @PostMapping("/register/buyer")
-    // <?> is a wildcard generic, this response can contain any type of body.
     public ResponseEntity<?> registerBuyer(@RequestBody BuyerDTO buyerDTO) {
         if (buyerService.existsByEmail(buyerDTO.getEmail())) {
             return ResponseEntity.badRequest().body("Email already Exists");
@@ -38,7 +49,7 @@ public class AuthController {
         User user = new User();
         user.setName(buyerDTO.getName());
         user.setEmail(buyerDTO.getEmail());
-        user.setPassword(buyerDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(buyerDTO.getPassword()));
         user.setPhone(buyerDTO.getPhone());
         user.setAge(buyerDTO.getAge());
         user.setSecurityQuestion(buyerDTO.getSecurityQuestion());
@@ -71,7 +82,7 @@ public class AuthController {
         user.setEmail(sellerDTO.getEmail());
         user.setPhone(sellerDTO.getPhone());
         user.setAge(sellerDTO.getAge());
-        user.setPassword(sellerDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(sellerDTO.getPassword()));
         user.setSecurityQuestion(sellerDTO.getSecurityQuestion());
         user.setSecurityAnswer(sellerDTO.getSecurityAnswer());
         user.setAddresses(mapAddressesToUser(sellerDTO.getAddresses(), user));
@@ -96,6 +107,18 @@ public class AuthController {
 
     @PostMapping("/login/buyer")
     public ResponseEntity<?> loginBuyer(@RequestBody LoginRequest loginRequest) {
+        try {
+            authenticationManager.authenticate(
+                    new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(), loginRequest.getPassword()));
+        } catch (org.springframework.security.core.AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        }
+
+        final org.springframework.security.core.userdetails.UserDetails userDetails = userDetailsService
+                .loadUserByUsername(loginRequest.getEmail());
+        final String jwt = jwtUtil.generateToken(userDetails);
+
         Optional<Buyer> buyerOptional = buyerService.loginBuyer(loginRequest.getEmail(), loginRequest.getPassword());
         if (buyerOptional.isPresent()) {
             Buyer buyer = buyerOptional.get();
@@ -105,17 +128,28 @@ public class AuthController {
                 loginResponse.setName(buyer.getUser().getName());
                 loginResponse.setEmail(buyer.getUser().getEmail());
                 loginResponse.setRole(buyer.getUser().getRole().toString());
+                loginResponse.setToken(jwt);
             }
-            // return ResponseEntity.ok("login successful");
             loginResponse.setMessage("login successful");
             return ResponseEntity.ok(loginResponse);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("invalid email or password");
-
     }
 
     @PostMapping("/login/seller")
     public ResponseEntity<?> loginSeller(@RequestBody LoginRequest loginRequest) {
+        try {
+            authenticationManager.authenticate(
+                    new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                            loginRequest.getEmail(), loginRequest.getPassword()));
+        } catch (org.springframework.security.core.AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
+        }
+
+        final org.springframework.security.core.userdetails.UserDetails userDetails = userDetailsService
+                .loadUserByUsername(loginRequest.getEmail());
+        final String jwt = jwtUtil.generateToken(userDetails);
+
         Optional<Seller> sellerOptional = sellerService.loginSeller(loginRequest.getEmail(),
                 loginRequest.getPassword());
 
@@ -123,12 +157,12 @@ public class AuthController {
             Seller seller = sellerOptional.get();
             LoginResponse loginResponse = new LoginResponse();
             if (seller.getUser() != null) {
-                loginResponse.setUserId(seller.getUser().getUserId());
+                loginResponse.setUserId(seller.getUserId());
                 loginResponse.setName(seller.getUser().getName());
                 loginResponse.setEmail(seller.getUser().getEmail());
                 loginResponse.setRole(seller.getUser().getRole().toString());
+                loginResponse.setToken(jwt);
             }
-            // return ResponseEntity.ok("Login successful");
             loginResponse.setMessage("Login successful");
             return ResponseEntity.ok(loginResponse);
         }
