@@ -2,10 +2,15 @@ package com.revature.revshop.controller;
 
 import com.revature.revshop.dto.PasswordUpdateRequest;
 import com.revature.revshop.dto.UserDTO;
+import com.revature.revshop.exception.InvalidInputException;
+import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.User;
 import com.revature.revshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +42,17 @@ public class UserController {
 
     @PutMapping("/{id}/profile")
     public ResponseEntity<UserDTO> updateProfile(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String loggedInEmail = userDetails.getUsername();
+
+        User loggedInUser = userService.getUserByEmail(loggedInEmail)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        if (!loggedInUser.getUserId().equals(id)) {
+            throw new InvalidInputException("You cannot update another user's profile");
+        }
         User user = convertToEntity(userDTO);
         User updatedUser = userService.updateUser(id, user);
         return ResponseEntity.ok(convertToDTO(updatedUser));
