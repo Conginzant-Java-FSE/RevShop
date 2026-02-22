@@ -1,5 +1,7 @@
 package com.revature.revshop.service;
 
+import com.revature.revshop.exception.ResourceNotFoundException;
+import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.Notification;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.NotificationRepository;
@@ -23,7 +25,7 @@ public class NotificationService {
 
     public void createNotification(Long userId, String title, String message) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         Notification notification = new Notification();
         notification.setRecipient(user);
@@ -40,7 +42,7 @@ public class NotificationService {
 
     public void markAsRead(Long notificationId) {
         Notification notification = notificationRepository.findById(notificationId)
-                .orElseThrow(() -> new RuntimeException("Notification not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Notification not found"));
         notification.setIsRead(true);
         notificationRepository.save(notification);
     }

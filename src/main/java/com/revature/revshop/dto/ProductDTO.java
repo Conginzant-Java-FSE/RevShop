@@ -12,18 +12,20 @@ public class ProductDTO {
 
     private String description;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "MRP is required")
+    @DecimalMin(value = "1.0", message = "MRP must be greater than 0")
     private BigDecimal mrp;
 
-    @NotNull
-    @Positive
+    @NotNull(message = "Selling price is required")
+    @DecimalMin(value = "1.0", message = "Price must be greater than 0")
     private BigDecimal sellingPrice;
 
-    @NotNull
+    @NotNull(message = "Stock quantity is required")
+    @Min(value = 0, message = "Stock quantity cannot be negative")
     private Integer stockQuantity;
 
-    @NotNull
+    @NotNull(message = "Threshold quantity is required")
+    @Min(value = 0, message = "Threshold quantity cannot be negative")
     private Integer thresholdQuantity;
 
     private Boolean isActive = true;
@@ -36,33 +38,83 @@ public class ProductDTO {
 
     public ProductDTO() {}
 
-    public Long getProductId() { return productId; }
-    public void setProductId(Long productId) { this.productId = productId; }
+    public Long getProductId() {
+        return productId;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getName() {
+        return name;
+    }
 
-    public BigDecimal getMrp() { return mrp; }
-    public void setMrp(BigDecimal mrp) { this.mrp = mrp; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public BigDecimal getSellingPrice() { return sellingPrice; }
-    public void setSellingPrice(BigDecimal sellingPrice) { this.sellingPrice = sellingPrice; }
+    public String getDescription() {
+        return description;
+    }
 
-    public Integer getStockQuantity() { return stockQuantity; }
-    public void setStockQuantity(Integer stockQuantity) { this.stockQuantity = stockQuantity; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public Integer getThresholdQuantity() { return thresholdQuantity; }
-    public void setThresholdQuantity(Integer thresholdQuantity) { this.thresholdQuantity = thresholdQuantity; }
+    public BigDecimal getMrp() {
+        return mrp;
+    }
 
-    public Boolean getIsActive() { return isActive; }
-    public void setIsActive(Boolean active) { this.isActive = active; }
+    public void setMrp(BigDecimal mrp) {
+        this.mrp = mrp;
+    }
 
-    public Long getCategoryId() { return categoryId; }
-    public void setCategoryId(Long categoryId) { this.categoryId = categoryId; }
+    public BigDecimal getSellingPrice() {
+        return sellingPrice;
+    }
 
-    public Long getSellerId() { return sellerId; }
-    public void setSellerId(Long sellerId) { this.sellerId = sellerId; }
+    public void setSellingPrice(BigDecimal sellingPrice) {
+        this.sellingPrice = sellingPrice;
+    }
+
+    public Integer getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    public Integer getThresholdQuantity() {
+        return thresholdQuantity;
+    }
+
+    public void setThresholdQuantity(Integer thresholdQuantity) {
+        this.thresholdQuantity = thresholdQuantity;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public Long getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
+    }
 }

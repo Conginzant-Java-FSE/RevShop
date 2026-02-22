@@ -1,6 +1,9 @@
 package com.revature.revshop.service;
 
 import com.revature.revshop.dto.ProductDTO;
+import com.revature.revshop.exception.InvalidInputException;
+import com.revature.revshop.exception.ResourceNotFoundException;
+import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.Category;
 import com.revature.revshop.model.Product;
 import com.revature.revshop.model.Seller;
@@ -32,10 +35,10 @@ public class ProductService {
     public ProductDTO createProduct(ProductDTO dto) {
 
         Category category = categoryRepository.findById(dto.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         Seller seller = sellerRepository.findById(dto.getSellerId())
-                .orElseThrow(() -> new RuntimeException("Seller not found"));
+                .orElseThrow(() -> new UserNotFoundException("Seller not found"));
 
         Product product = new Product();
         product.setName(dto.getName());
@@ -56,7 +59,7 @@ public class ProductService {
     public List<ProductDTO> searchProducts(String keyword) {
 
         if (keyword == null || keyword.trim().isEmpty()) {
-            throw new RuntimeException("Search keyword is required");
+            throw new InvalidInputException("Search keyword is required");
         }
 
         return productRepository.findByNameContainingIgnoreCase(keyword)

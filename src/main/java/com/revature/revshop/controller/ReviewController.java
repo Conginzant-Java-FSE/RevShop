@@ -1,6 +1,7 @@
 package com.revature.revshop.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import com.revature.revshop.dto.ReviewDTO;
+import com.revature.revshop.dto.ReviewResponseDTO;
 import com.revature.revshop.model.Product;
 import com.revature.revshop.model.Review;
 import com.revature.revshop.model.User;
@@ -37,28 +40,53 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<Review> addReview(@RequestParam Long userId, @RequestBody ReviewDTO request) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public ResponseEntity<ReviewResponseDTO> addReview(@RequestBody ReviewDTO request) {
+        if (request.getUserId() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
         Product product = productRepository.findById(request.getProductId())
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
 
         Review review = new Review(product, user, request.getRating(), request.getReviewText());
         Review savedReview = reviewService.addReview(review);
-        return ResponseEntity.ok(savedReview);
+        return ResponseEntity.ok(convertToDto(savedReview));
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<List<Review>> getReviewsByProduct(@PathVariable Long productId) {
+    public ResponseEntity<List<ReviewResponseDTO>> getReviewsByProduct(@PathVariable Long productId) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        return ResponseEntity.ok(reviewService.getReviewsByProduct(product));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+        List<ReviewResponseDTO> responses = reviewService.getReviewsByProduct(product).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Review>> getReviewsByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<ReviewResponseDTO>> getReviewsByUser(@PathVariable Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        return ResponseEntity.ok(reviewService.getReviewsByUser(user));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        List<ReviewResponseDTO> responses = reviewService.getReviewsByUser(user).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responses);
+    }
+
+    private ReviewResponseDTO convertToDto(Review review) {
+        ReviewResponseDTO dto = new ReviewResponseDTO();
+        dto.setReviewId(review.getReviewId());
+        if (review.getProduct() != null) {
+            dto.setProductId(review.getProduct().getProductId());
+        }
+        if (review.getUser() != null) {
+            dto.setUserId(review.getUser().getUserId());
+            dto.setUserName(review.getUser().getName());
+        }
+        dto.setRating(review.getRating());
+        dto.setReviewText(review.getReviewText());
+        dto.setCreatedAt(review.getCreatedAt());
+        return dto;
     }
 }

@@ -1,6 +1,8 @@
 package com.revature.revshop.controller;
 
 import com.revature.revshop.dto.PaymentsDTO;
+import com.revature.revshop.exception.PaymentFailedException;
+import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.model.Payments;
 import com.revature.revshop.service.PaymentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +34,14 @@ public class PaymentsController {
     @GetMapping("/{id}")
     public ResponseEntity<PaymentsDTO> getPaymentById(@PathVariable Integer id) {
         Payments payment = paymentsService.getPaymentById(id)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
+                .orElseThrow(() -> new PaymentFailedException("Payment not found"));
         return ResponseEntity.ok(convertToDTO(payment));
     }
 
     @GetMapping("/order/{orderId}")
     public ResponseEntity<PaymentsDTO> getPaymentByOrderId(@PathVariable Long orderId) {
         Payments payment = paymentsService.getPaymentByOrderId(orderId)
-                .orElseThrow(() -> new RuntimeException("Payment not found for this order"));
+                .orElseThrow(() -> new PaymentFailedException("Payment not found for this order"));
         return ResponseEntity.ok(convertToDTO(payment));
     }
 
