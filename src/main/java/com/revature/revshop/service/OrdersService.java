@@ -1,14 +1,10 @@
 package com.revature.revshop.service;
 
-import com.revature.revshop.dto.OrderItemRequestDTO;
-import com.revature.revshop.dto.OrderItemResponseDTO;
-import com.revature.revshop.dto.OrderRequestDTO;
-import com.revature.revshop.dto.OrderResponseDTO;
+import com.revature.revshop.dto.*;
 import com.revature.revshop.exception.*;
 import com.revature.revshop.model.*;
 import com.revature.revshop.repository.*;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +12,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -27,24 +22,27 @@ public class OrdersService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final ProductRepository productRepository;
+    private final NotificationService notificationService;
 
     public OrdersService(OrdersRepository ordersRepository,
-            OrderItemsRepository orderItemsRepository,
-            UserRepository userRepository,
-            AddressRepository addressRepository,
-            ProductRepository productRepository) {
+                         OrderItemsRepository orderItemsRepository,
+                         UserRepository userRepository,
+                         AddressRepository addressRepository,
+                         ProductRepository productRepository,
+                         NotificationService notificationService) {
+
         this.ordersRepository = ordersRepository;
         this.orderItemsRepository = orderItemsRepository;
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.productRepository = productRepository;
+        this.notificationService = notificationService;
     }
 
     public OrderResponseDTO placeOrder(Long userId, OrderRequestDTO request) {
 
-
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));;
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         Address shippingAddress = addressRepository.findById(request.getShippingAddressId())
                 .orElseThrow(() -> new ResourceNotFoundException("Shipping address not found"));
@@ -64,7 +62,6 @@ public class OrdersService {
         order.setUser(user);
         order.setShippingAddress(shippingAddress);
         order.setBillingAddress(billingAddress);
-
         order.setOrderDate(LocalDateTime.now());
         order.setStatus(Orders.OrderStatus.PENDING);
         order.setOrderNumber("ORD-" + System.currentTimeMillis());
@@ -79,7 +76,6 @@ public class OrdersService {
 
             Product product = productRepository.findById(itemDTO.getProductId())
                     .orElseThrow(() -> new ProductNotFoundException("Product not found"));
-
 
             if (product.getStockQuantity() < itemDTO.getQuantity()) {
                 throw new InvalidInputException("Insufficient stock for product: " + product.getName());
@@ -101,17 +97,22 @@ public class OrdersService {
 
             totalAmount = totalAmount.add(subtotal);
 
-            responseItems.add(
-                    new OrderItemResponseDTO(
-                            product.getProductId(),
-                            product.getName(),
-                            itemDTO.getQuantity(),
-                            price,
-                            subtotal));
+            responseItems.add(new OrderItemResponseDTO(
+                    product.getProductId(),
+                    product.getName(),
+                    itemDTO.getQuantity(),
+                    price,
+                    subtotal));
         }
 
         savedOrder.setTotalAmount(totalAmount);
         Orders finalOrder = ordersRepository.save(savedOrder);
+
+        notificationService.createNotification(
+                userId,
+                "Order Placed",
+                "Your order " + finalOrder.getOrderNumber() + " has been placed successfully."
+        );
 
         return new OrderResponseDTO(
                 finalOrder.getOrderId(),
@@ -120,41 +121,6 @@ public class OrdersService {
                 finalOrder.getStatus().name(),
                 finalOrder.getOrderDate(),
                 responseItems);
-    }
-
-    public List<OrderResponseDTO> getOrdersByUser(Long userId) {
-
-        List<Orders> orders = ordersRepository.findByUser_UserId(userId);
-
-        List<OrderResponseDTO> responseList = new ArrayList<>();
-
-        for (Orders order : orders) {
-
-            List<OrderItemResponseDTO> items = new ArrayList<>();
-
-            for (OrderItems item : order.getOrderItems()) {
-
-                BigDecimal subtotal = item.getPriceAtPurchase()
-                        .multiply(BigDecimal.valueOf(item.getQuantity()));
-
-                items.add(new OrderItemResponseDTO(
-                        item.getProduct().getProductId(),
-                        item.getProduct().getName(),
-                        item.getQuantity(),
-                        item.getPriceAtPurchase(),
-                        subtotal));
-            }
-
-            responseList.add(new OrderResponseDTO(
-                    order.getOrderId(),
-                    order.getOrderNumber(),
-                    order.getTotalAmount(),
-                    order.getStatus().name(),
-                    order.getOrderDate(),
-                    items));
-        }
-
-        return responseList;
     }
 
     public void cancelOrder(Long orderId, Long userId) {
@@ -174,5 +140,24 @@ public class OrdersService {
         order.setStatus(Orders.OrderStatus.CANCELLED);
         ordersRepository.save(order);
 
+        notificationService.createNotification(
+                userId,
+                "Order Cancelled",
+                "Your order " + order.getOrderNumber() + " has been cancelled."
+        );
+    }
+
+    public List<OrderResponseDTO> getOrdersByUser(Long userId) {
+
+        List<Orders> orders = ordersRepository.findByUser_UserId(userId);
+
+        return orders.stream().map(order -> new OrderResponseDTO(
+                order.getOrderId(),
+                order.getOrderNumber(),
+                order.getTotalAmount(),
+                order.getStatus().name(),
+                order.getOrderDate(),
+                new ArrayList<>()
+        )).toList();
     }
 }
