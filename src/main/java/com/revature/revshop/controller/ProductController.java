@@ -1,6 +1,8 @@
 package com.revature.revshop.controller;
 
+import com.revature.revshop.dto.ApiResponse;
 import com.revature.revshop.dto.ProductDTO;
+import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,14 +21,33 @@ public class ProductController {
         this.productService = productService;
     }
 
+
     @PostMapping
-    public ResponseEntity<ProductDTO> create(@Valid @RequestBody ProductDTO dto) {
+    public ResponseEntity<ApiResponse<ProductDTO>> create(
+            @Valid @RequestBody ProductDTO dto) {
+
         ProductDTO saved = productService.createProduct(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse<>(
+                        "Product created successfully",
+                        saved
+                ));
     }
 
+
     @GetMapping("/search")
-    public ResponseEntity<List<ProductDTO>> search(@RequestParam String keyword) {
-        return ResponseEntity.ok(productService.searchProducts(keyword));
+    public ResponseEntity<ApiResponse<List<ProductDTO>>> search(
+            @RequestParam String keyword) {
+
+        List<ProductDTO> products =
+                productService.searchProducts(keyword);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Products fetched successfully",
+                        products
+                )
+        );
     }
 }
