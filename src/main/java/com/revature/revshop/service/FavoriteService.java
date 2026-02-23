@@ -23,13 +23,17 @@ public class FavoriteService {
     private final FavoriteRepository favoriteRepository;
     private final ProductRepository productRepository;
     private final BuyerRepository buyerRepository;
+    private final NotificationService notificationService;
 
     public FavoriteService(FavoriteRepository favoriteRepository,
                            ProductRepository productRepository,
-                           BuyerRepository buyerRepository) {
+                           BuyerRepository buyerRepository,
+                           NotificationService notificationService) {
+
         this.favoriteRepository = favoriteRepository;
         this.productRepository = productRepository;
         this.buyerRepository = buyerRepository;
+        this.notificationService = notificationService;
     }
 
     public void addToFavorite(Long buyerId, Long productId) {
@@ -49,6 +53,12 @@ public class FavoriteService {
         favorite.setProduct(product);
 
         favoriteRepository.save(favorite);
+
+        notificationService.createNotification(
+                buyer.getUser().getUserId(),
+                "Added to Favorites",
+                product.getName() + " has been added to your favorites."
+        );
     }
 
     public void removeFromFavorite(Long buyerId, Long productId) {
