@@ -103,6 +103,20 @@ public class ReviewController {
         );
     }
 
+    @DeleteMapping("/{reviewId}")
+    public ResponseEntity<ApiResponse<Void>> deleteReview(
+            @PathVariable Long reviewId) {
+
+        Review review = reviewService.getReviewById(reviewId)
+                .orElseThrow(() -> new ResourceNotFoundException("Review not found"));
+
+        reviewService.deleteReview(reviewId);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Review deleted successfully", null)
+        );
+    }
+
 
     private ReviewResponseDTO convertToDto(Review review) {
 

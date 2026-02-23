@@ -21,8 +21,6 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-
-
     @PostMapping
     public ResponseEntity<ApiResponse<CategoryDTO>> createCategory(
             @Valid @RequestBody CategoryDTO categoryDTO) {
@@ -35,7 +33,6 @@ public class CategoryController {
                         savedCategory
                 ));
     }
-
 
 
     @GetMapping
@@ -51,22 +48,45 @@ public class CategoryController {
         );
     }
 
-
-
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<CategoryDTO>> getCategoryById(
             @PathVariable Long id) {
 
         CategoryDTO category = categoryService.getCategoryById(id);
 
-        if (category == null) {
-            throw new ResourceNotFoundException("Category not found");
-        }
-
         return ResponseEntity.ok(
                 new ApiResponse<>(
                         "Category fetched successfully",
                         category
+                )
+        );
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<CategoryDTO>> updateCategory(
+            @PathVariable Long id,
+            @Valid @RequestBody CategoryDTO categoryDTO) {
+
+        CategoryDTO updatedCategory = categoryService.updateCategory(id, categoryDTO);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Category updated successfully",
+                        updatedCategory
+                )
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<String>> deleteCategory(
+            @PathVariable Long id) {
+
+        categoryService.deleteCategory(id);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Category deleted successfully",
+                        null
                 )
         );
     }

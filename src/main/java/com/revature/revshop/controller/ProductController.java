@@ -2,7 +2,6 @@ package com.revature.revshop.controller;
 
 import com.revature.revshop.dto.ApiResponse;
 import com.revature.revshop.dto.ProductDTO;
-import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -33,6 +32,65 @@ public class ProductController {
                         "Product created successfully",
                         saved
                 ));
+    }
+
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<ProductDTO>>> getAllProducts() {
+
+        List<ProductDTO> products = productService.getAllProducts();
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Products fetched successfully",
+                        products
+                )
+        );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<ProductDTO>> getById(
+            @PathVariable Long id) {
+
+        ProductDTO product = productService.getProductById(id);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Product fetched successfully",
+                        product
+                )
+        );
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<ProductDTO>> update(
+            @PathVariable Long id,
+            @Valid @RequestBody ProductDTO dto) {
+
+        ProductDTO updated = productService.updateProduct(id, dto);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Product updated successfully",
+                        updated
+                )
+        );
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<String>> delete(
+            @PathVariable Long id) {
+
+        productService.deleteProduct(id);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Product deleted successfully",
+                        null
+                )
+        );
     }
 
 

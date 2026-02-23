@@ -41,13 +41,7 @@ public class ProductService {
                 .orElseThrow(() -> new UserNotFoundException("Seller not found"));
 
         Product product = new Product();
-        product.setName(dto.getName());
-        product.setDescription(dto.getDescription());
-        product.setMrp(dto.getMrp());
-        product.setSellingPrice(dto.getSellingPrice());
-        product.setStockQuantity(dto.getStockQuantity());
-        product.setThresholdQuantity(dto.getThresholdQuantity());
-        product.setIsActive(dto.getIsActive());
+        mapDtoToEntity(dto, product);
         product.setCategory(category);
         product.setSeller(seller);
 
@@ -55,6 +49,46 @@ public class ProductService {
 
         return convertToDTO(saved);
     }
+
+
+    public List<ProductDTO> getAllProducts() {
+        return productRepository.findAll()
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+
+    public ProductDTO getProductById(Long id) {
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+        return convertToDTO(product);
+    }
+
+
+    public ProductDTO updateProduct(Long id, ProductDTO dto) {
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+        mapDtoToEntity(dto, product);
+
+        Product updated = productRepository.save(product);
+
+        return convertToDTO(updated);
+    }
+
+
+    public void deleteProduct(Long id) {
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+        productRepository.delete(product);
+    }
+
 
     public List<ProductDTO> searchProducts(String keyword) {
 
@@ -67,6 +101,18 @@ public class ProductService {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+
+
+    private void mapDtoToEntity(ProductDTO dto, Product product) {
+        product.setName(dto.getName());
+        product.setDescription(dto.getDescription());
+        product.setMrp(dto.getMrp());
+        product.setSellingPrice(dto.getSellingPrice());
+        product.setStockQuantity(dto.getStockQuantity());
+        product.setThresholdQuantity(dto.getThresholdQuantity());
+        product.setIsActive(dto.getIsActive());
+    }
+
 
     private ProductDTO convertToDTO(Product product) {
 

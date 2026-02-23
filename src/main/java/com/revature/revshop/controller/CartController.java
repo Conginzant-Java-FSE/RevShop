@@ -97,6 +97,7 @@ public class CartController {
 
                 List<CartItemDTO> itemDtos = cart.getCartItems().stream()
                         .map(item -> new CartItemDTO(
+                                item.getCartItemId(),
                                 item.getProduct().getProductId(),
                                 item.getQuantity(),
                                 item.getProduct().getName(),

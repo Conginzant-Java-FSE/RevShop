@@ -36,12 +36,14 @@ public class CategoryService {
         return convertToDTO(saved);
     }
 
+
     public List<CategoryDTO> getAllCategories() {
         return categoryRepository.findAll()
                 .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+
 
     public CategoryDTO getCategoryById(Long id) {
 
@@ -50,6 +52,34 @@ public class CategoryService {
 
         return convertToDTO(category);
     }
+
+    public CategoryDTO updateCategory(Long id, CategoryDTO dto) {
+
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+
+        if (!category.getName().equals(dto.getName()) &&
+                categoryRepository.existsByName(dto.getName())) {
+            throw new InvalidInputException("Category name already exists");
+        }
+
+        category.setName(dto.getName());
+        category.setDescription(dto.getDescription());
+
+        Category updated = categoryRepository.save(category);
+
+        return convertToDTO(updated);
+    }
+
+
+    public void deleteCategory(Long id) {
+
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+
+        categoryRepository.delete(category);
+    }
+
 
     private CategoryDTO convertToDTO(Category category) {
 
