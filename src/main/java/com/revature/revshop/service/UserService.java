@@ -5,6 +5,7 @@ import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,6 +20,8 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -101,12 +104,11 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        if (!user.getPassword().equals(oldPassword)) {
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
             throw new InvalidInputException("Invalid old password");
         }
 
-
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
         return userRepository.save(user);
     }
 
