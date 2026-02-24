@@ -1,6 +1,8 @@
 package com.revature.revshop.controller;
 
+import com.revature.revshop.dto.ApiResponse;
 import com.revature.revshop.dto.FavoriteDTO;
+import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.service.FavoriteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,22 +20,56 @@ public class FavoriteController {
         this.favoriteService = favoriteService;
     }
 
+
+
     @PostMapping("/{buyerId}/{productId}")
-    public ResponseEntity<Void> add(@PathVariable Long buyerId,
-                                    @PathVariable Long productId) {
+    public ResponseEntity<ApiResponse<Void>> add(
+            @PathVariable Long buyerId,
+            @PathVariable Long productId) {
+
         favoriteService.addToFavorite(buyerId, productId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse<>(
+                        "Product added to favorites successfully",
+                        null
+                ));
     }
+
+
 
     @DeleteMapping("/{buyerId}/{productId}")
-    public ResponseEntity<Void> remove(@PathVariable Long buyerId,
-                                       @PathVariable Long productId) {
+    public ResponseEntity<ApiResponse<Void>> remove(
+            @PathVariable Long buyerId,
+            @PathVariable Long productId) {
+
         favoriteService.removeFromFavorite(buyerId, productId);
-        return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Product removed from favorites successfully",
+                        null
+                )
+        );
     }
 
+
+
     @GetMapping("/{buyerId}")
-    public ResponseEntity<List<FavoriteDTO>> getFavorites(@PathVariable Long buyerId) {
-        return ResponseEntity.ok(favoriteService.getBuyerFavorites(buyerId));
+    public ResponseEntity<ApiResponse<List<FavoriteDTO>>> getFavorites(
+            @PathVariable Long buyerId) {
+
+        List<FavoriteDTO> favorites = favoriteService.getBuyerFavorites(buyerId);
+
+        if (favorites == null) {
+            throw new ResourceNotFoundException("Favorites not found for this buyer");
+        }
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Favorites fetched successfully",
+                        favorites
+                )
+        );
     }
 }

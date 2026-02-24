@@ -1,24 +1,33 @@
 package com.revature.revshop.dto;
 
+import java.math.BigDecimal;
+
 public class CartItemDTO {
+
+    private Long cartItemId;
     private Long productId;
     private Integer quantity;
     private String productName;
-    private java.math.BigDecimal price;
+    private BigDecimal price;
 
-    public CartItemDTO() {
-    }
+    public CartItemDTO() {}
 
-    public CartItemDTO(Long productId, Integer quantity) {
-        this.productId = productId;
-        this.quantity = quantity;
-    }
-
-    public CartItemDTO(Long productId, Integer quantity, String productName, java.math.BigDecimal price) {
+    public CartItemDTO(Long cartItemId, Long productId, Integer quantity,
+                       String productName, BigDecimal price) {
+        this.cartItemId = cartItemId;
         this.productId = productId;
         this.quantity = quantity;
         this.productName = productName;
         this.price = price;
+    }
+
+
+    public Long getCartItemId() {
+        return cartItemId;
+    }
+
+    public void setCartItemId(Long cartItemId) {
+        this.cartItemId = cartItemId;
     }
 
     public Long getProductId() {
@@ -45,11 +54,11 @@ public class CartItemDTO {
         this.productName = productName;
     }
 
-    public java.math.BigDecimal getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(java.math.BigDecimal price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

@@ -38,4 +38,8 @@ public class ReviewService {
     public List<Review> getReviewsByRating(Integer rating) {
         return reviewRepository.findByRating(rating);
     }
+
+    public void deleteReview(Long reviewId) {
+        reviewRepository.deleteById(reviewId);
+    }
 }
