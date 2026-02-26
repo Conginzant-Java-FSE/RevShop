@@ -1,17 +1,17 @@
 package com.revature.revshop.controller;
 
-import com.revature.revshop.dto.PasswordUpdateRequest;
-import com.revature.revshop.dto.UserDTO;
+import com.revature.revshop.dto.*;
 import com.revature.revshop.exception.InvalidInputException;
 import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.User;
 import com.revature.revshop.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,77 +19,147 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
+
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers().stream()
+    public ResponseEntity<ApiResponse<List<UserDTO>>> getAllUsers() {
+
+        List<UserDTO> list = userService.getAllUsers()
+                .stream()
                 .map(this::convertToDTO)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Users fetched successfully", list)
+        );
     }
+
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<UserDTO>> getUserById(
+            @PathVariable Long id) {
+
         User user = userService.getUserById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        return ResponseEntity.ok(convertToDTO(user));
+                .orElseThrow(() ->
+                        new UserNotFoundException("User not found"));
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("User fetched successfully",
+                        convertToDTO(user))
+        );
     }
 
+
     @PutMapping("/{id}/profile")
-    public ResponseEntity<UserDTO> updateProfile(@PathVariable Long id, @RequestBody UserDTO userDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    public ResponseEntity<ApiResponse<UserDTO>> updateProfile(
+            @PathVariable Long id,
+            @RequestBody UserDTO userDTO) {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        UserDetails userDetails =
+                (UserDetails) authentication.getPrincipal();
 
         String loggedInEmail = userDetails.getUsername();
 
         User loggedInUser = userService.getUserByEmail(loggedInEmail)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() ->
+                        new UserNotFoundException("User not found"));
 
         if (!loggedInUser.getUserId().equals(id)) {
-            throw new InvalidInputException("You cannot update another user's profile");
+            throw new InvalidInputException(
+                    "You cannot update another user's profile");
         }
-        User user = convertToEntity(userDTO);
-        User updatedUser = userService.updateUser(id, user);
-        return ResponseEntity.ok(convertToDTO(updatedUser));
+
+        User updatedUser =
+                userService.updateUser(id, convertToEntity(userDTO));
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Profile updated successfully",
+                        convertToDTO(updatedUser))
+        );
     }
+
 
     @PutMapping("/{id}/password")
-    public ResponseEntity<String> updatePassword(@PathVariable Long id, @RequestBody PasswordUpdateRequest request) {
-        userService.updatePassword(id, request.getOldPassword(), request.getNewPassword());
-        return ResponseEntity.ok("Password updated successfully");
+    public ResponseEntity<ApiResponse<Void>> updatePassword(
+            @PathVariable Long id,
+            @RequestBody PasswordUpdateRequest request) {
+
+        userService.updatePassword(
+                id,
+                request.getOldPassword(),
+                request.getNewPassword()
+        );
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Password updated successfully", null)
+        );
     }
+
 
     @PatchMapping("/{id}/name")
-    public ResponseEntity<UserDTO> updateName(@PathVariable Long id, @RequestParam String name) {
+    public ResponseEntity<ApiResponse<UserDTO>> updateName(
+            @PathVariable Long id,
+            @RequestParam String name) {
+
         User updatedUser = userService.updateName(id, name);
-        return ResponseEntity.ok(convertToDTO(updatedUser));
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Name updated successfully",
+                        convertToDTO(updatedUser))
+        );
     }
+
 
     @PatchMapping("/{id}/email")
-    public ResponseEntity<UserDTO> updateEmail(@PathVariable Long id, @RequestParam String email) {
+    public ResponseEntity<ApiResponse<UserDTO>> updateEmail(
+            @PathVariable Long id,
+            @RequestParam String email) {
+
         User updatedUser = userService.updateEmail(id, email);
-        return ResponseEntity.ok(convertToDTO(updatedUser));
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Email updated successfully",
+                        convertToDTO(updatedUser))
+        );
     }
+
 
     @PatchMapping("/{id}/phone")
-    public ResponseEntity<UserDTO> updatePhone(@PathVariable Long id, @RequestParam String phone) {
+    public ResponseEntity<ApiResponse<UserDTO>> updatePhone(
+            @PathVariable Long id,
+            @RequestParam String phone) {
+
         User updatedUser = userService.updatePhone(id, phone);
-        return ResponseEntity.ok(convertToDTO(updatedUser));
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Phone updated successfully",
+                        convertToDTO(updatedUser))
+        );
     }
+
 
     @PatchMapping("/{id}/age")
-    public ResponseEntity<UserDTO> updateAge(@PathVariable Long id, @RequestParam Integer age) {
+    public ResponseEntity<ApiResponse<UserDTO>> updateAge(
+            @PathVariable Long id,
+            @RequestParam Integer age) {
+
         User updatedUser = userService.updateAge(id, age);
-        return ResponseEntity.ok(convertToDTO(updatedUser));
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Age updated successfully",
+                        convertToDTO(updatedUser))
+        );
     }
 
-    // DTO Conversion Methods - instead of the repeating same code everytime (to
-    // reduce BoilerPlate Code)
+
     private User convertToEntity(UserDTO dto) {
         User user = new User();
         user.setName(dto.getName());
@@ -100,16 +170,18 @@ public class UserController {
     }
 
     private UserDTO convertToDTO(User user) {
+
         UserDTO dto = new UserDTO();
+
         dto.setUserId(user.getUserId());
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
         dto.setPhone(user.getPhone());
         dto.setAge(user.getAge());
-        if (user.getRole() != null) {
+
+        if (user.getRole() != null)
             dto.setRole(user.getRole().name());
-        }
+
         return dto;
     }
-
 }

@@ -1,12 +1,12 @@
 package com.revature.revshop.controller;
 
-import com.revature.revshop.dto.CancelOrderRequestDTO;
-import com.revature.revshop.dto.OrderRequestDTO;
-import com.revature.revshop.dto.OrderResponseDTO;
+import com.revature.revshop.dto.*;
 import com.revature.revshop.service.OrdersService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -19,34 +19,53 @@ public class OrdersController {
         this.ordersService = ordersService;
     }
 
+
+
     @PostMapping("/place")
-    public ResponseEntity<OrderResponseDTO> placeOrder(
+    public ResponseEntity<ApiResponse<OrderResponseDTO>> placeOrder(
             @Valid @RequestBody OrderRequestDTO request) {
 
         OrderResponseDTO response =
                 ordersService.placeOrder(request.getUserId(), request);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ApiResponse<>(
+                        "Order placed successfully",
+                        response
+                ));
     }
 
+
+
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<OrderResponseDTO>> getUserOrders(
+    public ResponseEntity<ApiResponse<List<OrderResponseDTO>>> getUserOrders(
             @PathVariable Long userId) {
 
         List<OrderResponseDTO> orders =
                 ordersService.getOrdersByUser(userId);
 
-        return ResponseEntity.ok(orders);
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Orders fetched successfully",
+                        orders
+                )
+        );
     }
 
+
+
     @PutMapping("/{orderId}/cancel")
-    public ResponseEntity<String> cancelOrder(
+    public ResponseEntity<ApiResponse<Void>> cancelOrder(
             @PathVariable Long orderId,
             @Valid @RequestBody CancelOrderRequestDTO request) {
 
         ordersService.cancelOrder(orderId, request.getUserId());
 
-        return ResponseEntity.ok("Order cancelled successfully");
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Order cancelled successfully",
+                        null
+                )
+        );
     }
-
 }
