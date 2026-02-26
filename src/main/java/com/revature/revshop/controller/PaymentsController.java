@@ -2,7 +2,6 @@ package com.revature.revshop.controller;
 
 import com.revature.revshop.dto.PaymentsDTO;
 import com.revature.revshop.exception.PaymentFailedException;
-import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.model.Payments;
 import com.revature.revshop.service.PaymentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class PaymentsController {
 
     @PostMapping
     public ResponseEntity<PaymentsDTO> createPayment(@RequestParam Long orderId,
-                                                     @RequestBody PaymentsDTO paymentsDTO) {
+            @RequestBody PaymentsDTO paymentsDTO) {
         Payments payment = convertToEntity(paymentsDTO);
         Payments savedPayment = paymentsService.createPayment(payment, orderId);
         return ResponseEntity.ok(convertToDTO(savedPayment));
@@ -55,7 +54,7 @@ public class PaymentsController {
 
     @PutMapping("/{id}/status")
     public ResponseEntity<PaymentsDTO> updatePaymentStatus(@PathVariable Integer id,
-                                                           @RequestParam String status) {
+            @RequestParam String status) {
         Payments.PaymentStatus paymentStatus = Payments.PaymentStatus.valueOf(status);
         Payments updatedPayment = paymentsService.updatePaymentStatus(id, paymentStatus);
         return ResponseEntity.ok(convertToDTO(updatedPayment));
