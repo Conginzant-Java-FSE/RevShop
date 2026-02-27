@@ -19,7 +19,7 @@ public class JwtUtil {
 
     private final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    @Value("${jwt.expiration:3600000}") // 1 hour default
+    @Value("${jwt.expiration:3600000}")
     private long jwtExpiration;
 
     public String extractUsername(String token) {

@@ -24,10 +24,8 @@ public class PaymentsController {
 
 
     @PostMapping
-    public ResponseEntity<ApiResponse<PaymentsDTO>> createPayment(
-            @RequestParam Long orderId,
+    public ResponseEntity<PaymentsDTO> createPayment(@RequestParam Long orderId,
             @RequestBody PaymentsDTO paymentsDTO) {
-
         Payments payment = convertToEntity(paymentsDTO);
         Payments savedPayment = paymentsService.createPayment(payment, orderId);
 
@@ -82,25 +80,11 @@ public class PaymentsController {
 
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<ApiResponse<PaymentsDTO>> updatePaymentStatus(
-            @PathVariable Integer id,
+    public ResponseEntity<PaymentsDTO> updatePaymentStatus(@PathVariable Integer id,
             @RequestParam String status) {
-
-        Payments.PaymentStatus paymentStatus;
-
-        try {
-            paymentStatus = Payments.PaymentStatus.valueOf(status.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new PaymentFailedException("Invalid payment status");
-        }
-
-        Payments updatedPayment =
-                paymentsService.updatePaymentStatus(id, paymentStatus);
-
-        return ResponseEntity.ok(
-                new ApiResponse<>("Payment status updated successfully",
-                        convertToDTO(updatedPayment))
-        );
+        Payments.PaymentStatus paymentStatus = Payments.PaymentStatus.valueOf(status);
+        Payments updatedPayment = paymentsService.updatePaymentStatus(id, paymentStatus);
+        return ResponseEntity.ok(convertToDTO(updatedPayment));
     }
 
 
