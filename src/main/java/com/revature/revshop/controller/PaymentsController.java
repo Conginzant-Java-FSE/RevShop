@@ -24,8 +24,10 @@ public class PaymentsController {
 
 
     @PostMapping
-    public ResponseEntity<PaymentsDTO> createPayment(@RequestParam Long orderId,
+    public ResponseEntity<ApiResponse<PaymentsDTO>> createPayment(
+            @RequestParam Long orderId,
             @RequestBody PaymentsDTO paymentsDTO) {
+
         Payments payment = convertToEntity(paymentsDTO);
         Payments savedPayment = paymentsService.createPayment(payment, orderId);
 
