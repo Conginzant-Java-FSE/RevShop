@@ -5,6 +5,7 @@ import com.revature.revshop.model.User;
 import com.revature.revshop.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -33,5 +34,14 @@ public class CartService {
     public Cart findOrCreateCart(User user) {
         return cartRepository.findByUser(user)
                 .orElseGet(() -> createCart(user));
+    }
+
+    public BigDecimal calculateCartTotal(Cart cart) {
+        if (cart == null || cart.getCartItems() == null) {
+            return BigDecimal.ZERO;
+        }
+        return cart.getCartItems().stream()
+                .map(item -> item.getProduct().getSellingPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

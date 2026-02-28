@@ -42,4 +42,25 @@ public class ReviewService {
     public void deleteReview(Long reviewId) {
         reviewRepository.deleteById(reviewId);
     }
+
+    public Review updateReview(Long reviewId, Review updatedReview) {
+        return reviewRepository.findById(reviewId)
+                .map(existingReview -> {
+                    existingReview.setRating(updatedReview.getRating());
+                    existingReview.setReviewText(updatedReview.getReviewText());
+                    return reviewRepository.save(existingReview);
+                })
+                .orElse(null);
+    }
+
+    public Double getAverageRatingByProduct(Product product) {
+        List<Review> reviews = reviewRepository.findByProduct(product);
+        if (reviews == null || reviews.isEmpty()) {
+            return 0.0;
+        }
+        return reviews.stream()
+                .mapToInt(Review::getRating)
+                .average()
+                .orElse(0.0);
+    }
 }

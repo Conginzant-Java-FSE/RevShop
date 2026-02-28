@@ -22,9 +22,8 @@ public class PaymentsController {
         this.paymentsService = paymentsService;
     }
 
-
     @PostMapping
-    public ResponseEntity<PaymentsDTO> createPayment(@RequestParam Long orderId,
+    public ResponseEntity<ApiResponse<PaymentsDTO>> createPayment(@RequestParam Long orderId,
             @RequestBody PaymentsDTO paymentsDTO) {
         Payments payment = convertToEntity(paymentsDTO);
         Payments savedPayment = paymentsService.createPayment(payment, orderId);
@@ -32,10 +31,8 @@ public class PaymentsController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse<>(
                         "Payment created successfully",
-                        convertToDTO(savedPayment)
-                ));
+                        convertToDTO(savedPayment)));
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<PaymentsDTO>> getPaymentById(
@@ -46,10 +43,8 @@ public class PaymentsController {
 
         return ResponseEntity.ok(
                 new ApiResponse<>("Payment fetched successfully",
-                        convertToDTO(payment))
-        );
+                        convertToDTO(payment)));
     }
-
 
     @GetMapping("/order/{orderId}")
     public ResponseEntity<ApiResponse<PaymentsDTO>> getPaymentByOrderId(
@@ -60,10 +55,8 @@ public class PaymentsController {
 
         return ResponseEntity.ok(
                 new ApiResponse<>("Payment fetched successfully",
-                        convertToDTO(payment))
-        );
+                        convertToDTO(payment)));
     }
-
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<PaymentsDTO>>> getAllPayments() {
@@ -74,10 +67,8 @@ public class PaymentsController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(
-                new ApiResponse<>("Payments fetched successfully", payments)
-        );
+                new ApiResponse<>("Payments fetched successfully", payments));
     }
-
 
     @PutMapping("/{id}/status")
     public ResponseEntity<PaymentsDTO> updatePaymentStatus(@PathVariable Integer id,
@@ -87,7 +78,6 @@ public class PaymentsController {
         return ResponseEntity.ok(convertToDTO(updatedPayment));
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deletePayment(
             @PathVariable Integer id) {
@@ -95,10 +85,8 @@ public class PaymentsController {
         paymentsService.deletePayment(id);
 
         return ResponseEntity.ok(
-                new ApiResponse<>("Payment deleted successfully", null)
-        );
+                new ApiResponse<>("Payment deleted successfully", null));
     }
-
 
     private PaymentsDTO convertToDTO(Payments payment) {
 
