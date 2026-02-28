@@ -1,9 +1,10 @@
 package com.revature.revshop.controller;
 
+import com.revature.revshop.dto.ApiResponse;
 import com.revature.revshop.dto.NotificationDTO;
+import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.model.Notification;
 import com.revature.revshop.service.NotificationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,30 +15,54 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/notifications")
 public class NotificationController {
 
-    @Autowired
-    private NotificationService notificationService;
+    private final NotificationService notificationService;
+
+    public NotificationController(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<NotificationDTO>> getNotifications(@PathVariable Long userId) {
-        List<Notification> notifications = notificationService.getNotificationsByUserId(userId);
-        return ResponseEntity.ok(notifications.stream()
-                                                .map(this::convertToDTO)
-                                                .collect(Collectors.toList()));
+    public ResponseEntity<ApiResponse<List<NotificationDTO>>> getNotifications(
+            @PathVariable Long userId) {
+
+        List<Notification> notifications =
+                notificationService.getNotificationsByUserId(userId);
+
+        List<NotificationDTO> list = notifications.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Notifications fetched successfully", list)
+        );
     }
+
 
     @PutMapping("/{id}/read")
-    public ResponseEntity<Void> markAsRead(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> markAsRead(
+            @PathVariable Long id) {
+
         notificationService.markAsRead(id);
-        return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Notification marked as read", null)
+        );
     }
+
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNotification(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteNotification(
+            @PathVariable Long id) {
+
         notificationService.deleteNotification(id);
-        return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Notification deleted successfully", null)
+        );
     }
 
-    // DTO conversion method (To reduce BoilerPlate Code)
+
     private NotificationDTO convertToDTO(Notification notification) {
         NotificationDTO dto = new NotificationDTO();
         dto.setNotificationId(notification.getNotificationId());

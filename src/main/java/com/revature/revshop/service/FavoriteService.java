@@ -7,6 +7,7 @@ import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.Buyer;
 import com.revature.revshop.model.Favorite;
 import com.revature.revshop.model.Product;
+import com.revature.revshop.model.Seller;
 import com.revature.revshop.repository.BuyerRepository;
 import com.revature.revshop.repository.FavoriteRepository;
 import com.revature.revshop.repository.ProductRepository;
@@ -54,10 +55,15 @@ public class FavoriteService {
 
         favoriteRepository.save(favorite);
 
+        Seller seller = product.getSeller();
+
         notificationService.createNotification(
-                buyer.getUser().getUserId(),
-                "Added to Favorites",
-                product.getName() + " has been added to your favorites."
+                seller.getUser().getUserId(),
+                "Product Favorited",
+                buyer.getUser().getName() +
+                        " added your product '" +
+                        product.getName() +
+                        "' to favorites."
         );
     }
 

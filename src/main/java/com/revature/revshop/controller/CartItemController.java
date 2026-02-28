@@ -1,10 +1,13 @@
 package com.revature.revshop.controller;
 
+import com.revature.revshop.dto.ApiResponse;
+import com.revature.revshop.exception.InvalidInputException;
+import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.model.CartItem;
 import com.revature.revshop.service.CartItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Map;
 
 @RestController
@@ -13,28 +16,47 @@ public class CartItemController {
 
     private final CartItemService cartItemService;
 
-    @Autowired
     public CartItemController(CartItemService cartItemService) {
         this.cartItemService = cartItemService;
     }
 
+
     @PutMapping("/{cartItemId}")
-    public ResponseEntity<CartItem> updateItemQuantity(@PathVariable Long cartItemId,
+    public ResponseEntity<ApiResponse<CartItem>> updateItemQuantity(
+            @PathVariable Long cartItemId,
             @RequestBody Map<String, Integer> request) {
+
         Integer quantity = request.get("quantity");
-        if (quantity == null) {
-            return ResponseEntity.badRequest().build();
+
+        if (quantity == null || quantity <= 0) {
+            throw new InvalidInputException("Quantity must be greater than 0");
         }
+
         CartItem item = cartItemService.updateItemQuantity(cartItemId, quantity);
-        if (item != null) {
-            return ResponseEntity.ok(item);
+
+        if (item == null) {
+            throw new ResourceNotFoundException("Cart item not found");
         }
-        return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Cart item updated successfully", item)
+        );
     }
 
     @DeleteMapping("/{cartItemId}")
-    public ResponseEntity<Void> removeItemFromCart(@PathVariable Long cartItemId) {
+    public ResponseEntity<ApiResponse<Void>> removeItemFromCart(
+            @PathVariable Long cartItemId) {
+
+        CartItem item = cartItemService.updateItemQuantity(cartItemId, 0);
+
+        if (item == null) {
+            throw new ResourceNotFoundException("Cart item not found");
+        }
+
         cartItemService.removeItemFromCart(cartItemId);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("Cart item removed successfully", null)
+        );
     }
 }
