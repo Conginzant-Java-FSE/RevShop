@@ -1,6 +1,5 @@
 package com.revature.revshop.service;
 
-import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.Seller;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.SellerRepository;
@@ -19,9 +18,9 @@ public class SellerService {
     private final NotificationService notificationService;
 
     public SellerService(SellerRepository sellerRepository,
-                         UserRepository userRepository,
-                         PasswordEncoder passwordEncoder,
-                         NotificationService notificationService) {
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            NotificationService notificationService) {
 
         this.sellerRepository = sellerRepository;
         this.userRepository = userRepository;
@@ -30,9 +29,9 @@ public class SellerService {
     }
 
     public Seller registerSeller(User user,
-                                 String businessName,
-                                 String businessDescription,
-                                 String taxId) {
+            String businessName,
+            String businessDescription,
+            String taxId) {
 
         user.setRole(com.revature.revshop.model.Role.SELLER);
 
@@ -49,12 +48,10 @@ public class SellerService {
 
         User savedUser = userRepository.save(user);
 
-
         notificationService.createNotification(
                 savedUser.getUserId(),
                 "Welcome to RevShop",
-                "Your seller account has been created successfully."
-        );
+                "Your seller account has been created successfully.");
 
         return savedUser.getSellerProfile();
     }
