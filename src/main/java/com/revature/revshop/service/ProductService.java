@@ -10,6 +10,8 @@ import com.revature.revshop.model.Seller;
 import com.revature.revshop.repository.CategoryRepository;
 import com.revature.revshop.repository.ProductRepository;
 import com.revature.revshop.repository.SellerRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,11 +53,9 @@ public class ProductService {
     }
 
 
-    public List<ProductDTO> getAllProducts() {
-        return productRepository.findAll()
-                .stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+    public Page<ProductDTO> getAllProducts(Pageable pageable) {
+        return productRepository.findAll(pageable)
+                .map(this::convertToDTO);
     }
 
 
@@ -90,18 +90,35 @@ public class ProductService {
     }
 
 
-    public List<ProductDTO> searchProducts(String keyword) {
+    public Page<ProductDTO> searchProducts(String keyword, Pageable pageable) {
 
         if (keyword == null || keyword.trim().isEmpty()) {
             throw new InvalidInputException("Search keyword is required");
         }
 
-        return productRepository.findByNameContainingIgnoreCase(keyword)
-                .stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        return productRepository.findByNameContainingIgnoreCase(keyword, pageable)
+                .map(this::convertToDTO);
     }
 
+    public Page<ProductDTO> filterProducts(Double minPrice, Double maxPrice, Long categoryId, Pageable pageable) {
+
+        org.springframework.data.jpa.domain.Specification<Product> spec = org.springframework.data.jpa.domain.Specification.where((root, query, cb) -> cb.conjunction());
+
+        if (minPrice != null) {
+            spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("sellingPrice"), minPrice));
+        }
+
+        if (maxPrice != null) {
+            spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("sellingPrice"), maxPrice));
+        }
+
+        if (categoryId != null) {
+            spec = spec.and((root, query, cb) -> cb.equal(root.get("category").get("categoryId"), categoryId));
+        }
+
+        return productRepository.findAll(spec, pageable)
+                .map(this::convertToDTO);
+    }
 
     private void mapDtoToEntity(ProductDTO dto, Product product) {
         product.setName(dto.getName());
