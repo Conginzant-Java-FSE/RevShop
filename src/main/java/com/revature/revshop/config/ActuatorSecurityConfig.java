@@ -26,7 +26,8 @@ public class ActuatorSecurityConfig {
                                                 .roles("ADMIN")
                                                 .build());
 
-                DaoAuthenticationProvider actuatorAuthProvider = new DaoAuthenticationProvider(actuatorUsers);
+                DaoAuthenticationProvider actuatorAuthProvider = new DaoAuthenticationProvider();
+                actuatorAuthProvider.setUserDetailsService(actuatorUsers);
                 actuatorAuthProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
 
                 AuthenticationManager actuatorAuthManager = new ProviderManager(actuatorAuthProvider);

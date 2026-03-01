@@ -45,13 +45,8 @@ public class UserController {
             @PathVariable Long id) {
 
         User user = userService.getUserById(id)
-                .orElseThrow(() ->
-                        new UserNotFoundException("User not found"));
-
-        return ResponseEntity.ok(
-                new ApiResponse<>("User fetched successfully",
-                        convertToDTO(user))
-        );
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        return ResponseEntity.ok(convertToDTO(user));
     }
 
 
