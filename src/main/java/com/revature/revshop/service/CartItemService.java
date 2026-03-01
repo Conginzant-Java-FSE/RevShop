@@ -44,6 +44,11 @@ public class CartItemService {
         cartItemRepository.deleteById(cartItemId);
     }
 
+    @Transactional
+    public void removeItemFromCart(Cart cart, Product product) {
+        cartItemRepository.deleteByCartAndProduct(cart, product);
+    }
+
     public List<CartItem> getCartItemsByCart(Cart cart) {
         return cartItemRepository.findByCart(cart);
     }
