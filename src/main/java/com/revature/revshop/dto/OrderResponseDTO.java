@@ -11,6 +11,9 @@ public class OrderResponseDTO {
     private BigDecimal totalAmount;
     private String status;
     private LocalDateTime orderDate;
+    private String paymentMethod;
+    private String buyerName;
+    private String buyerEmail;
     private List<OrderItemResponseDTO> items;
 
     public OrderResponseDTO() {
@@ -21,12 +24,18 @@ public class OrderResponseDTO {
                             BigDecimal totalAmount,
                             String status,
                             LocalDateTime orderDate,
+                            String paymentMethod,
+                            String buyerName,
+                            String buyerEmail,
                             List<OrderItemResponseDTO> items) {
         this.orderId = orderId;
         this.orderNumber = orderNumber;
         this.totalAmount = totalAmount;
         this.status = status;
         this.orderDate = orderDate;
+        this.paymentMethod = paymentMethod;
+        this.buyerName = buyerName;
+        this.buyerEmail = buyerEmail;
         this.items = items;
     }
 
@@ -48,6 +57,18 @@ public class OrderResponseDTO {
 
     public LocalDateTime getOrderDate() {
         return orderDate;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public String getBuyerName() {
+        return buyerName;
+    }
+
+    public String getBuyerEmail() {
+        return buyerEmail;
     }
 
     public List<OrderItemResponseDTO> getItems() {

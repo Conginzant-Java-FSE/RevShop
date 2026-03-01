@@ -21,6 +21,8 @@ public class OrderRequestDTO {
     @Valid
     private List<OrderItemRequestDTO> items;
 
+    private String paymentMethod;
+
     public OrderRequestDTO() {
     }
 
@@ -64,5 +66,13 @@ public class OrderRequestDTO {
 
     public void setItems(List<OrderItemRequestDTO> items) {
         this.items = items;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 }
