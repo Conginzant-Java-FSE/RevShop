@@ -10,6 +10,8 @@ import com.revature.revshop.model.Seller;
 import com.revature.revshop.repository.CategoryRepository;
 import com.revature.revshop.repository.ProductRepository;
 import com.revature.revshop.repository.SellerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,19 +24,22 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProductService {
 
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
+
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final SellerRepository sellerRepository;
 
     public ProductService(ProductRepository productRepository,
-                          CategoryRepository categoryRepository,
-                          SellerRepository sellerRepository) {
+            CategoryRepository categoryRepository,
+            SellerRepository sellerRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.sellerRepository = sellerRepository;
     }
 
     public ProductDTO createProduct(ProductDTO dto) {
+        log.info("Creating product name={}", dto.getName());
 
         Category category = categoryRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
@@ -52,14 +57,13 @@ public class ProductService {
         return convertToDTO(saved);
     }
 
-
     public Page<ProductDTO> getAllProducts(Pageable pageable) {
         return productRepository.findAll(pageable)
                 .map(this::convertToDTO);
     }
 
-
     public ProductDTO getProductById(Long id) {
+        log.info("Fetching product id={}", id);
 
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
@@ -67,8 +71,8 @@ public class ProductService {
         return convertToDTO(product);
     }
 
-
     public ProductDTO updateProduct(Long id, ProductDTO dto) {
+        log.info("Updating product id={}", id);
 
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
@@ -80,8 +84,8 @@ public class ProductService {
         return convertToDTO(updated);
     }
 
-
     public void deleteProduct(Long id) {
+        log.info("Deleting product id={}", id);
 
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
@@ -89,8 +93,8 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-
     public Page<ProductDTO> searchProducts(String keyword, Pageable pageable) {
+        log.info("Searching products keyword={}", keyword);
 
         if (keyword == null || keyword.trim().isEmpty()) {
             throw new InvalidInputException("Search keyword is required");
@@ -102,7 +106,8 @@ public class ProductService {
 
     public Page<ProductDTO> filterProducts(Double minPrice, Double maxPrice, Long categoryId, Pageable pageable) {
 
-        org.springframework.data.jpa.domain.Specification<Product> spec = org.springframework.data.jpa.domain.Specification.where((root, query, cb) -> cb.conjunction());
+        org.springframework.data.jpa.domain.Specification<Product> spec = org.springframework.data.jpa.domain.Specification
+                .where((root, query, cb) -> cb.conjunction());
 
         if (minPrice != null) {
             spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("sellingPrice"), minPrice));
@@ -129,7 +134,6 @@ public class ProductService {
         product.setThresholdQuantity(dto.getThresholdQuantity());
         product.setIsActive(dto.getIsActive());
     }
-
 
     private ProductDTO convertToDTO(Product product) {
 

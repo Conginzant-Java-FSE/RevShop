@@ -11,6 +11,8 @@ import com.revature.revshop.model.Seller;
 import com.revature.revshop.repository.BuyerRepository;
 import com.revature.revshop.repository.FavoriteRepository;
 import com.revature.revshop.repository.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,74 +23,76 @@ import java.util.stream.Collectors;
 @Transactional
 public class FavoriteService {
 
-    private final FavoriteRepository favoriteRepository;
-    private final ProductRepository productRepository;
-    private final BuyerRepository buyerRepository;
-    private final NotificationService notificationService;
+        private static final Logger log = LoggerFactory.getLogger(FavoriteService.class);
 
-    public FavoriteService(FavoriteRepository favoriteRepository,
-                           ProductRepository productRepository,
-                           BuyerRepository buyerRepository,
-                           NotificationService notificationService) {
+        private final FavoriteRepository favoriteRepository;
+        private final ProductRepository productRepository;
+        private final BuyerRepository buyerRepository;
+        private final NotificationService notificationService;
 
-        this.favoriteRepository = favoriteRepository;
-        this.productRepository = productRepository;
-        this.buyerRepository = buyerRepository;
-        this.notificationService = notificationService;
-    }
+        public FavoriteService(FavoriteRepository favoriteRepository,
+                        ProductRepository productRepository,
+                        BuyerRepository buyerRepository,
+                        NotificationService notificationService) {
 
-    public void addToFavorite(Long buyerId, Long productId) {
-
-        Buyer buyer = buyerRepository.findById(buyerId)
-                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
-
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
-
-        if (favoriteRepository.findByBuyerAndProduct(buyer, product).isPresent()) {
-            throw new InvalidInputException("Product already in favorites");
+                this.favoriteRepository = favoriteRepository;
+                this.productRepository = productRepository;
+                this.buyerRepository = buyerRepository;
+                this.notificationService = notificationService;
         }
 
-        Favorite favorite = new Favorite();
-        favorite.setBuyer(buyer);
-        favorite.setProduct(product);
+        public void addToFavorite(Long buyerId, Long productId) {
+                log.info("Adding favorite buyerId={} productId={}", buyerId, productId);
 
-        favoriteRepository.save(favorite);
+                Buyer buyer = buyerRepository.findById(buyerId)
+                                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
 
-        Seller seller = product.getSeller();
+                Product product = productRepository.findById(productId)
+                                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
-        notificationService.createNotification(
-                seller.getUser().getUserId(),
-                "Product Favorited",
-                buyer.getUser().getName() +
-                        " added your product '" +
-                        product.getName() +
-                        "' to favorites."
-        );
-    }
+                if (favoriteRepository.findByBuyerAndProduct(buyer, product).isPresent()) {
+                        throw new InvalidInputException("Product already in favorites");
+                }
 
-    public void removeFromFavorite(Long buyerId, Long productId) {
+                Favorite favorite = new Favorite();
+                favorite.setBuyer(buyer);
+                favorite.setProduct(product);
 
-        Buyer buyer = buyerRepository.findById(buyerId)
-                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
+                favoriteRepository.save(favorite);
 
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+                Seller seller = product.getSeller();
 
-        favoriteRepository.deleteByBuyerAndProduct(buyer, product);
-    }
+                notificationService.createNotification(
+                                seller.getUser().getUserId(),
+                                "Product Favorited",
+                                buyer.getUser().getName() +
+                                                " added your product '" +
+                                                product.getName() +
+                                                "' to favorites.");
+        }
 
-    public List<FavoriteDTO> getBuyerFavorites(Long buyerId) {
+        public void removeFromFavorite(Long buyerId, Long productId) {
+                log.info("Removing favorite buyerId={} productId={}", buyerId, productId);
 
-        Buyer buyer = buyerRepository.findById(buyerId)
-                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
+                Buyer buyer = buyerRepository.findById(buyerId)
+                                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
 
-        return favoriteRepository.findByBuyer(buyer)
-                .stream()
-                .map(fav -> new FavoriteDTO(
-                        fav.getProduct().getProductId(),
-                        fav.getProduct().getName()
-                ))
-                .collect(Collectors.toList());
-    }
+                Product product = productRepository.findById(productId)
+                                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+
+                favoriteRepository.deleteByBuyerAndProduct(buyer, product);
+        }
+
+        public List<FavoriteDTO> getBuyerFavorites(Long buyerId) {
+
+                Buyer buyer = buyerRepository.findById(buyerId)
+                                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
+
+                return favoriteRepository.findByBuyer(buyer)
+                                .stream()
+                                .map(fav -> new FavoriteDTO(
+                                                fav.getProduct().getProductId(),
+                                                fav.getProduct().getName()))
+                                .collect(Collectors.toList());
+        }
 }

@@ -4,6 +4,8 @@ import com.revature.revshop.model.Cart;
 import com.revature.revshop.model.CartItem;
 import com.revature.revshop.model.Product;
 import com.revature.revshop.repository.CartItemRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,8 @@ import java.util.Optional;
 @Service
 public class CartItemService {
 
+    private static final Logger log = LoggerFactory.getLogger(CartItemService.class);
+
     private final CartItemRepository cartItemRepository;
 
     @Autowired
@@ -21,6 +25,7 @@ public class CartItemService {
     }
 
     public CartItem addItemToCart(Cart cart, Product product, Integer quantity) {
+        log.info("Adding item to cart productId={} qty={}", product.getProductId(), quantity);
         Optional<CartItem> existingItem = cartItemRepository.findByCartAndProduct(cart, product);
         if (existingItem.isPresent()) {
             CartItem item = existingItem.get();
@@ -33,6 +38,7 @@ public class CartItemService {
     }
 
     public CartItem updateItemQuantity(Long cartItemId, Integer quantity) {
+        log.info("Updating cart item id={} qty={}", cartItemId, quantity);
         return cartItemRepository.findById(cartItemId)
                 .map(item -> {
                     item.setQuantity(quantity);
@@ -55,6 +61,7 @@ public class CartItemService {
 
     @Transactional
     public void clearCart(Cart cart) {
+        log.info("Clearing cart id={}", cart.getCartId());
         cartItemRepository.deleteByCart(cart);
     }
 

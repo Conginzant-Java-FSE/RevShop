@@ -4,6 +4,8 @@ import com.revature.revshop.dto.*;
 import com.revature.revshop.exception.*;
 import com.revature.revshop.model.*;
 import com.revature.revshop.repository.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,8 @@ import java.util.List;
 @Transactional
 public class OrdersService {
 
+    private static final Logger log = LoggerFactory.getLogger(OrdersService.class);
+
     private final OrdersRepository ordersRepository;
     private final OrderItemsRepository orderItemsRepository;
     private final UserRepository userRepository;
@@ -28,14 +32,14 @@ public class OrdersService {
     private final OrderItemService orderItemService;
 
     public OrdersService(OrdersRepository ordersRepository,
-                         OrderItemsRepository orderItemsRepository,
-                         UserRepository userRepository,
-                         AddressRepository addressRepository,
-                         ProductRepository productRepository,
-                         NotificationService notificationService,
-                         PaymentsRepository paymentsRepository,
-                         TrackingDetailsRepository trackingDetailsRepository,
-                         OrderItemService orderItemService) {
+            OrderItemsRepository orderItemsRepository,
+            UserRepository userRepository,
+            AddressRepository addressRepository,
+            ProductRepository productRepository,
+            NotificationService notificationService,
+            PaymentsRepository paymentsRepository,
+            TrackingDetailsRepository trackingDetailsRepository,
+            OrderItemService orderItemService) {
 
         this.ordersRepository = ordersRepository;
         this.orderItemsRepository = orderItemsRepository;
@@ -49,6 +53,7 @@ public class OrdersService {
     }
 
     public OrderResponseDTO placeOrder(Long userId, OrderRequestDTO request) {
+        log.info("Placing order for userId={}", userId);
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -183,6 +188,7 @@ public class OrdersService {
     }
 
     public void cancelOrder(Long orderId, Long userId) {
+        log.info("Cancelling order id={} userId={}", orderId, userId);
 
         Orders order = ordersRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException("Order not found"));
@@ -209,6 +215,7 @@ public class OrdersService {
     }
 
     public List<OrderResponseDTO> getOrdersByUser(Long userId) {
+        log.info("Fetching orders for userId={}", userId);
         List<Orders> orders = ordersRepository.findByUser_UserId(userId);
         return orders.stream().map(order -> new OrderResponseDTO(
                 order.getOrderId(),
@@ -251,6 +258,7 @@ public class OrdersService {
     }
 
     public OrderResponseDTO updateOrderStatus(Long orderId, String status, Long sellerId) {
+        log.info("Updating order id={} status={}", orderId, status);
         Orders order = ordersRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException("Order not found"));
 
