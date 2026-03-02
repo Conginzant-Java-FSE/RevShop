@@ -48,6 +48,32 @@ public class CategoryController {
         );
     }
 
+    @GetMapping("/roots")
+    public ResponseEntity<ApiResponse<List<CategoryDTO>>> getRootCategories() {
+
+        List<CategoryDTO> categories = categoryService.getRootCategories();
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Root categories fetched successfully",
+                        categories
+                )
+        );
+    }
+
+    @GetMapping("/{id}/subcategories")
+    public ResponseEntity<ApiResponse<List<CategoryDTO>>> getSubCategories(@PathVariable Long id) {
+
+        List<CategoryDTO> categories = categoryService.getSubCategories(id);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(
+                        "Subcategories fetched successfully",
+                        categories
+                )
+        );
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<CategoryDTO>> getCategoryById(
             @PathVariable Long id) {

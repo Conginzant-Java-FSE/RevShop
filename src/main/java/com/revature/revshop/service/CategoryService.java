@@ -31,6 +31,12 @@ public class CategoryService {
         category.setName(dto.getName());
         category.setDescription(dto.getDescription());
 
+        if (dto.getParentCategoryId() != null) {
+            Category parent = categoryRepository.findById(dto.getParentCategoryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Parent category not found"));
+            category.setParentCategory(parent);
+        }
+
         Category saved = categoryRepository.save(category);
 
         return convertToDTO(saved);
@@ -39,6 +45,23 @@ public class CategoryService {
 
     public List<CategoryDTO> getAllCategories() {
         return categoryRepository.findAll()
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<CategoryDTO> getRootCategories() {
+        return categoryRepository.findByParentCategoryIsNull()
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<CategoryDTO> getSubCategories(Long parentId) {
+        if (!categoryRepository.existsById(parentId)) {
+            throw new ResourceNotFoundException("Parent category not found");
+        }
+        return categoryRepository.findByParentCategory_CategoryId(parentId)
                 .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -87,6 +110,9 @@ public class CategoryService {
         dto.setCategoryId(category.getCategoryId());
         dto.setName(category.getName());
         dto.setDescription(category.getDescription());
+        if (category.getParentCategory() != null) {
+            dto.setParentCategoryId(category.getParentCategory().getCategoryId());
+        }
 
         return dto;
     }
