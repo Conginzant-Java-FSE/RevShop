@@ -5,6 +5,8 @@ import com.revature.revshop.dto.PaymentsDTO;
 import com.revature.revshop.exception.PaymentFailedException;
 import com.revature.revshop.model.Payments;
 import com.revature.revshop.service.PaymentsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/payments")
 public class PaymentsController {
 
+    private static final Logger log = LoggerFactory.getLogger(PaymentsController.class);
+
     private final PaymentsService paymentsService;
 
     public PaymentsController(PaymentsService paymentsService) {
@@ -26,6 +30,7 @@ public class PaymentsController {
     public ResponseEntity<ApiResponse<PaymentsDTO>> createPayment(@RequestParam Long orderId,
             @RequestBody PaymentsDTO paymentsDTO) {
 
+        log.info("POST /api/payments - orderId={}", orderId);
         Payments payment = convertToEntity(paymentsDTO);
         Payments savedPayment = paymentsService.createPayment(payment, orderId);
 
@@ -39,6 +44,7 @@ public class PaymentsController {
     public ResponseEntity<ApiResponse<PaymentsDTO>> getPaymentById(
             @PathVariable Integer id) {
 
+        log.info("GET /api/payments/{}", id);
         Payments payment = paymentsService.getPaymentById(id)
                 .orElseThrow(() -> new PaymentFailedException("Payment not found"));
 
@@ -51,6 +57,7 @@ public class PaymentsController {
     public ResponseEntity<ApiResponse<PaymentsDTO>> getPaymentByOrderId(
             @PathVariable Long orderId) {
 
+        log.info("GET /api/payments/order/{}", orderId);
         Payments payment = paymentsService.getPaymentByOrderId(orderId)
                 .orElseThrow(() -> new PaymentFailedException("Payment not found for this order"));
 
@@ -62,6 +69,7 @@ public class PaymentsController {
     @GetMapping
     public ResponseEntity<ApiResponse<List<PaymentsDTO>>> getAllPayments() {
 
+        log.info("GET /api/payments");
         List<PaymentsDTO> payments = paymentsService.getAllPayments()
                 .stream()
                 .map(this::convertToDTO)
@@ -74,6 +82,7 @@ public class PaymentsController {
     @PutMapping("/{id}/status")
     public ResponseEntity<PaymentsDTO> updatePaymentStatus(@PathVariable Integer id,
             @RequestParam String status) {
+        log.info("PUT /api/payments/{}/status - status={}", id, status);
         Payments.PaymentStatus paymentStatus = Payments.PaymentStatus.valueOf(status);
         Payments updatedPayment = paymentsService.updatePaymentStatus(id, paymentStatus);
         return ResponseEntity.ok(convertToDTO(updatedPayment));
@@ -83,6 +92,7 @@ public class PaymentsController {
     public ResponseEntity<ApiResponse<Void>> deletePayment(
             @PathVariable Integer id) {
 
+        log.info("DELETE /api/payments/{}", id);
         paymentsService.deletePayment(id);
 
         return ResponseEntity.ok(

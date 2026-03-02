@@ -11,6 +11,8 @@ import com.revature.revshop.security.JwtUtil;
 import com.revature.revshop.service.BuyerService;
 import com.revature.revshop.service.SellerService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,228 +30,223 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final BuyerService buyerService;
-    private final SellerService sellerService;
-    private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
-    private final PasswordEncoder passwordEncoder;
-    private final CustomUserDetailsService userDetailsService;
+        private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
-    public AuthController(BuyerService buyerService,
-                          SellerService sellerService,
-                          AuthenticationManager authenticationManager,
-                          JwtUtil jwtUtil,
-                          PasswordEncoder passwordEncoder,
-                          CustomUserDetailsService userDetailsService) {
-        this.buyerService = buyerService;
-        this.sellerService = sellerService;
-        this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
-        this.passwordEncoder = passwordEncoder;
-        this.userDetailsService = userDetailsService;
-    }
+        private final BuyerService buyerService;
+        private final SellerService sellerService;
+        private final AuthenticationManager authenticationManager;
+        private final JwtUtil jwtUtil;
+        private final PasswordEncoder passwordEncoder;
+        private final CustomUserDetailsService userDetailsService;
 
-
-    @PostMapping("/register/buyer")
-    public ResponseEntity<ApiResponse<BuyerDTO>> registerBuyer(
-            @RequestBody BuyerDTO buyerDTO) {
-
-        if (buyerService.existsByEmail(buyerDTO.getEmail())) {
-            throw new InvalidInputException("Email already exists");
+        public AuthController(BuyerService buyerService,
+                        SellerService sellerService,
+                        AuthenticationManager authenticationManager,
+                        JwtUtil jwtUtil,
+                        PasswordEncoder passwordEncoder,
+                        CustomUserDetailsService userDetailsService) {
+                this.buyerService = buyerService;
+                this.sellerService = sellerService;
+                this.authenticationManager = authenticationManager;
+                this.jwtUtil = jwtUtil;
+                this.passwordEncoder = passwordEncoder;
+                this.userDetailsService = userDetailsService;
         }
 
-        User user = buildUserFromBuyerDTO(buyerDTO);
+        @PostMapping("/register/buyer")
+        public ResponseEntity<ApiResponse<BuyerDTO>> registerBuyer(
+                        @RequestBody BuyerDTO buyerDTO) {
 
-        Buyer buyer = buyerService.registerBuyer(user);
+                log.info("POST /api/auth/register/buyer - email={}", buyerDTO.getEmail());
 
-        BuyerDTO responseDTO = convertBuyerToDTO(buyer);
+                if (buyerService.existsByEmail(buyerDTO.getEmail())) {
+                        throw new InvalidInputException("Email already exists");
+                }
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponse<>("Buyer registered successfully", responseDTO));
-    }
+                User user = buildUserFromBuyerDTO(buyerDTO);
 
+                Buyer buyer = buyerService.registerBuyer(user);
 
-    @PostMapping("/register/seller")
-    public ResponseEntity<ApiResponse<SellerDTO>> registerSeller(
-            @RequestBody SellerDTO sellerDTO) {
+                BuyerDTO responseDTO = convertBuyerToDTO(buyer);
 
-        if (sellerService.existsByEmail(sellerDTO.getEmail())) {
-            throw new InvalidInputException("Email already exists");
+                return ResponseEntity.status(HttpStatus.CREATED)
+                                .body(new ApiResponse<>("Buyer registered successfully", responseDTO));
         }
 
-        User user = buildUserFromSellerDTO(sellerDTO);
+        @PostMapping("/register/seller")
+        public ResponseEntity<ApiResponse<SellerDTO>> registerSeller(
+                        @RequestBody SellerDTO sellerDTO) {
 
-        Seller seller = sellerService.registerSeller(
-                user,
-                sellerDTO.getBusinessName(),
-                sellerDTO.getBusinessDescription(),
-                sellerDTO.getTaxId()
-        );
+                log.info("POST /api/auth/register/seller - email={}", sellerDTO.getEmail());
 
-        SellerDTO responseDTO = convertSellerToDTO(seller);
+                if (sellerService.existsByEmail(sellerDTO.getEmail())) {
+                        throw new InvalidInputException("Email already exists");
+                }
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponse<>("Seller registered successfully", responseDTO));
-    }
+                User user = buildUserFromSellerDTO(sellerDTO);
 
+                Seller seller = sellerService.registerSeller(
+                                user,
+                                sellerDTO.getBusinessName(),
+                                sellerDTO.getBusinessDescription(),
+                                sellerDTO.getTaxId());
 
-    @PostMapping("/login/buyer")
-    public ResponseEntity<ApiResponse<LoginResponse>> loginBuyer(
-            @RequestBody LoginRequest loginRequest) {
+                SellerDTO responseDTO = convertSellerToDTO(seller);
 
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getEmail(),
-                            loginRequest.getPassword()
-                    )
-            );
-        } catch (AuthenticationException e) {
-            throw new InvalidInputException("Invalid email or password");
+                return ResponseEntity.status(HttpStatus.CREATED)
+                                .body(new ApiResponse<>("Seller registered successfully", responseDTO));
         }
 
-        UserDetails userDetails =
-                userDetailsService.loadUserByUsername(loginRequest.getEmail());
+        @PostMapping("/login/buyer")
+        public ResponseEntity<ApiResponse<LoginResponse>> loginBuyer(
+                        @RequestBody LoginRequest loginRequest) {
 
-        String jwt = jwtUtil.generateToken(userDetails);
+                log.info("POST /api/auth/login/buyer - email={}", loginRequest.getEmail());
 
-        Buyer buyer = buyerService.loginBuyer(
-                loginRequest.getEmail(),
-                loginRequest.getPassword()
-        ).orElseThrow(() ->
-                new InvalidInputException("Invalid email or password"));
+                try {
+                        authenticationManager.authenticate(
+                                        new UsernamePasswordAuthenticationToken(
+                                                        loginRequest.getEmail(),
+                                                        loginRequest.getPassword()));
+                } catch (AuthenticationException e) {
+                        throw new InvalidInputException("Invalid email or password");
+                }
 
-        LoginResponse response = buildLoginResponse(
-                buyer.getUser(), jwt);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
 
-        return ResponseEntity.ok(
-                new ApiResponse<>("Login successful", response)
-        );
-    }
+                String jwt = jwtUtil.generateToken(userDetails);
 
+                Buyer buyer = buyerService.loginBuyer(
+                                loginRequest.getEmail(),
+                                loginRequest.getPassword())
+                                .orElseThrow(() -> new InvalidInputException("Invalid email or password"));
 
-    @PostMapping("/login/seller")
-    public ResponseEntity<ApiResponse<LoginResponse>> loginSeller(
-            @RequestBody LoginRequest loginRequest) {
+                LoginResponse response = buildLoginResponse(
+                                buyer.getUser(), jwt);
 
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getEmail(),
-                            loginRequest.getPassword()
-                    )
-            );
-        } catch (AuthenticationException e) {
-            throw new InvalidInputException("Invalid email or password");
+                return ResponseEntity.ok(
+                                new ApiResponse<>("Login successful", response));
         }
 
-        UserDetails userDetails =
-                userDetailsService.loadUserByUsername(loginRequest.getEmail());
+        @PostMapping("/login/seller")
+        public ResponseEntity<ApiResponse<LoginResponse>> loginSeller(
+                        @RequestBody LoginRequest loginRequest) {
 
-        String jwt = jwtUtil.generateToken(userDetails);
+                log.info("POST /api/auth/login/seller - email={}", loginRequest.getEmail());
 
-        Seller seller = sellerService.loginSeller(
-                loginRequest.getEmail(),
-                loginRequest.getPassword()
-        ).orElseThrow(() ->
-                new InvalidInputException("Invalid email or password"));
+                try {
+                        authenticationManager.authenticate(
+                                        new UsernamePasswordAuthenticationToken(
+                                                        loginRequest.getEmail(),
+                                                        loginRequest.getPassword()));
+                } catch (AuthenticationException e) {
+                        throw new InvalidInputException("Invalid email or password");
+                }
 
-        LoginResponse response = buildLoginResponse(
-                seller.getUser(), jwt);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
 
-        return ResponseEntity.ok(
-                new ApiResponse<>("Login successful", response)
-        );
-    }
+                String jwt = jwtUtil.generateToken(userDetails);
 
+                Seller seller = sellerService.loginSeller(
+                                loginRequest.getEmail(),
+                                loginRequest.getPassword())
+                                .orElseThrow(() -> new InvalidInputException("Invalid email or password"));
 
-    private User buildUserFromBuyerDTO(BuyerDTO dto) {
+                LoginResponse response = buildLoginResponse(
+                                seller.getUser(), jwt);
 
-        User user = new User();
-        user.setName(dto.getName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setPhone(dto.getPhone());
-        user.setAge(dto.getAge());
-        user.setSecurityQuestion(dto.getSecurityQuestion());
-        user.setSecurityAnswer(dto.getSecurityAnswer());
-        user.setAddresses(mapAddresses(dto.getAddresses(), user));
+                return ResponseEntity.ok(
+                                new ApiResponse<>("Login successful", response));
+        }
 
-        return user;
-    }
+        private User buildUserFromBuyerDTO(BuyerDTO dto) {
 
-    private User buildUserFromSellerDTO(SellerDTO dto) {
+                User user = new User();
+                user.setName(dto.getName());
+                user.setEmail(dto.getEmail());
+                user.setPassword(passwordEncoder.encode(dto.getPassword()));
+                user.setPhone(dto.getPhone());
+                user.setAge(dto.getAge());
+                user.setSecurityQuestion(dto.getSecurityQuestion());
+                user.setSecurityAnswer(dto.getSecurityAnswer());
+                user.setAddresses(mapAddresses(dto.getAddresses(), user));
 
-        User user = new User();
-        user.setName(dto.getName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setPhone(dto.getPhone());
-        user.setAge(dto.getAge());
-        user.setSecurityQuestion(dto.getSecurityQuestion());
-        user.setSecurityAnswer(dto.getSecurityAnswer());
-        user.setAddresses(mapAddresses(dto.getAddresses(), user));
+                return user;
+        }
 
-        return user;
-    }
+        private User buildUserFromSellerDTO(SellerDTO dto) {
 
-    private BuyerDTO convertBuyerToDTO(Buyer buyer) {
+                User user = new User();
+                user.setName(dto.getName());
+                user.setEmail(dto.getEmail());
+                user.setPassword(passwordEncoder.encode(dto.getPassword()));
+                user.setPhone(dto.getPhone());
+                user.setAge(dto.getAge());
+                user.setSecurityQuestion(dto.getSecurityQuestion());
+                user.setSecurityAnswer(dto.getSecurityAnswer());
+                user.setAddresses(mapAddresses(dto.getAddresses(), user));
 
-        BuyerDTO dto = new BuyerDTO();
-        dto.setUserId(buyer.getUser().getUserId());
-        dto.setName(buyer.getUser().getName());
-        dto.setEmail(buyer.getUser().getEmail());
-        dto.setPhone(buyer.getUser().getPhone());
-        dto.setAge(buyer.getUser().getAge());
-        dto.setRole("BUYER");
+                return user;
+        }
 
-        return dto;
-    }
+        private BuyerDTO convertBuyerToDTO(Buyer buyer) {
 
-    private SellerDTO convertSellerToDTO(Seller seller) {
+                BuyerDTO dto = new BuyerDTO();
+                dto.setUserId(buyer.getUser().getUserId());
+                dto.setName(buyer.getUser().getName());
+                dto.setEmail(buyer.getUser().getEmail());
+                dto.setPhone(buyer.getUser().getPhone());
+                dto.setAge(buyer.getUser().getAge());
+                dto.setRole("BUYER");
 
-        SellerDTO dto = new SellerDTO();
-        dto.setUserId(seller.getUser().getUserId());
-        dto.setName(seller.getUser().getName());
-        dto.setEmail(seller.getUser().getEmail());
-        dto.setPhone(seller.getUser().getPhone());
-        dto.setAge(seller.getUser().getAge());
-        dto.setRole("SELLER");
-        dto.setBusinessName(seller.getBusinessName());
-        dto.setBusinessDescription(seller.getBusinessDescription());
-        dto.setTaxId(seller.getTaxId());
+                return dto;
+        }
 
-        return dto;
-    }
+        private SellerDTO convertSellerToDTO(Seller seller) {
 
-    private LoginResponse buildLoginResponse(User user, String token) {
+                SellerDTO dto = new SellerDTO();
+                dto.setUserId(seller.getUser().getUserId());
+                dto.setName(seller.getUser().getName());
+                dto.setEmail(seller.getUser().getEmail());
+                dto.setPhone(seller.getUser().getPhone());
+                dto.setAge(seller.getUser().getAge());
+                dto.setRole("SELLER");
+                dto.setBusinessName(seller.getBusinessName());
+                dto.setBusinessDescription(seller.getBusinessDescription());
+                dto.setTaxId(seller.getTaxId());
 
-        LoginResponse response = new LoginResponse();
-        response.setUserId(user.getUserId());
-        response.setName(user.getName());
-        response.setEmail(user.getEmail());
-        response.setRole(user.getRole().name());
-        response.setToken(token);
-        response.setMessage("Login successful");
+                return dto;
+        }
 
-        return response;
-    }
+        private LoginResponse buildLoginResponse(User user, String token) {
 
-    private List<Address> mapAddresses(List<AddressDTO> addressDTOs, User user) {
+                LoginResponse response = new LoginResponse();
+                response.setUserId(user.getUserId());
+                response.setName(user.getName());
+                response.setEmail(user.getEmail());
+                response.setRole(user.getRole().name());
+                response.setToken(token);
+                response.setMessage("Login successful");
 
-        if (addressDTOs == null) return new ArrayList<>();
+                return response;
+        }
 
-        return addressDTOs.stream().map(dto -> {
-            Address address = new Address();
-            address.setAddressLine(dto.getAddressLine());
-            address.setCity(dto.getCity());
-            address.setState(dto.getState());
-            address.setZipCode(dto.getZipCode());
-            address.setCountry(dto.getCountry());
-            address.setIsDefault(dto.getIsDefault() != null && dto.getIsDefault());
-            address.setAddressType(dto.getAddressType());
-            address.setUser(user);
-            return address;
-        }).collect(Collectors.toList());
-    }
+        private List<Address> mapAddresses(List<AddressDTO> addressDTOs, User user) {
+
+                if (addressDTOs == null)
+                        return new ArrayList<>();
+
+                return addressDTOs.stream().map(dto -> {
+                        Address address = new Address();
+                        address.setAddressLine(dto.getAddressLine());
+                        address.setCity(dto.getCity());
+                        address.setState(dto.getState());
+                        address.setZipCode(dto.getZipCode());
+                        address.setCountry(dto.getCountry());
+                        address.setIsDefault(dto.getIsDefault() != null && dto.getIsDefault());
+                        address.setAddressType(dto.getAddressType());
+                        address.setUser(user);
+                        return address;
+                }).collect(Collectors.toList());
+        }
 }
