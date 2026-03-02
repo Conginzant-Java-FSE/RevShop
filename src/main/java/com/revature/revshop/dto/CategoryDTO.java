@@ -11,6 +11,8 @@ public class CategoryDTO {
 
     private String description;
 
+    private Long parentCategoryId;
+
     public CategoryDTO() {}
 
     public Long getCategoryId() { return categoryId; }
@@ -21,4 +23,7 @@ public class CategoryDTO {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public Long getParentCategoryId() { return parentCategoryId; }
+    public void setParentCategoryId(Long parentCategoryId) { this.parentCategoryId = parentCategoryId; }
 }
