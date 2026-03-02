@@ -4,6 +4,8 @@ import com.revature.revshop.exception.InvalidInputException;
 import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,16 +16,20 @@ import java.util.List;
 @Service
 public class UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
+
     private final UserRepository userRepository;
 
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     public List<User> getAllUsers() {
+        log.info("Fetching all users");
         return userRepository.findAll();
     }
 
@@ -36,6 +42,7 @@ public class UserService {
     }
 
     public User updateUser(Long userId, User updatedUser) {
+        log.info("Updating user id={}", userId);
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
@@ -101,6 +108,7 @@ public class UserService {
     }
 
     public User updatePassword(Long userId, String oldPassword, String newPassword) {
+        log.info("Updating password for user id={}", userId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 

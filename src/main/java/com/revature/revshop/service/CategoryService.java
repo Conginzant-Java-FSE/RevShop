@@ -5,6 +5,8 @@ import com.revature.revshop.exception.InvalidInputException;
 import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.model.Category;
 import com.revature.revshop.repository.CategoryRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,8 @@ import java.util.stream.Collectors;
 @Transactional
 public class CategoryService {
 
+    private static final Logger log = LoggerFactory.getLogger(CategoryService.class);
+
     private final CategoryRepository categoryRepository;
 
     public CategoryService(CategoryRepository categoryRepository) {
@@ -22,6 +26,7 @@ public class CategoryService {
     }
 
     public CategoryDTO createCategory(CategoryDTO dto) {
+        log.info("Creating category name={}", dto.getName());
 
         if (categoryRepository.existsByName(dto.getName())) {
             throw new InvalidInputException("Category already exists");
@@ -41,7 +46,6 @@ public class CategoryService {
 
         return convertToDTO(saved);
     }
-
 
     public List<CategoryDTO> getAllCategories() {
         return categoryRepository.findAll()
@@ -67,7 +71,6 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
-
     public CategoryDTO getCategoryById(Long id) {
 
         Category category = categoryRepository.findById(id)
@@ -77,6 +80,7 @@ public class CategoryService {
     }
 
     public CategoryDTO updateCategory(Long id, CategoryDTO dto) {
+        log.info("Updating category id={}", id);
 
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
@@ -94,15 +98,14 @@ public class CategoryService {
         return convertToDTO(updated);
     }
 
-
     public void deleteCategory(Long id) {
+        log.info("Deleting category id={}", id);
 
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         categoryRepository.delete(category);
     }
-
 
     private CategoryDTO convertToDTO(Category category) {
 

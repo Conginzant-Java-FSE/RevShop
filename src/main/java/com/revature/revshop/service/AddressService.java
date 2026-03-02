@@ -6,6 +6,8 @@ import com.revature.revshop.model.Address;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.AddressRepository;
 import com.revature.revshop.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.Optional;
 
 @Service
 public class AddressService {
+
+    private static final Logger log = LoggerFactory.getLogger(AddressService.class);
 
     private final AddressRepository addressRepository;
     private final UserRepository userRepository;
@@ -25,6 +29,7 @@ public class AddressService {
     }
 
     public Address addAddress(Address address, Long userId) {
+        log.info("Adding address for userId={}", userId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
         address.setUser(user);
@@ -42,6 +47,7 @@ public class AddressService {
     }
 
     public Address updateAddress(Long addressId, Address updatedAddress) {
+        log.info("Updating address id={}", addressId);
         Address existingAddress = addressRepository.findById(addressId)
                 .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
 
@@ -56,6 +62,7 @@ public class AddressService {
     }
 
     public void deleteAddress(Long addressId) {
+        log.info("Deleting address id={}", addressId);
         if (!addressRepository.existsById(addressId)) {
             throw new ResourceNotFoundException("Address not found");
         }

@@ -4,6 +4,8 @@ import com.revature.revshop.model.Seller;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.SellerRepository;
 import com.revature.revshop.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import java.util.Optional;
 
 @Service
 public class SellerService {
+
+    private static final Logger log = LoggerFactory.getLogger(SellerService.class);
 
     private final SellerRepository sellerRepository;
     private final UserRepository userRepository;
@@ -32,6 +36,7 @@ public class SellerService {
             String businessName,
             String businessDescription,
             String taxId) {
+        log.info("Registering seller email={}", user.getEmail());
 
         user.setRole(com.revature.revshop.model.Role.SELLER);
 
@@ -57,6 +62,7 @@ public class SellerService {
     }
 
     public Optional<Seller> loginSeller(String email, String password) {
+        log.info("Seller login attempt email={}", email);
         return userRepository.findByEmail(email)
                 .filter(user -> com.revature.revshop.model.Role.SELLER.equals(user.getRole()))
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()))
