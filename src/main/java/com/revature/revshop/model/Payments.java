@@ -52,7 +52,7 @@ public class Payments {
     }
 
     public enum PaymentMethod {
-        CREDIT_CARD, DEBIT_CARD, NET_BANKING, UPI, WALLET
+        CREDIT_CARD, DEBIT_CARD, NET_BANKING, UPI, WALLET, COD
     }
 
     public enum PaymentStatus {
@@ -63,7 +63,7 @@ public class Payments {
     }
 
     public Payments(Integer paymentId, Orders order, BigDecimal amount, PaymentMethod paymentMethod,
-                    PaymentStatus paymentStatus, String transactionId, LocalDateTime paymentDate) {
+            PaymentStatus paymentStatus, String transactionId, LocalDateTime paymentDate) {
         this.paymentId = paymentId;
         this.order = order;
         this.amount = amount;

@@ -71,8 +71,8 @@ class OrdersControllerTest {
         when(ordersService.placeOrder(eq(1L), any(OrderRequestDTO.class))).thenReturn(mockResponse);
 
         mockMvc.perform(post("/api/orders/place")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(validRequest)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(validRequest)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.message").value("Order placed successfully"))
                 .andExpect(jsonPath("$.data.orderNumber").value("ORD-123"));
@@ -94,8 +94,8 @@ class OrdersControllerTest {
         String jsonBody = "{\"status\": \"SHIPPED\", \"sellerId\": \"1\"}";
 
         mockMvc.perform(put("/api/orders/101/status")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonBody))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonBody))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Order status updated"));
     }
