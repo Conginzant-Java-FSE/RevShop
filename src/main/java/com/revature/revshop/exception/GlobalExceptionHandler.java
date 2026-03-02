@@ -1,6 +1,8 @@
 package com.revature.revshop.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,109 +16,110 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    //404 - Not Found
-    @ExceptionHandler({
-            ProductNotFoundException.class,
-            OrderNotFoundException.class,
-            UserNotFoundException.class,
-            ResourceNotFoundException.class
-    })
-    public ResponseEntity<ErrorResponse> handleNotFoundExceptions(
-            RuntimeException ex,
-            HttpServletRequest request) {
+        private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-        ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                request.getRequestURI()
-        );
+        // 404 - Not Found
+        @ExceptionHandler({
+                        ProductNotFoundException.class,
+                        OrderNotFoundException.class,
+                        UserNotFoundException.class,
+                        ResourceNotFoundException.class
+        })
+        public ResponseEntity<ErrorResponse> handleNotFoundExceptions(
+                        RuntimeException ex,
+                        HttpServletRequest request) {
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
+                log.warn("Not found: {} - {}", request.getRequestURI(), ex.getMessage());
+                ErrorResponse error = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.NOT_FOUND.value(),
+                                ex.getMessage(),
+                                request.getRequestURI());
 
-    //400 - Invalid Input
-    @ExceptionHandler(InvalidInputException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidInput(
-            InvalidInputException ex,
-            HttpServletRequest request) {
+                return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
 
-        ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(),
-                request.getRequestURI()
-        );
+        // 400 - Invalid Input
+        @ExceptionHandler(InvalidInputException.class)
+        public ResponseEntity<ErrorResponse> handleInvalidInput(
+                        InvalidInputException ex,
+                        HttpServletRequest request) {
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
+                log.warn("Invalid input: {} - {}", request.getRequestURI(), ex.getMessage());
+                ErrorResponse error = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.BAD_REQUEST.value(),
+                                ex.getMessage(),
+                                request.getRequestURI());
 
-    @ExceptionHandler(InvalidOrderStateException.class)
-    public ResponseEntity<ErrorResponse> handleInvalidOrderState(
-            InvalidOrderStateException ex,
-            HttpServletRequest request) {
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
 
-        ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                ex.getMessage(),
-                request.getRequestURI()
-        );
+        @ExceptionHandler(InvalidOrderStateException.class)
+        public ResponseEntity<ErrorResponse> handleInvalidOrderState(
+                        InvalidOrderStateException ex,
+                        HttpServletRequest request) {
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
+                log.warn("Invalid order state: {} - {}", request.getRequestURI(), ex.getMessage());
+                ErrorResponse error = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.BAD_REQUEST.value(),
+                                ex.getMessage(),
+                                request.getRequestURI());
 
-    //403-Access Denied
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ErrorResponse> handleAccessDenied(
-            AccessDeniedException ex,
-            HttpServletRequest request) {
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
 
-        ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.FORBIDDEN.value(),
-                ex.getMessage(),
-                request.getRequestURI()
-        );
+        // 403-Access Denied
+        @ExceptionHandler(AccessDeniedException.class)
+        public ResponseEntity<ErrorResponse> handleAccessDenied(
+                        AccessDeniedException ex,
+                        HttpServletRequest request) {
 
-        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
-    }
+                log.warn("Access denied: {} - {}", request.getRequestURI(), ex.getMessage());
+                ErrorResponse error = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.FORBIDDEN.value(),
+                                ex.getMessage(),
+                                request.getRequestURI());
 
-    //400-Validation Errors
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationException(
-            MethodArgumentNotValidException ex,
-            HttpServletRequest request) {
+                return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+        }
 
-        String errorMessage = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .collect(Collectors.joining(", "));
+        // 400-Validation Errors
+        @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ResponseEntity<ErrorResponse> handleValidationException(
+                        MethodArgumentNotValidException ex,
+                        HttpServletRequest request) {
 
-        ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                errorMessage,
-                request.getRequestURI()
-        );
+                String errorMessage = ex.getBindingResult()
+                                .getFieldErrors()
+                                .stream()
+                                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                                .collect(Collectors.joining(", "));
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
+                ErrorResponse error = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.BAD_REQUEST.value(),
+                                errorMessage,
+                                request.getRequestURI());
 
-    //500
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleGenericException(
-            Exception ex,
-            HttpServletRequest request) {
+                return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
 
-        ErrorResponse error = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                ex.getMessage(),
-                request.getRequestURI()
-        );
+        // 500
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<ErrorResponse> handleGenericException(
+                        Exception ex,
+                        HttpServletRequest request) {
 
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+                log.error("Unhandled exception at {}: {}", request.getRequestURI(), ex.getMessage(), ex);
+                ErrorResponse error = new ErrorResponse(
+                                LocalDateTime.now(),
+                                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                                ex.getMessage(),
+                                request.getRequestURI());
+
+                return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 }
