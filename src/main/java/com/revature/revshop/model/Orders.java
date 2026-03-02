@@ -40,6 +40,9 @@ public class Orders {
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
+    @Column(name = "payment_method")
+    private String paymentMethod;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItems> orderItems;
 
@@ -55,7 +58,7 @@ public class Orders {
     }
 
     public Orders(Long orderId, User user, String orderNumber, Address shippingAddress, Address billingAddress,
-            OrderStatus status, LocalDateTime orderDate) {
+                  OrderStatus status, LocalDateTime orderDate) {
         this.orderId = orderId;
         this.user = user;
         this.orderNumber = orderNumber;
@@ -135,5 +138,13 @@ public class Orders {
 
     public void setOrderItems(List<OrderItems> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 }
