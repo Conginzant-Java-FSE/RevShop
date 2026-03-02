@@ -6,6 +6,8 @@ import com.revature.revshop.exception.UserNotFoundException;
 import com.revature.revshop.model.User;
 import com.revature.revshop.service.UserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +21,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/users")
 public class UserController {
 
+        private static final Logger log = LoggerFactory.getLogger(UserController.class);
+
         private final UserService userService;
 
         public UserController(UserService userService) {
@@ -27,6 +31,8 @@ public class UserController {
 
         @GetMapping
         public ResponseEntity<ApiResponse<List<UserDTO>>> getAllUsers() {
+
+                log.info("GET /api/users");
 
                 List<UserDTO> list = userService.getAllUsers()
                                 .stream()
@@ -41,6 +47,8 @@ public class UserController {
         public ResponseEntity<ApiResponse<UserDTO>> getUserById(
                         @PathVariable Long id) {
 
+                log.info("GET /api/users/{}", id);
+
                 User user = userService.getUserById(id)
                                 .orElseThrow(() -> new UserNotFoundException("User not found"));
                 return ResponseEntity.ok(
@@ -51,6 +59,8 @@ public class UserController {
         public ResponseEntity<ApiResponse<UserDTO>> updateProfile(
                         @PathVariable Long id,
                         @RequestBody UserDTO userDTO) {
+
+                log.info("PUT /api/users/{}/profile", id);
 
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -78,6 +88,8 @@ public class UserController {
                         @PathVariable Long id,
                         @RequestBody PasswordUpdateRequest request) {
 
+                log.info("PUT /api/users/{}/password", id);
+
                 userService.updatePassword(
                                 id,
                                 request.getOldPassword(),
@@ -92,6 +104,8 @@ public class UserController {
                         @PathVariable Long id,
                         @RequestParam String name) {
 
+                log.info("PATCH /api/users/{}/name", id);
+
                 User updatedUser = userService.updateName(id, name);
 
                 return ResponseEntity.ok(
@@ -103,6 +117,8 @@ public class UserController {
         public ResponseEntity<ApiResponse<UserDTO>> updateEmail(
                         @PathVariable Long id,
                         @RequestParam String email) {
+
+                log.info("PATCH /api/users/{}/email", id);
 
                 User updatedUser = userService.updateEmail(id, email);
 
@@ -116,6 +132,8 @@ public class UserController {
                         @PathVariable Long id,
                         @RequestParam String phone) {
 
+                log.info("PATCH /api/users/{}/phone", id);
+
                 User updatedUser = userService.updatePhone(id, phone);
 
                 return ResponseEntity.ok(
@@ -127,6 +145,8 @@ public class UserController {
         public ResponseEntity<ApiResponse<UserDTO>> updateAge(
                         @PathVariable Long id,
                         @RequestParam Integer age) {
+
+                log.info("PATCH /api/users/{}/age", id);
 
                 User updatedUser = userService.updateAge(id, age);
 

@@ -6,6 +6,8 @@ import com.revature.revshop.exception.ResourceNotFoundException;
 import com.revature.revshop.model.TrackingDetails;
 import com.revature.revshop.service.TrackingDetailsService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,129 +19,118 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/tracking")
 public class TrackingController {
 
-    private final TrackingDetailsService trackingDetailsService;
+        private static final Logger log = LoggerFactory.getLogger(TrackingController.class);
 
-    public TrackingController(TrackingDetailsService trackingDetailsService) {
-        this.trackingDetailsService = trackingDetailsService;
-    }
+        private final TrackingDetailsService trackingDetailsService;
 
+        public TrackingController(TrackingDetailsService trackingDetailsService) {
+                this.trackingDetailsService = trackingDetailsService;
+        }
 
-    @PostMapping
-    public ResponseEntity<ApiResponse<TrackingDetailsDTO>> addTrackingDetail(
-            @RequestParam Long orderId,
-            @RequestBody TrackingDetailsDTO trackingDTO) {
+        @PostMapping
+        public ResponseEntity<ApiResponse<TrackingDetailsDTO>> addTrackingDetail(
+                        @RequestParam Long orderId,
+                        @RequestBody TrackingDetailsDTO trackingDTO) {
 
-        TrackingDetails tracking = convertToEntity(trackingDTO);
+                log.info("POST /api/tracking - orderId={}", orderId);
+                TrackingDetails tracking = convertToEntity(trackingDTO);
 
-        TrackingDetails savedTracking =
-                trackingDetailsService.addTrackingDetail(tracking, orderId);
+                TrackingDetails savedTracking = trackingDetailsService.addTrackingDetail(tracking, orderId);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new ApiResponse<>(
-                        "Tracking detail added successfully",
-                        convertToDTO(savedTracking)
-                ));
-    }
+                return ResponseEntity.status(HttpStatus.CREATED)
+                                .body(new ApiResponse<>(
+                                                "Tracking detail added successfully",
+                                                convertToDTO(savedTracking)));
+        }
 
+        @GetMapping("/{id}")
+        public ResponseEntity<ApiResponse<TrackingDetailsDTO>> getTrackingById(
+                        @PathVariable Integer id) {
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<TrackingDetailsDTO>> getTrackingById(
-            @PathVariable Integer id) {
+                log.info("GET /api/tracking/{}", id);
+                TrackingDetails tracking = trackingDetailsService.getTrackingById(id)
+                                .orElseThrow(() -> new ResourceNotFoundException("Tracking detail not found"));
 
-        TrackingDetails tracking =
-                trackingDetailsService.getTrackingById(id)
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException("Tracking detail not found"));
+                return ResponseEntity.ok(
+                                new ApiResponse<>("Tracking detail fetched successfully",
+                                                convertToDTO(tracking)));
+        }
 
-        return ResponseEntity.ok(
-                new ApiResponse<>("Tracking detail fetched successfully",
-                        convertToDTO(tracking))
-        );
-    }
+        @GetMapping("/order/{orderId}")
+        public ResponseEntity<ApiResponse<List<TrackingDetailsDTO>>> getTrackingByOrderId(
+                        @PathVariable Long orderId) {
 
+                log.info("GET /api/tracking/order/{}", orderId);
+                List<TrackingDetailsDTO> list = trackingDetailsService.getTrackingByOrderId(orderId)
+                                .stream()
+                                .map(this::convertToDTO)
+                                .collect(Collectors.toList());
 
-    @GetMapping("/order/{orderId}")
-    public ResponseEntity<ApiResponse<List<TrackingDetailsDTO>>> getTrackingByOrderId(
-            @PathVariable Long orderId) {
+                return ResponseEntity.ok(
+                                new ApiResponse<>("Tracking details fetched successfully", list));
+        }
 
-        List<TrackingDetailsDTO> list =
-                trackingDetailsService.getTrackingByOrderId(orderId)
-                        .stream()
-                        .map(this::convertToDTO)
-                        .collect(Collectors.toList());
+        @GetMapping
+        public ResponseEntity<ApiResponse<List<TrackingDetailsDTO>>> getAllTrackingDetails() {
 
-        return ResponseEntity.ok(
-                new ApiResponse<>("Tracking details fetched successfully", list)
-        );
-    }
+                log.info("GET /api/tracking");
+                List<TrackingDetailsDTO> list = trackingDetailsService.getAllTrackingDetails()
+                                .stream()
+                                .map(this::convertToDTO)
+                                .collect(Collectors.toList());
 
+                return ResponseEntity.ok(
+                                new ApiResponse<>("All tracking details fetched successfully", list));
+        }
 
-    @GetMapping
-    public ResponseEntity<ApiResponse<List<TrackingDetailsDTO>>> getAllTrackingDetails() {
+        @PutMapping("/{id}")
+        public ResponseEntity<ApiResponse<TrackingDetailsDTO>> updateTrackingStatus(
+                        @PathVariable Integer id,
+                        @RequestParam String status,
+                        @RequestParam String description) {
 
-        List<TrackingDetailsDTO> list =
-                trackingDetailsService.getAllTrackingDetails()
-                        .stream()
-                        .map(this::convertToDTO)
-                        .collect(Collectors.toList());
+                log.info("PUT /api/tracking/{} - status={}", id, status);
+                TrackingDetails updated = trackingDetailsService.updateTrackingStatus(id, status, description);
 
-        return ResponseEntity.ok(
-                new ApiResponse<>("All tracking details fetched successfully", list)
-        );
-    }
+                return ResponseEntity.ok(
+                                new ApiResponse<>("Tracking status updated successfully",
+                                                convertToDTO(updated)));
+        }
 
+        @DeleteMapping("/{id}")
+        public ResponseEntity<ApiResponse<Void>> deleteTracking(
+                        @PathVariable Integer id) {
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<TrackingDetailsDTO>> updateTrackingStatus(
-            @PathVariable Integer id,
-            @RequestParam String status,
-            @RequestParam String description) {
+                log.info("DELETE /api/tracking/{}", id);
+                trackingDetailsService.deleteTracking(id);
 
-        TrackingDetails updated =
-                trackingDetailsService.updateTrackingStatus(id, status, description);
+                return ResponseEntity.ok(
+                                new ApiResponse<>("Tracking detail deleted successfully", null));
+        }
 
-        return ResponseEntity.ok(
-                new ApiResponse<>("Tracking status updated successfully",
-                        convertToDTO(updated))
-        );
-    }
+        private TrackingDetailsDTO convertToDTO(TrackingDetails tracking) {
 
+                TrackingDetailsDTO dto = new TrackingDetailsDTO();
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteTracking(
-            @PathVariable Integer id) {
+                dto.setTrackingId(tracking.getTrackingId());
 
-        trackingDetailsService.deleteTracking(id);
+                if (tracking.getOrder() != null)
+                        dto.setOrderId(tracking.getOrder().getOrderId().intValue());
 
-        return ResponseEntity.ok(
-                new ApiResponse<>("Tracking detail deleted successfully", null)
-        );
-    }
+                dto.setStatus(tracking.getStatus());
+                dto.setDescription(tracking.getDescription());
+                dto.setUpdatedAt(tracking.getUpdatedAt());
+                dto.setCreatedAt(tracking.getCreatedAt());
 
+                return dto;
+        }
 
-    private TrackingDetailsDTO convertToDTO(TrackingDetails tracking) {
+        private TrackingDetails convertToEntity(TrackingDetailsDTO dto) {
 
-        TrackingDetailsDTO dto = new TrackingDetailsDTO();
+                TrackingDetails tracking = new TrackingDetails();
+                tracking.setStatus(dto.getStatus());
+                tracking.setDescription(dto.getDescription());
 
-        dto.setTrackingId(tracking.getTrackingId());
-
-        if (tracking.getOrder() != null)
-            dto.setOrderId(tracking.getOrder().getOrderId().intValue());
-
-        dto.setStatus(tracking.getStatus());
-        dto.setDescription(tracking.getDescription());
-        dto.setUpdatedAt(tracking.getUpdatedAt());
-        dto.setCreatedAt(tracking.getCreatedAt());
-
-        return dto;
-    }
-
-    private TrackingDetails convertToEntity(TrackingDetailsDTO dto) {
-
-        TrackingDetails tracking = new TrackingDetails();
-        tracking.setStatus(dto.getStatus());
-        tracking.setDescription(dto.getDescription());
-
-        return tracking;
-    }
+                return tracking;
+        }
 }
