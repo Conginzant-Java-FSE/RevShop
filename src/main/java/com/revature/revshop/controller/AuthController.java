@@ -10,6 +10,7 @@ import com.revature.revshop.security.CustomUserDetailsService;
 import com.revature.revshop.security.JwtUtil;
 import com.revature.revshop.service.BuyerService;
 import com.revature.revshop.service.SellerService;
+import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +57,7 @@ public class AuthController {
 
         @PostMapping("/register/buyer")
         public ResponseEntity<ApiResponse<BuyerDTO>> registerBuyer(
-                        @RequestBody BuyerDTO buyerDTO) {
+                        @Valid @RequestBody BuyerDTO buyerDTO) {
 
                 log.info("POST /api/auth/register/buyer - email={}", buyerDTO.getEmail());
 
@@ -76,7 +77,7 @@ public class AuthController {
 
         @PostMapping("/register/seller")
         public ResponseEntity<ApiResponse<SellerDTO>> registerSeller(
-                        @RequestBody SellerDTO sellerDTO) {
+                        @Valid @RequestBody SellerDTO sellerDTO) {
 
                 log.info("POST /api/auth/register/seller - email={}", sellerDTO.getEmail());
 
@@ -100,7 +101,7 @@ public class AuthController {
 
         @PostMapping("/login/buyer")
         public ResponseEntity<ApiResponse<LoginResponse>> loginBuyer(
-                        @RequestBody LoginRequest loginRequest) {
+                        @Valid @RequestBody LoginRequest loginRequest) {
 
                 log.info("POST /api/auth/login/buyer - email={}", loginRequest.getEmail());
 
@@ -131,7 +132,7 @@ public class AuthController {
 
         @PostMapping("/login/seller")
         public ResponseEntity<ApiResponse<LoginResponse>> loginSeller(
-                        @RequestBody LoginRequest loginRequest) {
+                        @Valid @RequestBody LoginRequest loginRequest) {
 
                 log.info("POST /api/auth/login/seller - email={}", loginRequest.getEmail());
 

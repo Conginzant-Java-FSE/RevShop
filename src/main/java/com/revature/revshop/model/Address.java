@@ -14,6 +14,9 @@ public class Address {
     @Column(name = "address_line", nullable = false)
     private String addressLine;
 
+    @Column(length = 255)
+    private String street;
+
     @Column(nullable = false, length = 100)
     private String city;
 
@@ -59,8 +62,9 @@ public class Address {
     public Address() {
     }
 
-    public Address(String addressLine, String city, String state, String country, String zipCode) {
+    public Address(String addressLine, String street, String city, String state, String country, String zipCode) {
         this.addressLine = addressLine;
+        this.street = street;
         this.city = city;
         this.state = state;
         this.country = country;
@@ -81,6 +85,14 @@ public class Address {
 
     public void setAddressLine(String addressLine) {
         this.addressLine = addressLine;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getCity() {
