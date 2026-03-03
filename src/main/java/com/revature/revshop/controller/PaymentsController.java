@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/payments")
@@ -73,7 +72,7 @@ public class PaymentsController {
         List<PaymentsDTO> payments = paymentsService.getAllPayments()
                 .stream()
                 .map(this::convertToDTO)
-                .collect(Collectors.toList());
+                .toList();
 
         return ResponseEntity.ok(
                 new ApiResponse<>("Payments fetched successfully", payments));

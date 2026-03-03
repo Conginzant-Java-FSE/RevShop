@@ -36,7 +36,11 @@ public class ProductDTO {
     @NotNull(message = "Seller ID is required")
     private Long sellerId;
 
-    public ProductDTO() {}
+    /**
+     * Default constructor for Jackson deserialization.
+     */
+    public ProductDTO() {
+    }
 
     public Long getProductId() {
         return productId;

@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(
-        name = "favorites",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"buyer_id", "product_id"})
-)
+@Table(name = "favorites", uniqueConstraints = @UniqueConstraint(columnNames = { "buyer_id", "product_id" }))
 public class Favorite {
 
     @Id
@@ -31,7 +28,11 @@ public class Favorite {
         this.addedAt = LocalDateTime.now();
     }
 
-    public Favorite() {}
+    /**
+     * Default constructor for JPA.
+     */
+    public Favorite() {
+    }
 
     public Long getFavoriteId() {
         return favoriteId;

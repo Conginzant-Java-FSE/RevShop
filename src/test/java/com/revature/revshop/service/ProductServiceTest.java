@@ -17,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.ArgumentMatchers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -34,21 +35,22 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
 
-    @Mock private ProductRepository productRepository;
-    @Mock private CategoryRepository categoryRepository;
-    @Mock private SellerRepository sellerRepository;
+    @Mock
+    private ProductRepository productRepository;
+    @Mock
+    private CategoryRepository categoryRepository;
+    @Mock
+    private SellerRepository sellerRepository;
 
-    @InjectMocks private ProductService productService;
-
-
+    @InjectMocks
+    private ProductService productService;
 
     private Category category;
-    private Seller   seller;
-    private Product  product;
+    private Seller seller;
+    private Product product;
     private ProductDTO productDTO;
 
     @BeforeEach
@@ -92,8 +94,6 @@ class ProductServiceTest {
         productDTO.setSellerId(10L);
     }
 
-
-
     @Test
     void createProduct_shouldSaveAndReturnDTO_whenValidInput() {
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
@@ -134,8 +134,6 @@ class ProductServiceTest {
         verify(productRepository, never()).save(any());
     }
 
-
-
     @Test
     void getAllProducts_shouldReturnPageOfDTOs_whenProductsExist() {
         Product product2 = new Product();
@@ -170,8 +168,6 @@ class ProductServiceTest {
         assertThat(results.getContent()).isEmpty();
     }
 
-
-
     @Test
     void getProductById_shouldReturnDTO_whenProductFound() {
         when(productRepository.findById(100L)).thenReturn(Optional.of(product));
@@ -190,8 +186,6 @@ class ProductServiceTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Product not found");
     }
-
-
 
     @Test
     void updateProduct_shouldUpdateFieldsAndReturnDTO_whenProductFound() {
@@ -239,8 +233,6 @@ class ProductServiceTest {
         verify(productRepository, never()).save(any());
     }
 
-
-
     @Test
     void deleteProduct_shouldDeleteProduct_whenProductFound() {
         when(productRepository.findById(100L)).thenReturn(Optional.of(product));
@@ -262,8 +254,6 @@ class ProductServiceTest {
 
         verify(productRepository, never()).delete(any(Product.class));
     }
-
-
 
     @Test
     void searchProducts_shouldReturnMatchingProducts_whenKeywordIsValid() {
@@ -302,12 +292,10 @@ class ProductServiceTest {
                 .hasMessageContaining("Search keyword is required");
     }
 
-
-
     @Test
     void filterProducts_shouldReturnMatchingProducts_whenFiltersAreApplied() {
         Page<Product> pagedResponse = new PageImpl<>(List.of(product));
-        when(productRepository.findAll(any(Specification.class), any(Pageable.class)))
+        when(productRepository.findAll(ArgumentMatchers.<Specification<Product>>any(), any(Pageable.class)))
                 .thenReturn(pagedResponse);
 
         Page<ProductDTO> results = productService.filterProducts(100.0, 500000.0, 1L, PageRequest.of(0, 10));
@@ -315,8 +303,6 @@ class ProductServiceTest {
         assertThat(results.getContent()).hasSize(1);
         assertThat(results.getContent().get(0).getName()).isEqualTo("Laptop");
     }
-
-
 
     @Test
     void createProduct_shouldMapAllFieldsCorrectly_fromDTO() {

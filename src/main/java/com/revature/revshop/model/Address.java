@@ -53,6 +53,9 @@ public class Address {
     @JoinColumn(name = "user_id")
     private User user;
 
+    /**
+     * Empty constructor for JPA.
+     */
     public Address() {
     }
 

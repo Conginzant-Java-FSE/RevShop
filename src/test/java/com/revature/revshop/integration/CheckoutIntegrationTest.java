@@ -30,8 +30,6 @@ class CheckoutIntegrationTest {
     private OrderItemsRepository orderItemsRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private SellerRepository sellerRepository;
 
     @Test
     void fullCheckoutFlow_ShouldMapDataCorrectlyAndReduceStock() {
@@ -45,11 +43,14 @@ class CheckoutIntegrationTest {
         sellerUser.setEmail("seller-" + System.currentTimeMillis() + "@test.com");
         sellerUser.setPassword("pass");
         sellerUser.setRole(com.revature.revshop.model.Role.SELLER);
-        User savedSellerUser = userRepository.save(sellerUser);
 
-        Seller seller = new Seller(savedSellerUser);
+        Seller seller = new Seller();
         seller.setBusinessName("Test Business");
-        Seller savedSeller = sellerRepository.save(seller);
+        seller.setUser(sellerUser);
+        sellerUser.setSellerProfile(seller);
+
+        User savedSellerUser = userRepository.save(sellerUser);
+        Seller savedSeller = savedSellerUser.getSellerProfile();
 
         User user = new User();
         user.setName("Integration User");
@@ -72,6 +73,7 @@ class CheckoutIntegrationTest {
         prod.setName("Int Product");
         prod.setCategory(savedCat);
         prod.setSeller(savedSeller);
+        prod.setMrp(new BigDecimal("60.00"));
         prod.setSellingPrice(new BigDecimal("50.00"));
         prod.setStockQuantity(20);
         prod.setThresholdQuantity(5);

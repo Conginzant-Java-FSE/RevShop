@@ -2,7 +2,7 @@ package com.revature.revshop.controller;
 
 import com.revature.revshop.dto.ApiResponse;
 import com.revature.revshop.dto.NotificationDTO;
-import com.revature.revshop.exception.ResourceNotFoundException;
+
 import com.revature.revshop.model.Notification;
 import com.revature.revshop.service.NotificationService;
 import org.slf4j.Logger;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/notifications")
@@ -34,7 +33,7 @@ public class NotificationController {
 
                 List<NotificationDTO> list = notifications.stream()
                                 .map(this::convertToDTO)
-                                .collect(Collectors.toList());
+                                .toList();
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>("Notifications fetched successfully", list));

@@ -27,12 +27,15 @@ public class Notification {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    /**
+     * Empty constructor for JPA.
+     */
     public Notification() {
         this.isRead = false;
     }
 
     public Notification(Long notificationId, User recipient, String title, String message, Boolean isRead,
-                        LocalDateTime createdAt) {
+            LocalDateTime createdAt) {
         this.notificationId = notificationId;
         this.recipient = recipient;
         this.title = title;

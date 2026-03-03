@@ -24,13 +24,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
         private static final Logger log = LoggerFactory.getLogger(AuthController.class);
+        private static final String INVALID_CREDENTIALS = "Invalid email or password";
+        private static final String LOGIN_SUCCESSFUL = "Login successful";
 
         private final BuyerService buyerService;
         private final SellerService sellerService;
@@ -109,7 +110,7 @@ public class AuthController {
                                                         loginRequest.getEmail(),
                                                         loginRequest.getPassword()));
                 } catch (AuthenticationException e) {
-                        throw new InvalidInputException("Invalid email or password");
+                        throw new InvalidInputException(INVALID_CREDENTIALS);
                 }
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
@@ -119,13 +120,13 @@ public class AuthController {
                 Buyer buyer = buyerService.loginBuyer(
                                 loginRequest.getEmail(),
                                 loginRequest.getPassword())
-                                .orElseThrow(() -> new InvalidInputException("Invalid email or password"));
+                                .orElseThrow(() -> new InvalidInputException(INVALID_CREDENTIALS));
 
                 LoginResponse response = buildLoginResponse(
                                 buyer.getUser(), jwt);
 
                 return ResponseEntity.ok(
-                                new ApiResponse<>("Login successful", response));
+                                new ApiResponse<>(LOGIN_SUCCESSFUL, response));
         }
 
         @PostMapping("/login/seller")
@@ -140,7 +141,7 @@ public class AuthController {
                                                         loginRequest.getEmail(),
                                                         loginRequest.getPassword()));
                 } catch (AuthenticationException e) {
-                        throw new InvalidInputException("Invalid email or password");
+                        throw new InvalidInputException(INVALID_CREDENTIALS);
                 }
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
@@ -150,13 +151,13 @@ public class AuthController {
                 Seller seller = sellerService.loginSeller(
                                 loginRequest.getEmail(),
                                 loginRequest.getPassword())
-                                .orElseThrow(() -> new InvalidInputException("Invalid email or password"));
+                                .orElseThrow(() -> new InvalidInputException(INVALID_CREDENTIALS));
 
                 LoginResponse response = buildLoginResponse(
                                 seller.getUser(), jwt);
 
                 return ResponseEntity.ok(
-                                new ApiResponse<>("Login successful", response));
+                                new ApiResponse<>(LOGIN_SUCCESSFUL, response));
         }
 
         private User buildUserFromBuyerDTO(BuyerDTO dto) {
@@ -226,7 +227,7 @@ public class AuthController {
                 response.setEmail(user.getEmail());
                 response.setRole(user.getRole().name());
                 response.setToken(token);
-                response.setMessage("Login successful");
+                response.setMessage(LOGIN_SUCCESSFUL);
 
                 return response;
         }
@@ -247,6 +248,6 @@ public class AuthController {
                         address.setAddressType(dto.getAddressType());
                         address.setUser(user);
                         return address;
-                }).collect(Collectors.toList());
+                }).toList();
         }
 }

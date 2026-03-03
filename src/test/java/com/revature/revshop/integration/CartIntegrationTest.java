@@ -10,7 +10,7 @@ import com.revature.revshop.repository.CartItemRepository;
 import com.revature.revshop.repository.CartRepository;
 import com.revature.revshop.repository.CategoryRepository;
 import com.revature.revshop.repository.ProductRepository;
-import com.revature.revshop.repository.SellerRepository;
+
 import com.revature.revshop.repository.UserRepository;
 import com.revature.revshop.model.Role;
 import com.revature.revshop.service.CartItemService;
@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("test") // Use a test profile to potentially use H2 or isolate DB
 @Transactional
-public class CartIntegrationTest {
+class CartIntegrationTest {
 
     @Autowired
     private CartService cartService;
@@ -44,9 +44,6 @@ public class CartIntegrationTest {
 
     @Autowired
     private ProductRepository productRepository;
-
-    @Autowired
-    private SellerRepository sellerRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;

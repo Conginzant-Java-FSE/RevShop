@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class TrackingDetailsServiceTest {
+class TrackingDetailsServiceTest {
 
     @Mock
     private TrackingDetailsRepository trackingDetailsRepository;
@@ -127,7 +127,7 @@ public class TrackingDetailsServiceTest {
         when(trackingDetailsRepository.findById(1)).thenReturn(Optional.of(sampleTracking));
         when(trackingDetailsRepository.save(any(TrackingDetails.class))).thenReturn(sampleTracking);
 
-        TrackingDetails result = trackingDetailsService.updateTrackingStatus(1, "DELIVERED", "Package delivered");
+        trackingDetailsService.updateTrackingStatus(1, "DELIVERED", "Package delivered");
 
         assertEquals("DELIVERED", sampleTracking.getStatus());
         assertEquals("Package delivered", sampleTracking.getDescription());

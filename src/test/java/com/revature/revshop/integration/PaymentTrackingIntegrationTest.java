@@ -10,7 +10,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
+
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 "springdoc.api-docs.enabled=false",
                 "springdoc.swagger-ui.enabled=false"
 })
-public class PaymentTrackingIntegrationTest {
+class PaymentTrackingIntegrationTest {
 
         @Autowired
         private MockMvc mockMvc;
@@ -55,7 +55,14 @@ public class PaymentTrackingIntegrationTest {
         @Autowired
         private ObjectMapper objectMapper;
 
+        @Autowired
+        private com.revature.revshop.security.JwtUtil jwtUtil;
+
+        @Autowired
+        private com.revature.revshop.security.CustomUserDetailsService customUserDetailsService;
+
         private User testUser;
+        private String token;
         private Orders testOrder;
 
         @BeforeEach
@@ -85,14 +92,18 @@ public class PaymentTrackingIntegrationTest {
                 testOrder.setStatus(Orders.OrderStatus.PENDING);
                 testOrder.setOrderDate(LocalDateTime.now());
                 testOrder = ordersRepository.save(testOrder);
+
+                org.springframework.security.core.userdetails.UserDetails userDetails = customUserDetailsService
+                                .loadUserByUsername("testbuyer@example.com");
+                token = jwtUtil.generateToken(userDetails);
         }
 
         @Test
-        @WithMockUser(username = "testbuyer@example.com", roles = "BUYER")
         void testCreatePayment_ReturnsPendingStatus() throws Exception {
                 String paymentJson = "{\"amount\": 500.00, \"paymentMethod\": \"CREDIT_CARD\", \"transactionId\": \"TXN-INT-001\"}";
 
                 mockMvc.perform(post("/api/payments")
+                                .header("Authorization", "Bearer " + token)
                                 .param("orderId", testOrder.getOrderId().toString())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(paymentJson))
@@ -102,7 +113,6 @@ public class PaymentTrackingIntegrationTest {
         }
 
         @Test
-        @WithMockUser(username = "testbuyer@example.com", roles = "BUYER")
         void testUpdatePaymentStatus_ToSuccess() throws Exception {
                 Payments payment = new Payments();
                 payment.setOrder(testOrder);
@@ -114,17 +124,18 @@ public class PaymentTrackingIntegrationTest {
                 payment = paymentsRepository.save(payment);
 
                 mockMvc.perform(put("/api/payments/" + payment.getPaymentId() + "/status")
+                                .header("Authorization", "Bearer " + token)
                                 .param("status", "SUCCESS"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.paymentStatus").value("SUCCESS"));
         }
 
         @Test
-        @WithMockUser(username = "testbuyer@example.com", roles = "BUYER")
         void testCreateTrackingDetail_ForOrder() throws Exception {
                 String trackingJson = "{\"status\": \"PROCESSING\", \"description\": \"Order is being processed\"}";
 
                 mockMvc.perform(post("/api/tracking")
+                                .header("Authorization", "Bearer " + token)
                                 .param("orderId", testOrder.getOrderId().toString())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(trackingJson))
@@ -134,7 +145,6 @@ public class PaymentTrackingIntegrationTest {
         }
 
         @Test
-        @WithMockUser(username = "testbuyer@example.com", roles = "BUYER")
         void testUpdateTrackingStatus_ToShipped() throws Exception {
                 TrackingDetails tracking = new TrackingDetails();
                 tracking.setOrder(testOrder);
@@ -143,6 +153,7 @@ public class PaymentTrackingIntegrationTest {
                 tracking = trackingDetailsRepository.save(tracking);
 
                 mockMvc.perform(put("/api/tracking/" + tracking.getTrackingId())
+                                .header("Authorization", "Bearer " + token)
                                 .param("status", "SHIPPED")
                                 .param("description", "Package shipped via courier"))
                                 .andExpect(status().isOk())
@@ -151,11 +162,11 @@ public class PaymentTrackingIntegrationTest {
         }
 
         @Test
-        @WithMockUser(username = "testbuyer@example.com", roles = "BUYER")
         void testFullFlow_OrderToPaymentToTracking() throws Exception {
                 String paymentJson = "{\"amount\": 500.00, \"paymentMethod\": \"UPI\", \"transactionId\": \"TXN-FLOW-001\"}";
 
                 MvcResult paymentResult = mockMvc.perform(post("/api/payments")
+                                .header("Authorization", "Bearer " + token)
                                 .param("orderId", testOrder.getOrderId().toString())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(paymentJson))
@@ -167,6 +178,7 @@ public class PaymentTrackingIntegrationTest {
                                 .path("data").path("paymentId").asInt();
 
                 mockMvc.perform(put("/api/payments/" + paymentId + "/status")
+                                .header("Authorization", "Bearer " + token)
                                 .param("status", "SUCCESS"))
                                 .andExpect(status().isOk())
                                 .andExpect(jsonPath("$.paymentStatus").value("SUCCESS"));
@@ -174,6 +186,7 @@ public class PaymentTrackingIntegrationTest {
                 String trackingJson = "{\"status\": \"SHIPPED\", \"description\": \"Package dispatched after payment confirmed\"}";
 
                 mockMvc.perform(post("/api/tracking")
+                                .header("Authorization", "Bearer " + token)
                                 .param("orderId", testOrder.getOrderId().toString())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(trackingJson))

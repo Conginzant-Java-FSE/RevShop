@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -78,7 +77,7 @@ public class ReviewController {
                 List<ReviewResponseDTO> responses = reviewService.getReviewsByProduct(product)
                                 .stream()
                                 .map(this::convertToDto)
-                                .collect(Collectors.toList());
+                                .toList();
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>("Reviews fetched successfully", responses));
@@ -95,7 +94,7 @@ public class ReviewController {
                 List<ReviewResponseDTO> responses = reviewService.getReviewsByUser(user)
                                 .stream()
                                 .map(this::convertToDto)
-                                .collect(Collectors.toList());
+                                .toList();
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>("Reviews fetched successfully", responses));
@@ -106,7 +105,7 @@ public class ReviewController {
                         @PathVariable Long reviewId) {
 
                 log.info("DELETE /api/reviews/{}", reviewId);
-                Review review = reviewService.getReviewById(reviewId)
+                reviewService.getReviewById(reviewId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Review not found"));
 
                 reviewService.deleteReview(reviewId);

@@ -22,7 +22,7 @@ public class OrdersService {
     private static final Logger log = LoggerFactory.getLogger(OrdersService.class);
 
     private final OrdersRepository ordersRepository;
-    private final OrderItemsRepository orderItemsRepository;
+
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final ProductRepository productRepository;
@@ -32,7 +32,7 @@ public class OrdersService {
     private final OrderItemService orderItemService;
 
     public OrdersService(OrdersRepository ordersRepository,
-            OrderItemsRepository orderItemsRepository,
+
             UserRepository userRepository,
             AddressRepository addressRepository,
             ProductRepository productRepository,
@@ -42,7 +42,7 @@ public class OrdersService {
             OrderItemService orderItemService) {
 
         this.ordersRepository = ordersRepository;
-        this.orderItemsRepository = orderItemsRepository;
+
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.productRepository = productRepository;
@@ -114,7 +114,7 @@ public class OrdersService {
             BigDecimal price = product.getSellingPrice();
             BigDecimal subtotal = price.multiply(BigDecimal.valueOf(itemDTO.getQuantity()));
 
-            OrderItems orderItem = orderItemService.createOrderItem(savedOrder, product,
+            orderItemService.createOrderItem(savedOrder, product,
                     itemDTO.getQuantity());
 
             totalAmount = totalAmount.add(subtotal);

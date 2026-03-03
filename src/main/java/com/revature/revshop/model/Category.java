@@ -29,7 +29,11 @@ public class Category {
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
     private List<Category> subCategories = new ArrayList<>();
 
-    public Category() {}
+    /**
+     * Default constructor for JPA.
+     */
+    public Category() {
+    }
 
     public Long getCategoryId() {
         return categoryId;

@@ -59,6 +59,9 @@ public class Payments {
         PENDING, SUCCESS, FAILED, REFUNDED
     }
 
+    /**
+     * Empty constructor for JPA.
+     */
     public Payments() {
     }
 

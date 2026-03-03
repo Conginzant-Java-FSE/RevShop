@@ -60,7 +60,11 @@ public class Product {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Product() {}
+    /**
+     * Default constructor for JPA.
+     */
+    public Product() {
+    }
 
     public Long getProductId() {
         return productId;
