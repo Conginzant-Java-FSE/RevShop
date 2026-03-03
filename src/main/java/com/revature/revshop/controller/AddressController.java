@@ -70,6 +70,7 @@ public class AddressController {
     private Address convertToEntity(AddressDTO dto) {
         Address address = new Address();
         address.setAddressLine(dto.getAddressLine());
+        address.setStreet(dto.getStreet());
         address.setCity(dto.getCity());
         address.setState(dto.getState());
         address.setCountry(dto.getCountry());
@@ -82,6 +83,7 @@ public class AddressController {
     private AddressDTO convertToDTO(Address address) {
         AddressDTO dto = new AddressDTO();
         dto.setAddressLine(address.getAddressLine());
+        dto.setStreet(address.getStreet());
         dto.setCity(address.getCity());
         dto.setState(address.getState());
         dto.setCountry(address.getCountry());

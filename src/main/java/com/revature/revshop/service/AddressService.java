@@ -52,6 +52,7 @@ public class AddressService {
                 .orElseThrow(() -> new ResourceNotFoundException("Address not found"));
 
         existingAddress.setAddressLine(updatedAddress.getAddressLine());
+        existingAddress.setStreet(updatedAddress.getStreet());
         existingAddress.setCity(updatedAddress.getCity());
         existingAddress.setState(updatedAddress.getState());
         existingAddress.setZipCode(updatedAddress.getZipCode());
