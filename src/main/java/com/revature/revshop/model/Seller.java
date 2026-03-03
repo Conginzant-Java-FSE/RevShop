@@ -41,6 +41,9 @@ public class Seller {
         updatedAt = LocalDateTime.now();
     }
 
+    /**
+     * Empty constructor for JPA.
+     */
     public Seller() {
     }
 

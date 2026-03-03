@@ -13,17 +13,41 @@ public class CategoryDTO {
 
     private Long parentCategoryId;
 
-    public CategoryDTO() {}
+    /**
+     * Default constructor for Jackson deserialization.
+     */
+    public CategoryDTO() {
+    }
 
-    public Long getCategoryId() { return categoryId; }
-    public void setCategoryId(Long categoryId) { this.categoryId = categoryId; }
+    public Long getCategoryId() {
+        return categoryId;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public String getName() {
+        return name;
+    }
 
-    public Long getParentCategoryId() { return parentCategoryId; }
-    public void setParentCategoryId(Long parentCategoryId) { this.parentCategoryId = parentCategoryId; }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getParentCategoryId() {
+        return parentCategoryId;
+    }
+
+    public void setParentCategoryId(Long parentCategoryId) {
+        this.parentCategoryId = parentCategoryId;
+    }
 }

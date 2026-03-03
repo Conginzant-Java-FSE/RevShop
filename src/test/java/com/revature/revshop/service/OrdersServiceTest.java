@@ -21,8 +21,7 @@ class OrdersServiceTest {
 
     @Mock
     private OrdersRepository ordersRepository;
-    @Mock
-    private OrderItemsRepository orderItemsRepository;
+
     @Mock
     private UserRepository userRepository;
     @Mock
@@ -49,7 +48,7 @@ class OrdersServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         ordersService = new OrdersService(
-                ordersRepository, orderItemsRepository, userRepository,
+                ordersRepository, userRepository,
                 addressRepository, productRepository, notificationService,
                 paymentsRepository, trackingDetailsRepository, orderItemService);
 

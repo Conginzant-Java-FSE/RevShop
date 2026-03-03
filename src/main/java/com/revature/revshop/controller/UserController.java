@@ -15,13 +15,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
         private static final Logger log = LoggerFactory.getLogger(UserController.class);
+        private static final String USER_NOT_FOUND = "User not found";
 
         private final UserService userService;
 
@@ -37,7 +37,7 @@ public class UserController {
                 List<UserDTO> list = userService.getAllUsers()
                                 .stream()
                                 .map(this::convertToDTO)
-                                .collect(Collectors.toList());
+                                .toList();
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>("Users fetched successfully", list));
@@ -50,7 +50,7 @@ public class UserController {
                 log.info("GET /api/users/{}", id);
 
                 User user = userService.getUserById(id)
-                                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
                 return ResponseEntity.ok(
                                 new ApiResponse<>("User fetched successfully", convertToDTO(user)));
         }
@@ -69,7 +69,7 @@ public class UserController {
                 String loggedInEmail = userDetails.getUsername();
 
                 User loggedInUser = userService.getUserByEmail(loggedInEmail)
-                                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
 
                 if (!loggedInUser.getUserId().equals(id)) {
                         throw new InvalidInputException(

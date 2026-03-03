@@ -8,7 +8,7 @@ import com.revature.revshop.model.Seller;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.ProductRepository;
 import com.revature.revshop.repository.ReviewRepository;
-import com.revature.revshop.repository.SellerRepository;
+
 import com.revature.revshop.repository.UserRepository;
 import com.revature.revshop.repository.CategoryRepository;
 import com.revature.revshop.model.Role;
@@ -20,7 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
+
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-public class ProductDependencyIntegrationTest {
+class ProductDependencyIntegrationTest {
 
     @Autowired
     private CartService cartService;
@@ -48,9 +48,6 @@ public class ProductDependencyIntegrationTest {
 
     @Autowired
     private ProductRepository productRepository;
-
-    @Autowired
-    private SellerRepository sellerRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;

@@ -7,13 +7,11 @@ import com.revature.revshop.service.AddressService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/addresses")
@@ -23,7 +21,6 @@ public class AddressController {
 
     private final AddressService addressService;
 
-    @Autowired
     public AddressController(AddressService addressService) {
         this.addressService = addressService;
     }
@@ -50,7 +47,7 @@ public class AddressController {
         List<Address> addresses = addressService.getAddressesByUserId(userId);
         List<AddressDTO> addressDTOs = addresses.stream()
                 .map(this::convertToDTO)
-                .collect(Collectors.toList());
+                .toList();
         return ResponseEntity.ok(addressDTOs);
     }
 

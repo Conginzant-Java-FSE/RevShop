@@ -1,6 +1,5 @@
 package com.revature.revshop.dto;
 
-
 import jakarta.validation.constraints.NotNull;
 
 public class CancelOrderRequestDTO {
@@ -8,8 +7,14 @@ public class CancelOrderRequestDTO {
     private Long userId;
 
     public CancelOrderRequestDTO() {
+        // Default constructor for Jackson deserialization
     }
 
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -93,6 +92,6 @@ public class FavoriteService {
                                 .map(fav -> new FavoriteDTO(
                                                 fav.getProduct().getProductId(),
                                                 fav.getProduct().getName()))
-                                .collect(Collectors.toList());
+                                .toList();
         }
 }

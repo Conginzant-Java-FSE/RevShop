@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(UserController.class)
 @AutoConfigureMockMvc(addFilters = false) // Add this to bypass security filters for unit tests if needed, or use
                                           // @WithMockUser
-public class UserControllerTest {
+class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -49,9 +49,7 @@ public class UserControllerTest {
     @MockitoBean
     private CustomUserDetailsService customUserDetailsService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
+    private ObjectMapper objectMapper = new ObjectMapper();
     private User sampleUser;
     private UserDTO sampleUserDTO;
 
@@ -81,8 +79,8 @@ public class UserControllerTest {
 
         mockMvc.perform(get("/api/users"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("John Doe"))
-                .andExpect(jsonPath("$[0].email").value("john@example.com"));
+                .andExpect(jsonPath("$.data[0].name").value("John Doe"))
+                .andExpect(jsonPath("$.data[0].email").value("john@example.com"));
     }
 
     @Test
@@ -92,8 +90,8 @@ public class UserControllerTest {
 
         mockMvc.perform(get("/api/users/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("John Doe"))
-                .andExpect(jsonPath("$.email").value("john@example.com"));
+                .andExpect(jsonPath("$.data.name").value("John Doe"))
+                .andExpect(jsonPath("$.data.email").value("john@example.com"));
     }
 
     @Test
@@ -118,7 +116,7 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(sampleUserDTO)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("John Doe"));
+                .andExpect(jsonPath("$.data.name").value("John Doe"));
     }
 
     @Test
@@ -151,7 +149,7 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Password updated successfully"));
+                .andExpect(jsonPath("$.message").value("Password updated successfully"));
     }
 
     @Test
@@ -164,6 +162,6 @@ public class UserControllerTest {
                 .with(csrf())
                 .param("name", "New Name"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("New Name"));
+                .andExpect(jsonPath("$.data.name").value("New Name"));
     }
 }

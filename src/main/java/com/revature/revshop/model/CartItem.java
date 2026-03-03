@@ -26,6 +26,9 @@ public class CartItem {
     @Column(name = "added_at")
     private LocalDateTime addedAt;
 
+    /**
+     * Empty constructor for JPA.
+     */
     public CartItem() {
     }
 
