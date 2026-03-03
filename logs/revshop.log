@@ -1,0 +1,262 @@
+2026-03-03 10:19:57 [main] INFO  c.r.revshop.RevShopApplication - Starting RevShopApplication using Java 21.0.9 with PID 32484 (C:\Users\Laddu\Desktop\Project\RevShop\target\classes started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 10:19:57 [main] INFO  c.r.revshop.RevShopApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-03 10:19:58 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-03-03 10:19:59 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-03 10:19:59 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 188 ms. Found 15 JPA repository interfaces.
+2026-03-03 10:20:00 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-03-03 10:20:00 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-03-03 10:20:00 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-03 10:20:00 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-03-03 10:20:01 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 3867 ms
+2026-03-03 10:20:01 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-03 10:20:01 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.1.Final
+2026-03-03 10:20:02 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-03 10:20:02 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-03-03 10:20:03 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4d71ec5b
+2026-03-03 10:20:03 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-03-03 10:20:03 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-03 10:20:03 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/revshop]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.39
+	Default catalog/schema: revshop/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-03 10:20:06 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-03 10:20:06 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 10:20:07 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-03 10:20:07 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-03 10:20:09 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-03 10:20:11 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2026-03-03 10:20:11 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-03-03 10:20:11 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-03-03 10:20:11 [main] INFO  c.r.revshop.RevShopApplication - Started RevShopApplication in 16.028 seconds (process running for 17.195)
+2026-03-03 10:30:28 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-03 10:30:28 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-03-03 10:30:28 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 16 ms
+2026-03-03 10:49:29 [http-nio-8080-exec-7] INFO  c.r.r.controller.AuthController - POST /api/auth/register/buyer - email=bharadwaj@gmail.com
+2026-03-03 10:49:30 [http-nio-8080-exec-7] INFO  c.r.revshop.service.BuyerService - Registering buyer email=bharadwaj@gmail.com
+2026-03-03 10:49:30 [http-nio-8080-exec-7] INFO  c.r.r.service.NotificationService - Creating notification for userId=67 title=Welcome to RevShop
+2026-03-03 10:49:46 [http-nio-8080-exec-8] INFO  c.r.r.controller.AuthController - POST /api/auth/login/buyer - email=bharadwaj@gmail.com
+2026-03-03 10:49:46 [http-nio-8080-exec-8] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:49:47 [http-nio-8080-exec-8] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:49:47 [http-nio-8080-exec-8] INFO  c.r.revshop.service.BuyerService - Buyer login attempt email=bharadwaj@gmail.com
+2026-03-03 10:49:47 [http-nio-8080-exec-9] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:49:47 [http-nio-8080-exec-9] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:49:47 [http-nio-8080-exec-9] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:49:47 [http-nio-8080-exec-9] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:49:58 [http-nio-8080-exec-10] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:49:58 [http-nio-8080-exec-10] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:49:58 [http-nio-8080-exec-10] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 10:49:58 [http-nio-8080-exec-10] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-03-03 10:50:09 [http-nio-8080-exec-1] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:50:09 [http-nio-8080-exec-1] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:50:09 [http-nio-8080-exec-1] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:50:09 [http-nio-8080-exec-1] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:50:35 [http-nio-8080-exec-2] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:50:35 [http-nio-8080-exec-2] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:50:35 [http-nio-8080-exec-2] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 10:50:38 [http-nio-8080-exec-3] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:50:38 [http-nio-8080-exec-3] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:50:38 [http-nio-8080-exec-3] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:50:38 [http-nio-8080-exec-3] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:50:39 [http-nio-8080-exec-4] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:50:39 [http-nio-8080-exec-4] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:50:39 [http-nio-8080-exec-4] INFO  c.r.r.controller.CartController - GET /api/carts/user/67
+2026-03-03 10:50:39 [http-nio-8080-exec-4] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/carts/user/67 - Cart not found
+2026-03-03 10:50:41 [http-nio-8080-exec-5] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:50:41 [http-nio-8080-exec-5] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:50:41 [http-nio-8080-exec-5] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:50:41 [http-nio-8080-exec-5] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:50:43 [http-nio-8080-exec-6] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:50:43 [http-nio-8080-exec-6] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:50:43 [http-nio-8080-exec-6] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:50:43 [http-nio-8080-exec-6] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:50:45 [http-nio-8080-exec-7] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:50:45 [http-nio-8080-exec-7] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:50:45 [http-nio-8080-exec-7] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:50:45 [http-nio-8080-exec-7] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:50:51 [http-nio-8080-exec-8] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:50:51 [http-nio-8080-exec-8] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:50:51 [http-nio-8080-exec-8] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:50:51 [http-nio-8080-exec-8] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:51:06 [http-nio-8080-exec-9] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:51:06 [http-nio-8080-exec-9] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:51:06 [http-nio-8080-exec-9] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 10:51:26 [http-nio-8080-exec-10] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:51:26 [http-nio-8080-exec-10] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:51:26 [http-nio-8080-exec-10] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 10:51:33 [http-nio-8080-exec-1] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:51:33 [http-nio-8080-exec-1] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:51:33 [http-nio-8080-exec-1] INFO  c.r.r.controller.CartController - GET /api/carts/user/67
+2026-03-03 10:51:33 [http-nio-8080-exec-1] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/carts/user/67 - Cart not found
+2026-03-03 10:51:38 [http-nio-8080-exec-2] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:51:38 [http-nio-8080-exec-2] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:51:38 [http-nio-8080-exec-2] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 10:51:41 [http-nio-8080-exec-3] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:51:41 [http-nio-8080-exec-3] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:51:41 [http-nio-8080-exec-3] INFO  c.r.r.controller.CartController - GET /api/carts/user/67
+2026-03-03 10:51:41 [http-nio-8080-exec-3] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/carts/user/67 - Cart not found
+2026-03-03 10:54:56 [http-nio-8080-exec-4] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:54:56 [http-nio-8080-exec-4] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:54:56 [http-nio-8080-exec-4] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:54:56 [http-nio-8080-exec-4] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:57:27 [http-nio-8080-exec-5] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:57:27 [http-nio-8080-exec-5] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:57:27 [http-nio-8080-exec-5] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:57:27 [http-nio-8080-exec-5] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:57:59 [http-nio-8080-exec-6] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:57:59 [http-nio-8080-exec-6] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:57:59 [http-nio-8080-exec-6] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:57:59 [http-nio-8080-exec-6] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:58:04 [http-nio-8080-exec-7] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:58:04 [http-nio-8080-exec-7] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:58:04 [http-nio-8080-exec-7] INFO  c.r.r.controller.CartController - GET /api/carts/user/67
+2026-03-03 10:58:04 [http-nio-8080-exec-7] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/carts/user/67 - Cart not found
+2026-03-03 10:58:06 [http-nio-8080-exec-8] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:58:06 [http-nio-8080-exec-8] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:58:06 [http-nio-8080-exec-8] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:58:06 [http-nio-8080-exec-8] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:58:08 [http-nio-8080-exec-9] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:58:08 [http-nio-8080-exec-9] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:58:08 [http-nio-8080-exec-9] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:58:08 [http-nio-8080-exec-9] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 10:58:09 [http-nio-8080-exec-10] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 10:58:09 [http-nio-8080-exec-10] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 10:58:09 [http-nio-8080-exec-10] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 10:58:09 [http-nio-8080-exec-10] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 11:00:15 [http-nio-8080-exec-1] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:00:15 [http-nio-8080-exec-1] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 11:00:15 [http-nio-8080-exec-1] INFO  c.r.r.controller.CartController - GET /api/carts/user/67
+2026-03-03 11:00:15 [http-nio-8080-exec-1] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/carts/user/67 - Cart not found
+2026-03-03 11:00:17 [http-nio-8080-exec-2] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:00:17 [http-nio-8080-exec-2] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 11:00:17 [http-nio-8080-exec-2] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 11:00:20 [http-nio-8080-exec-3] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:00:20 [http-nio-8080-exec-3] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 11:00:20 [http-nio-8080-exec-3] INFO  c.r.r.controller.CartController - GET /api/carts/user/67
+2026-03-03 11:00:20 [http-nio-8080-exec-3] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/carts/user/67 - Cart not found
+2026-03-03 11:00:22 [http-nio-8080-exec-4] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:00:22 [http-nio-8080-exec-4] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 11:00:22 [http-nio-8080-exec-4] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 11:00:26 [http-nio-8080-exec-5] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:00:26 [http-nio-8080-exec-5] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 11:00:26 [http-nio-8080-exec-5] INFO  c.r.r.controller.CartController - GET /api/carts/user/67
+2026-03-03 11:00:26 [http-nio-8080-exec-5] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/carts/user/67 - Cart not found
+2026-03-03 11:03:40 [http-nio-8080-exec-6] INFO  c.r.r.controller.AuthController - POST /api/auth/login/seller - email=Rithwik@gmail.com
+2026-03-03 11:03:40 [http-nio-8080-exec-6] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:03:40 [http-nio-8080-exec-6] WARN  c.r.r.e.GlobalExceptionHandler - Invalid input: /api/auth/login/seller - Invalid email or password
+2026-03-03 11:04:36 [http-nio-8080-exec-7] INFO  c.r.r.controller.AuthController - POST /api/auth/register/buyer - email=Rithwik@gmail.com
+2026-03-03 11:04:36 [http-nio-8080-exec-7] INFO  c.r.revshop.service.BuyerService - Registering buyer email=Rithwik@gmail.com
+2026-03-03 11:04:36 [http-nio-8080-exec-7] INFO  c.r.r.service.NotificationService - Creating notification for userId=68 title=Welcome to RevShop
+2026-03-03 11:04:45 [http-nio-8080-exec-8] INFO  c.r.r.controller.AuthController - POST /api/auth/login/buyer - email=Rithwik@gmail.com
+2026-03-03 11:04:45 [http-nio-8080-exec-8] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:04:45 [http-nio-8080-exec-8] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:04:45 [http-nio-8080-exec-8] INFO  c.r.revshop.service.BuyerService - Buyer login attempt email=Rithwik@gmail.com
+2026-03-03 11:04:45 [http-nio-8080-exec-9] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:04:45 [http-nio-8080-exec-9] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:04:45 [http-nio-8080-exec-9] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:04:45 [http-nio-8080-exec-9] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:05:23 [http-nio-8080-exec-10] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:05:23 [http-nio-8080-exec-10] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:05:23 [http-nio-8080-exec-10] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:05:23 [http-nio-8080-exec-10] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:05:24 [http-nio-8080-exec-1] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:05:24 [http-nio-8080-exec-1] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:05:24 [http-nio-8080-exec-1] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 11:05:26 [http-nio-8080-exec-2] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:05:27 [http-nio-8080-exec-2] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:05:27 [http-nio-8080-exec-2] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:05:27 [http-nio-8080-exec-2] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:05:28 [http-nio-8080-exec-3] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:05:28 [http-nio-8080-exec-3] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:05:28 [http-nio-8080-exec-3] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 11:05:33 [http-nio-8080-exec-4] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:05:33 [http-nio-8080-exec-4] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:05:33 [http-nio-8080-exec-4] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:05:33 [http-nio-8080-exec-4] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:05:33 [http-nio-8080-exec-5] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:05:33 [http-nio-8080-exec-5] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:05:33 [http-nio-8080-exec-5] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:05:33 [http-nio-8080-exec-5] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:05:41 [http-nio-8080-exec-6] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:05:41 [http-nio-8080-exec-6] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:05:41 [http-nio-8080-exec-6] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:05:41 [http-nio-8080-exec-6] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:05:59 [http-nio-8080-exec-7] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:05:59 [http-nio-8080-exec-7] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:05:59 [http-nio-8080-exec-7] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:05:59 [http-nio-8080-exec-7] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:12:53 [http-nio-8080-exec-8] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:12:53 [http-nio-8080-exec-8] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:12:53 [http-nio-8080-exec-8] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:12:53 [http-nio-8080-exec-8] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:12:54 [http-nio-8080-exec-9] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:12:54 [http-nio-8080-exec-9] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:12:54 [http-nio-8080-exec-9] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:12:54 [http-nio-8080-exec-9] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:13:04 [http-nio-8080-exec-10] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:13:04 [http-nio-8080-exec-10] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:13:04 [http-nio-8080-exec-10] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:13:04 [http-nio-8080-exec-10] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:14:51 [http-nio-8080-exec-1] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:14:51 [http-nio-8080-exec-1] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:14:51 [http-nio-8080-exec-1] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:14:51 [http-nio-8080-exec-1] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:16:55 [http-nio-8080-exec-2] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:16:55 [http-nio-8080-exec-2] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:16:55 [http-nio-8080-exec-2] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:16:55 [http-nio-8080-exec-2] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:18:02 [http-nio-8080-exec-3] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:18:03 [http-nio-8080-exec-3] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:18:03 [http-nio-8080-exec-3] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:18:03 [http-nio-8080-exec-3] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:21:02 [http-nio-8080-exec-4] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:21:02 [http-nio-8080-exec-4] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:21:02 [http-nio-8080-exec-4] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:21:02 [http-nio-8080-exec-4] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:21:32 [http-nio-8080-exec-5] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:21:32 [http-nio-8080-exec-5] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:21:32 [http-nio-8080-exec-5] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:21:32 [http-nio-8080-exec-5] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:22:36 [http-nio-8080-exec-6] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:22:36 [http-nio-8080-exec-6] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:22:36 [http-nio-8080-exec-6] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:22:36 [http-nio-8080-exec-6] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:22:59 [http-nio-8080-exec-7] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:22:59 [http-nio-8080-exec-7] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:22:59 [http-nio-8080-exec-7] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:22:59 [http-nio-8080-exec-7] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:23:36 [http-nio-8080-exec-8] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:23:36 [http-nio-8080-exec-8] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: Rithwik@gmail.com
+2026-03-03 11:23:36 [http-nio-8080-exec-8] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/68
+2026-03-03 11:23:36 [http-nio-8080-exec-8] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=68
+2026-03-03 11:23:55 [http-nio-8080-exec-9] INFO  c.r.r.controller.AuthController - POST /api/auth/login/seller - email=Rithwik@gmail.com
+2026-03-03 11:23:55 [http-nio-8080-exec-9] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:23:55 [http-nio-8080-exec-9] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:23:55 [http-nio-8080-exec-9] INFO  c.r.revshop.service.SellerService - Seller login attempt email=Rithwik@gmail.com
+2026-03-03 11:23:55 [http-nio-8080-exec-9] WARN  c.r.r.e.GlobalExceptionHandler - Invalid input: /api/auth/login/seller - Invalid email or password
+2026-03-03 11:23:59 [http-nio-8080-exec-10] INFO  c.r.r.controller.AuthController - POST /api/auth/login/seller - email=Rithwik@gmail.com
+2026-03-03 11:23:59 [http-nio-8080-exec-10] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:23:59 [http-nio-8080-exec-10] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=Rithwik@gmail.com
+2026-03-03 11:23:59 [http-nio-8080-exec-10] INFO  c.r.revshop.service.SellerService - Seller login attempt email=Rithwik@gmail.com
+2026-03-03 11:23:59 [http-nio-8080-exec-10] WARN  c.r.r.e.GlobalExceptionHandler - Invalid input: /api/auth/login/seller - Invalid email or password
+2026-03-03 11:24:14 [http-nio-8080-exec-1] INFO  c.r.r.controller.AuthController - POST /api/auth/login/buyer - email=bharadwaj@gmail.com
+2026-03-03 11:24:14 [http-nio-8080-exec-1] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:24:14 [http-nio-8080-exec-1] WARN  c.r.r.e.GlobalExceptionHandler - Invalid input: /api/auth/login/buyer - Invalid email or password
+2026-03-03 11:24:17 [http-nio-8080-exec-2] INFO  c.r.r.controller.AuthController - POST /api/auth/login/buyer - email=bharadwaj@gmail.com
+2026-03-03 11:24:17 [http-nio-8080-exec-2] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:24:17 [http-nio-8080-exec-2] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:24:17 [http-nio-8080-exec-2] INFO  c.r.revshop.service.BuyerService - Buyer login attempt email=bharadwaj@gmail.com
+2026-03-03 11:24:17 [http-nio-8080-exec-3] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:24:17 [http-nio-8080-exec-3] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 11:24:17 [http-nio-8080-exec-3] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 11:24:17 [http-nio-8080-exec-3] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67

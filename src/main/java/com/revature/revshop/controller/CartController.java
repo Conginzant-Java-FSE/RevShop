@@ -15,13 +15,13 @@ import jakarta.validation.Valid;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/carts")
 public class CartController {
 
         private static final Logger log = LoggerFactory.getLogger(CartController.class);
+        private static final String USER_NOT_FOUND = "User not found";
 
         private final CartService cartService;
         private final CartItemService cartItemService;
@@ -46,7 +46,7 @@ public class CartController {
                 log.info("POST /api/carts/user/{}/add - productId={}", userId, request.getProductId());
 
                 User user = userRepository.findById(userId)
-                                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
 
                 Product product = productRepository.findById(request.getProductId())
                                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
@@ -64,7 +64,7 @@ public class CartController {
                 log.info("GET /api/carts/user/{}", userId);
 
                 User user = userRepository.findById(userId)
-                                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
 
                 Cart cart = cartService.getCartByUser(user)
                                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
@@ -81,7 +81,7 @@ public class CartController {
                 log.info("DELETE /api/carts/user/{}/clear", userId);
 
                 User user = userRepository.findById(userId)
-                                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
 
                 Cart cart = cartService.getCartByUser(user)
                                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
@@ -104,7 +104,7 @@ public class CartController {
                                                 item.getQuantity(),
                                                 item.getProduct().getName(),
                                                 item.getProduct().getSellingPrice()))
-                                .collect(Collectors.toList());
+                                .toList();
 
                 dto.setItems(itemDtos);
 

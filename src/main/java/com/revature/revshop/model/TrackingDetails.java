@@ -39,11 +39,14 @@ public class TrackingDetails {
         updatedAt = LocalDateTime.now();
     }
 
+    /**
+     * Empty constructor for JPA.
+     */
     public TrackingDetails() {
     }
 
     public TrackingDetails(Integer trackingId, Orders order, String status, String description,
-                           LocalDateTime createdAt, LocalDateTime updatedAt) {
+            LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.trackingId = trackingId;
         this.order = order;
         this.status = status;

@@ -2,7 +2,7 @@ package com.revature.revshop.controller;
 
 import com.revature.revshop.dto.ApiResponse;
 import com.revature.revshop.dto.CategoryDTO;
-import com.revature.revshop.exception.ResourceNotFoundException;
+
 import com.revature.revshop.service.CategoryService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;

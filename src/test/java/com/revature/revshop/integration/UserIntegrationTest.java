@@ -1,6 +1,5 @@
 package com.revature.revshop.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.revshop.model.Role;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.UserRepository;
@@ -11,7 +10,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
+
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.test.context.TestPropertySource;
@@ -27,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "springdoc.api-docs.enabled=false",
         "springdoc.swagger-ui.enabled=false"
 })
-public class UserIntegrationTest {
+class UserIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,9 +36,6 @@ public class UserIntegrationTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     private User testBuyer;
     private User testSeller;
@@ -61,27 +57,32 @@ public class UserIntegrationTest {
         testSeller = userRepository.save(testSeller);
     }
 
+    @Autowired
+    private com.revature.revshop.security.JwtUtil jwtUtil;
+
+    @Autowired
+    private com.revature.revshop.security.CustomUserDetailsService customUserDetailsService;
+
     @Test
-    @WithMockUser(username = "intbuyer@example.com", roles = "BUYER")
     void testBuyerCannotAccessSellerEndpoints() throws Exception {
-        // Assuming /api/sellers is a seller-only endpoint, though we might not have a
-        // SellerController yet
-        // However, we can test that the buyer can access their profile, or we can test
-        // an endpoint restricted by role
+        org.springframework.security.core.userdetails.UserDetails userDetails = customUserDetailsService
+                .loadUserByUsername("intbuyer@example.com");
+        String token = jwtUtil.generateToken(userDetails);
+
         mockMvc.perform(get("/api/users/" + testBuyer.getUserId())
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-
-        // If there were a specific Seller Controller with /api/sellers/dashboard
-        // requiring SELLER role
-        // mockMvc.perform(get("/api/sellers/dashboard")).andExpect(status().isForbidden());
     }
 
     @Test
-    @WithMockUser(username = "intseller@example.com", roles = "SELLER")
     void testSellerCanAccessTheirEndpoints() throws Exception {
-        // Assuming Seller can access their profile via User endpoint
+        org.springframework.security.core.userdetails.UserDetails userDetails = customUserDetailsService
+                .loadUserByUsername("intseller@example.com");
+        String token = jwtUtil.generateToken(userDetails);
+
         mockMvc.perform(get("/api/users/" + testSeller.getUserId())
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }

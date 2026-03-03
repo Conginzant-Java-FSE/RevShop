@@ -28,6 +28,10 @@
     </scm>
     <properties>
         <java.version>21</java.version>
+        <sonar.projectKey>springboot-monolith</sonar.projectKey>
+        <sonar.projectName>Spring Boot Monolithic App</sonar.projectName>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
+        <sonar.login>squ_a5c47bc5837181b75171f79bea352d8a48619e33</sonar.login>
     </properties>
     <dependencies>
         <dependency>
@@ -130,6 +134,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.11.0.3922</version>
             </plugin>
         </plugins>
     </build>

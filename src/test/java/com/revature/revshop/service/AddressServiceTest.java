@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class AddressServiceTest {
+class AddressServiceTest {
 
     @Mock
     private AddressRepository addressRepository;
@@ -112,7 +112,7 @@ public class AddressServiceTest {
         updatedData.setAddressLine("456 Elm St");
         updatedData.setCity("Othertown");
 
-        Address result = addressService.updateAddress(1L, updatedData);
+        addressService.updateAddress(1L, updatedData);
 
         assertEquals("456 Elm St", sampleAddress.getAddressLine());
         assertEquals("Othertown", sampleAddress.getCity());

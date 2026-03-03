@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class PaymentsServiceTest {
+class PaymentsServiceTest {
 
     @Mock
     private PaymentsRepository paymentsRepository;
@@ -130,7 +130,7 @@ public class PaymentsServiceTest {
         when(paymentsRepository.save(any(Payments.class))).thenReturn(samplePayment);
         doNothing().when(notificationService).createNotification(anyLong(), anyString(), anyString());
 
-        Payments result = paymentsService.updatePaymentStatus(1, Payments.PaymentStatus.SUCCESS);
+        paymentsService.updatePaymentStatus(1, Payments.PaymentStatus.SUCCESS);
 
         assertEquals(Payments.PaymentStatus.SUCCESS, samplePayment.getPaymentStatus());
         verify(notificationService).createNotification(
@@ -145,7 +145,7 @@ public class PaymentsServiceTest {
         when(paymentsRepository.save(any(Payments.class))).thenReturn(samplePayment);
         doNothing().when(notificationService).createNotification(anyLong(), anyString(), anyString());
 
-        Payments result = paymentsService.updatePaymentStatus(1, Payments.PaymentStatus.FAILED);
+        paymentsService.updatePaymentStatus(1, Payments.PaymentStatus.FAILED);
 
         assertEquals(Payments.PaymentStatus.FAILED, samplePayment.getPaymentStatus());
         verify(notificationService).createNotification(
@@ -160,7 +160,7 @@ public class PaymentsServiceTest {
         when(paymentsRepository.save(any(Payments.class))).thenReturn(samplePayment);
         doNothing().when(notificationService).createNotification(anyLong(), anyString(), anyString());
 
-        Payments result = paymentsService.updatePaymentStatus(1, Payments.PaymentStatus.REFUNDED);
+        paymentsService.updatePaymentStatus(1, Payments.PaymentStatus.REFUNDED);
 
         assertEquals(Payments.PaymentStatus.REFUNDED, samplePayment.getPaymentStatus());
         verify(notificationService).createNotification(

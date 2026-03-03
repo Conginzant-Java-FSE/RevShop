@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -115,7 +115,7 @@ public class UserServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(sampleUser));
         when(userRepository.save(any(User.class))).thenReturn(sampleUser);
 
-        User result = userService.updateName(1L, "John Smith");
+        userService.updateName(1L, "John Smith");
         assertEquals("John Smith", sampleUser.getName());
     }
 
@@ -125,7 +125,7 @@ public class UserServiceTest {
         when(userRepository.findByEmail("new@example.com")).thenReturn(Optional.empty());
         when(userRepository.save(any(User.class))).thenReturn(sampleUser);
 
-        User result = userService.updateEmail(1L, "new@example.com");
+        userService.updateEmail(1L, "new@example.com");
         assertEquals("new@example.com", sampleUser.getEmail());
     }
 
@@ -136,7 +136,7 @@ public class UserServiceTest {
         when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
         when(userRepository.save(any(User.class))).thenReturn(sampleUser);
 
-        User result = userService.updatePassword(1L, "password123", "newPassword");
+        userService.updatePassword(1L, "password123", "newPassword");
         assertEquals("encodedNewPassword", sampleUser.getPassword());
     }
 

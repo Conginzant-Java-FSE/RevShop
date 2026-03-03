@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -51,14 +50,14 @@ public class CategoryService {
         return categoryRepository.findAll()
                 .stream()
                 .map(this::convertToDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<CategoryDTO> getRootCategories() {
         return categoryRepository.findByParentCategoryIsNull()
                 .stream()
                 .map(this::convertToDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public List<CategoryDTO> getSubCategories(Long parentId) {
@@ -68,7 +67,7 @@ public class CategoryService {
         return categoryRepository.findByParentCategory_CategoryId(parentId)
                 .stream()
                 .map(this::convertToDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public CategoryDTO getCategoryById(Long id) {

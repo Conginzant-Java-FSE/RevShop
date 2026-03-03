@@ -54,11 +54,14 @@ public class Orders {
         CANCELLED
     }
 
+    /**
+     * Empty constructor for JPA.
+     */
     public Orders() {
     }
 
     public Orders(Long orderId, User user, String orderNumber, Address shippingAddress, Address billingAddress,
-                  OrderStatus status, LocalDateTime orderDate) {
+            OrderStatus status, LocalDateTime orderDate) {
         this.orderId = orderId;
         this.user = user;
         this.orderNumber = orderNumber;

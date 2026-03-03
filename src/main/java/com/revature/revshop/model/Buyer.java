@@ -32,6 +32,9 @@ public class Buyer {
         updatedAt = LocalDateTime.now();
     }
 
+    /**
+     * Empty constructor for JPA.
+     */
     public Buyer() {
     }
 

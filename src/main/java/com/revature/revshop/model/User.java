@@ -64,6 +64,9 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Seller sellerProfile;
 
+    /**
+     * Empty constructor for JPA.
+     */
     public User() {
     }
 
