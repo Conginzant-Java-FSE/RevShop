@@ -260,3 +260,1293 @@
 2026-03-03 11:24:17 [http-nio-8080-exec-3] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
 2026-03-03 11:24:17 [http-nio-8080-exec-3] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
 2026-03-03 11:24:17 [http-nio-8080-exec-3] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 11:27:07 [http-nio-8080-exec-4] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:27:07 [http-nio-8080-exec-4] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 11:27:07 [http-nio-8080-exec-4] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 11:27:07 [http-nio-8080-exec-4] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 11:27:21 [http-nio-8080-exec-5] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:27:21 [http-nio-8080-exec-5] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 11:27:21 [http-nio-8080-exec-5] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 11:27:21 [http-nio-8080-exec-5] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 11:27:56 [http-nio-8080-exec-6] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:27:56 [http-nio-8080-exec-6] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 11:27:56 [http-nio-8080-exec-6] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 11:27:56 [http-nio-8080-exec-6] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 11:28:14 [http-nio-8080-exec-7] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=bharadwaj@gmail.com
+2026-03-03 11:28:14 [http-nio-8080-exec-7] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: bharadwaj@gmail.com
+2026-03-03 11:28:14 [http-nio-8080-exec-7] INFO  c.r.r.controller.OrdersController - GET /api/orders/user/67
+2026-03-03 11:28:14 [http-nio-8080-exec-7] INFO  c.r.revshop.service.OrdersService - Fetching orders for userId=67
+2026-03-03 11:42:10 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-03 11:42:10 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-03-03 11:42:10 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:42:10 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-03-03 11:42:10 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-03-03 11:42:28 [main] INFO  c.r.revshop.RevShopApplication - Starting RevShopApplication using Java 21.0.9 with PID 23064 (C:\Users\Laddu\Desktop\Project\RevShop\target\classes started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:42:28 [main] INFO  c.r.revshop.RevShopApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-03 11:42:28 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-03-03 11:42:29 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-03 11:42:29 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 75 ms. Found 15 JPA repository interfaces.
+2026-03-03 11:42:30 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-03-03 11:42:30 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-03-03 11:42:30 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-03 11:42:30 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-03-03 11:42:30 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1627 ms
+2026-03-03 11:42:30 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-03 11:42:30 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.1.Final
+2026-03-03 11:42:30 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-03 11:42:30 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-03-03 11:42:31 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@72641613
+2026-03-03 11:42:31 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-03-03 11:42:31 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-03 11:42:31 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/revshop]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.39
+	Default catalog/schema: revshop/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-03 11:42:32 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-03 11:42:32 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:42:32 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-03 11:42:32 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-03 11:42:33 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-03 11:42:34 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2026-03-03 11:42:34 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-03-03 11:42:34 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-03-03 11:42:34 [main] INFO  c.r.revshop.RevShopApplication - Started RevShopApplication in 6.58 seconds (process running for 7.087)
+2026-03-03 11:42:42 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-03 11:42:42 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-03-03 11:42:42 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:42:42 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-03-03 11:42:42 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-03-03 11:43:04 [main] INFO  c.r.r.c.ProductControllerTest - Starting ProductControllerTest using Java 21.0.9 with PID 9672 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:43:04 [main] INFO  c.r.r.c.ProductControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-03 11:43:05 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-03-03 11:43:05 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-03-03 11:43:05 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+2026-03-03 11:43:05 [main] INFO  c.r.r.c.ProductControllerTest - Started ProductControllerTest in 1.468 seconds (process running for 5.86)
+2026-03-03 11:43:37 [main] INFO  c.r.r.c.ProductControllerTest - Starting ProductControllerTest using Java 21.0.9 with PID 18004 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:43:37 [main] INFO  c.r.r.c.ProductControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-03 11:43:38 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-03-03 11:43:38 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-03-03 11:43:38 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 4 ms
+2026-03-03 11:43:38 [main] INFO  c.r.r.c.ProductControllerTest - Started ProductControllerTest in 1.833 seconds (process running for 6.274)
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - GET /api/products/search - keyword=head
+2026-03-03 11:43:38 [main] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - GET /api/products/1
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - DELETE /api/products/1
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - GET /api/products/1
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - GET /api/products/search - keyword=   
+2026-03-03 11:43:38 [main] WARN  c.r.r.e.GlobalExceptionHandler - Invalid input: /api/products/search - Search keyword is required
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - PUT /api/products/1
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - PUT /api/products/999
+2026-03-03 11:43:38 [main] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/products/999 - Product not found
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - DELETE /api/products/999
+2026-03-03 11:43:38 [main] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/products/999 - Product not found
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - GET /api/products/filter - minPrice=3000.0 maxPrice=5000.0 categoryId=1
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - GET /api/products/search - keyword=xyz
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - GET /api/products/999
+2026-03-03 11:43:38 [main] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/products/999 - Product not found
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 11:43:38 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.controller.UserControllerTest]: UserControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:43:38 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.controller.UserControllerTest
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.UserControllerTest - Starting UserControllerTest using Java 21.0.9 with PID 18004 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:43:38 [main] INFO  c.r.r.controller.UserControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-03 11:43:39 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-03-03 11:43:39 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-03-03 11:43:39 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+2026-03-03 11:43:39 [main] INFO  c.r.r.controller.UserControllerTest - Started UserControllerTest in 0.732 seconds (process running for 7.504)
+2026-03-03 11:43:39 [main] INFO  c.r.r.controller.UserController - GET /api/users/2
+2026-03-03 11:43:39 [main] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/users/2 - User not found
+2026-03-03 11:43:39 [main] INFO  c.r.r.controller.UserController - GET /api/users
+2026-03-03 11:43:39 [main] TRACE o.s.s.w.c.CsrfTokenRequestAttributeHandler - Wrote a CSRF token to the following request attributes: [_csrf, org.springframework.security.web.csrf.CsrfToken]
+2026-03-03 11:43:39 [main] INFO  c.r.r.controller.UserController - PUT /api/users/1/profile
+2026-03-03 11:43:39 [main] TRACE o.s.s.w.c.CsrfTokenRequestAttributeHandler - Wrote a CSRF token to the following request attributes: [_csrf, org.springframework.security.web.csrf.CsrfToken]
+2026-03-03 11:43:39 [main] INFO  c.r.r.controller.UserController - PUT /api/users/1/password
+2026-03-03 11:43:39 [main] TRACE o.s.s.w.c.CsrfTokenRequestAttributeHandler - Wrote a CSRF token to the following request attributes: [_csrf, org.springframework.security.web.csrf.CsrfToken]
+2026-03-03 11:43:39 [main] INFO  c.r.r.controller.UserController - PATCH /api/users/1/name
+2026-03-03 11:43:39 [main] TRACE o.s.s.w.c.CsrfTokenRequestAttributeHandler - Wrote a CSRF token to the following request attributes: [_csrf, org.springframework.security.web.csrf.CsrfToken]
+2026-03-03 11:43:39 [main] INFO  c.r.r.controller.UserController - PUT /api/users/1/profile
+2026-03-03 11:43:39 [main] WARN  c.r.r.e.GlobalExceptionHandler - Invalid input: /api/users/1/profile - You cannot update another user's profile
+2026-03-03 11:43:39 [main] INFO  c.r.r.controller.UserController - GET /api/users/1
+2026-03-03 11:43:39 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.CartIntegrationTest]: CartIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:43:39 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.CartIntegrationTest
+2026-03-03 11:43:39 [main] INFO  c.r.r.i.CartIntegrationTest - Starting CartIntegrationTest using Java 21.0.9 with PID 18004 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:43:39 [main] INFO  c.r.r.i.CartIntegrationTest - The following 1 profile is active: "test"
+2026-03-03 11:43:40 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-03 11:43:40 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 97 ms. Found 15 JPA repository interfaces.
+2026-03-03 11:43:41 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-03-03 11:43:41 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:0af35d6f-7031-4f9d-98c6-d30b4e66bc96 user=SA
+2026-03-03 11:43:41 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-03-03 11:43:41 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-03 11:43:42 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.1.Final
+2026-03-03 11:43:42 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-03 11:43:42 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:0af35d6f-7031-4f9d-98c6-d30b4e66bc96]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: 0AF35D6F-7031-4F9D-98C6-D30B4E66BC96/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-03 11:43:43 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-03 11:43:43 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:43:43 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-03 11:43:44 [main] TRACE o.s.s.c.a.a.c.AuthenticationConfiguration$EnableGlobalAuthenticationAutowiredConfigurer - Eagerly initializing {securityConfig=com.revature.revshop.security.SecurityConfig$$SpringCGLIB$$0@1312bde4}
+2026-03-03 11:43:44 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-03-03 11:43:44 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-03 11:43:45 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-03 11:43:46 [main] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-03-03 11:43:46 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-03-03 11:43:46 [main] INFO  c.r.r.i.CartIntegrationTest - Started CartIntegrationTest in 6.814 seconds (process running for 14.59)
+2026-03-03 11:43:46 [main] INFO  c.r.revshop.service.CartService - Finding or creating cart for userId=1
+2026-03-03 11:43:47 [main] INFO  c.r.revshop.service.CartService - Creating cart for userId=1
+2026-03-03 11:43:47 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=1 qty=1
+2026-03-03 11:43:47 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=2 qty=2
+2026-03-03 11:43:47 [main] INFO  c.r.revshop.service.CartItemService - Updating cart item id=2 qty=3
+2026-03-03 11:43:47 [main] INFO  c.r.revshop.service.CartItemService - Clearing cart id=1
+2026-03-03 11:43:47 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.CheckoutIntegrationTest]: CheckoutIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:43:47 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.CheckoutIntegrationTest
+2026-03-03 11:43:47 [main] INFO  c.r.r.i.CheckoutIntegrationTest - Starting CheckoutIntegrationTest using Java 21.0.9 with PID 18004 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:43:47 [main] INFO  c.r.r.i.CheckoutIntegrationTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-03 11:43:47 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-03 11:43:47 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37 ms. Found 15 JPA repository interfaces.
+2026-03-03 11:43:47 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2026-03-03 11:43:47 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:9ce356fc-7bb1-4e46-98c6-457f6683b65b user=SA
+2026-03-03 11:43:47 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2026-03-03 11:43:47 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-03 11:43:47 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-03 11:43:47 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:9ce356fc-7bb1-4e46-98c6-457f6683b65b]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: 9CE356FC-7BB1-4E46-98C6-457F6683B65B/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-03 11:43:47 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-03 11:43:47 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:43:47 [main] TRACE o.s.s.c.a.a.c.AuthenticationConfiguration$EnableGlobalAuthenticationAutowiredConfigurer - Eagerly initializing {securityConfig=com.revature.revshop.security.SecurityConfig$$SpringCGLIB$$0@2c5e6f74}
+2026-03-03 11:43:47 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-03-03 11:43:47 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-03 11:43:48 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-03 11:43:48 [main] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-03-03 11:43:48 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-03-03 11:43:48 [main] INFO  c.r.r.i.CheckoutIntegrationTest - Started CheckoutIntegrationTest in 1.258 seconds (process running for 16.318)
+2026-03-03 11:43:48 [main] INFO  c.r.revshop.service.OrdersService - Placing order for userId=2
+2026-03-03 11:43:48 [main] INFO  c.r.revshop.service.OrderItemService - Creating order item orderId=1 productId=1 qty=5
+2026-03-03 11:43:48 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=1 title=New Order Received
+2026-03-03 11:43:48 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=2 title=Order Placed
+2026-03-03 11:43:48 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.PaymentTrackingIntegrationTest]: PaymentTrackingIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:43:48 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.PaymentTrackingIntegrationTest
+2026-03-03 11:43:48 [main] INFO  c.r.r.i.PaymentTrackingIntegrationTest - Starting PaymentTrackingIntegrationTest using Java 21.0.9 with PID 18004 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:43:48 [main] INFO  c.r.r.i.PaymentTrackingIntegrationTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-03 11:43:48 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-03 11:43:48 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30 ms. Found 15 JPA repository interfaces.
+2026-03-03 11:43:48 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
+2026-03-03 11:43:48 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:6f207bb2-60f5-478b-83f0-4b68134dd064 user=SA
+2026-03-03 11:43:48 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
+2026-03-03 11:43:48 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-03 11:43:48 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-03 11:43:48 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:6f207bb2-60f5-478b-83f0-4b68134dd064]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: 6F207BB2-60F5-478B-83F0-4B68134DD064/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-03 11:43:49 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-03 11:43:49 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:43:49 [main] TRACE o.s.s.c.a.a.c.AuthenticationConfiguration$EnableGlobalAuthenticationAutowiredConfigurer - Eagerly initializing {securityConfig=com.revature.revshop.security.SecurityConfig$$SpringCGLIB$$0@43d4a4f3}
+2026-03-03 11:43:49 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-03-03 11:43:49 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-03 11:43:49 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-03 11:43:49 [main] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-03-03 11:43:49 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-03-03 11:43:49 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-03-03 11:43:49 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-03-03 11:43:49 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 5 ms
+2026-03-03 11:43:49 [main] INFO  c.r.r.i.PaymentTrackingIntegrationTest - Started PaymentTrackingIntegrationTest in 1.08 seconds (process running for 17.474)
+2026-03-03 11:43:49 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:43:49 [main] DEBUG o.s.security.web.FilterChainProxy - Securing PUT /api/tracking/1
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:43:49 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:49 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing PUT /api/tracking/1
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on PUT /api/tracking/1 using org.springframework.security.authorization.AuthenticatedAuthorizationManager@32f2c3d3
+2026-03-03 11:43:49 [main] DEBUG o.s.security.web.FilterChainProxy - Secured PUT /api/tracking/1
+2026-03-03 11:43:49 [main] INFO  c.r.r.controller.TrackingController - PUT /api/tracking/1 - status=SHIPPED
+2026-03-03 11:43:49 [main] INFO  c.r.r.service.TrackingDetailsService - Updating tracking id=1 status=SHIPPED
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:43:49 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:43:49 [main] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/tracking
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:43:49 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:49 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing POST /api/tracking
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on POST /api/tracking using org.springframework.security.authorization.AuthenticatedAuthorizationManager@32f2c3d3
+2026-03-03 11:43:49 [main] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/tracking
+2026-03-03 11:43:49 [main] INFO  c.r.r.controller.TrackingController - POST /api/tracking - orderId=2
+2026-03-03 11:43:49 [main] INFO  c.r.r.service.TrackingDetailsService - Adding tracking detail for orderId=2
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:43:49 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:43:49 [main] DEBUG o.s.security.web.FilterChainProxy - Securing PUT /api/payments/1/status
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:43:49 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:49 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:43:49 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing PUT /api/payments/1/status
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on PUT /api/payments/1/status using org.springframework.security.authorization.AuthenticatedAuthorizationManager@32f2c3d3
+2026-03-03 11:43:49 [main] DEBUG o.s.security.web.FilterChainProxy - Secured PUT /api/payments/1/status
+2026-03-03 11:43:49 [main] INFO  c.r.r.controller.PaymentsController - PUT /api/payments/1/status - status=SUCCESS
+2026-03-03 11:43:49 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=1 status=SUCCESS
+2026-03-03 11:43:49 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=3 title=Payment Update
+2026-03-03 11:43:49 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:43:50 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:43:50 [main] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/payments
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:43:50 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:50 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing POST /api/payments
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on POST /api/payments using org.springframework.security.authorization.AuthenticatedAuthorizationManager@32f2c3d3
+2026-03-03 11:43:50 [main] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/payments
+2026-03-03 11:43:50 [main] INFO  c.r.r.controller.PaymentsController - POST /api/payments - orderId=4
+2026-03-03 11:43:50 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=4
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:43:50 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:43:50 [main] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/payments
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:43:50 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:50 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing POST /api/payments
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on POST /api/payments using org.springframework.security.authorization.AuthenticatedAuthorizationManager@32f2c3d3
+2026-03-03 11:43:50 [main] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/payments
+2026-03-03 11:43:50 [main] INFO  c.r.r.controller.PaymentsController - POST /api/payments - orderId=5
+2026-03-03 11:43:50 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=5
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:43:50 [main] DEBUG o.s.security.web.FilterChainProxy - Securing PUT /api/payments/3/status
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:43:50 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:50 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing PUT /api/payments/3/status
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on PUT /api/payments/3/status using org.springframework.security.authorization.AuthenticatedAuthorizationManager@32f2c3d3
+2026-03-03 11:43:50 [main] DEBUG o.s.security.web.FilterChainProxy - Secured PUT /api/payments/3/status
+2026-03-03 11:43:50 [main] INFO  c.r.r.controller.PaymentsController - PUT /api/payments/3/status - status=SUCCESS
+2026-03-03 11:43:50 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=3 status=SUCCESS
+2026-03-03 11:43:50 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=5 title=Payment Update
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:43:50 [main] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/tracking
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:43:50 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:43:50 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:43:50 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing POST /api/tracking
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on POST /api/tracking using org.springframework.security.authorization.AuthenticatedAuthorizationManager@32f2c3d3
+2026-03-03 11:43:50 [main] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/tracking
+2026-03-03 11:43:50 [main] INFO  c.r.r.controller.TrackingController - POST /api/tracking - orderId=5
+2026-03-03 11:43:50 [main] INFO  c.r.r.service.TrackingDetailsService - Adding tracking detail for orderId=5
+2026-03-03 11:43:50 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:43:50 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.ProductCatalogIntegrationTest]: ProductCatalogIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:43:50 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.ProductCatalogIntegrationTest
+2026-03-03 11:43:50 [main] INFO  c.r.r.i.ProductCatalogIntegrationTest - Starting ProductCatalogIntegrationTest using Java 21.0.9 with PID 18004 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:43:50 [main] INFO  c.r.r.i.ProductCatalogIntegrationTest - The following 1 profile is active: "test"
+2026-03-03 11:43:50 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-03 11:43:50 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31 ms. Found 15 JPA repository interfaces.
+2026-03-03 11:43:50 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Starting...
+2026-03-03 11:43:50 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-4 - Added connection conn30: url=jdbc:h2:mem:4278fa75-2090-49a4-8e55-12983da857e3 user=SA
+2026-03-03 11:43:50 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Start completed.
+2026-03-03 11:43:50 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-03 11:43:50 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-03 11:43:50 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:4278fa75-2090-49a4-8e55-12983da857e3]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: 4278FA75-2090-49A4-8E55-12983DA857E3/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-03 11:43:50 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-03 11:43:50 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:43:50 [main] TRACE o.s.s.c.a.a.c.AuthenticationConfiguration$EnableGlobalAuthenticationAutowiredConfigurer - Eagerly initializing {securityConfig=com.revature.revshop.security.SecurityConfig$$SpringCGLIB$$0@1c48338f}
+2026-03-03 11:43:50 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-03-03 11:43:50 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-03 11:43:50 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-03 11:43:51 [main] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-03-03 11:43:51 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-03-03 11:43:51 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-03-03 11:43:51 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-03-03 11:43:51 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 6 ms
+2026-03-03 11:43:51 [main] INFO  c.r.r.i.ProductCatalogIntegrationTest - Started ProductCatalogIntegrationTest in 0.975 seconds (process running for 19.125)
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Creating product name=4K Monitor
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - GET /api/products/1
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Fetching product id=1
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Ergonomic Chair
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.FavoriteController - POST /api/favorites/4/2
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.FavoriteService - Adding favorite buyerId=4 productId=2
+2026-03-03 11:43:51 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=3 title=Product Favorited
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.FavoriteController - POST /api/favorites/4/2
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.FavoriteService - Adding favorite buyerId=4 productId=2
+2026-03-03 11:43:51 [main] WARN  c.r.r.e.GlobalExceptionHandler - Invalid input: /api/favorites/4/2 - Product already in favorites
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.FavoriteController - GET /api/favorites/6
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Mechanical Keyboard
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - GET /api/products/search - keyword=Keyboard
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Searching products keyword=Keyboard
+2026-03-03 11:43:51 [main] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Desk Lamp
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.FavoriteController - POST /api/favorites/10/4
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.FavoriteService - Adding favorite buyerId=10 productId=4
+2026-03-03 11:43:51 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=9 title=Product Favorited
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.FavoriteController - DELETE /api/favorites/10/4
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.FavoriteService - Removing favorite buyerId=10 productId=4
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.FavoriteController - GET /api/favorites/10
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Webcam
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.FavoriteController - POST /api/favorites/12/5
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.FavoriteService - Adding favorite buyerId=12 productId=5
+2026-03-03 11:43:51 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=11 title=Product Favorited
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.FavoriteController - GET /api/favorites/12
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Gaming Mouse
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Creating product name=USB Hub
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - GET /api/products/7
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Fetching product id=7
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.CategoryController - GET /api/categories/8
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Portable SSD
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.FavoriteController - POST /api/favorites/18/8
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.FavoriteService - Adding favorite buyerId=18 productId=8
+2026-03-03 11:43:51 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=17 title=Product Favorited
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.FavoriteController - GET /api/favorites/18
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.ProductController - GET /api/products/8
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ProductService - Fetching product id=8
+2026-03-03 11:43:51 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.ProductDependencyIntegrationTest]: ProductDependencyIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:43:51 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.ProductDependencyIntegrationTest
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.CartService - Finding or creating cart for userId=2
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.CartService - Creating cart for userId=2
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=3 qty=1
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ReviewService - Adding review for productId=3
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.CartItemService - Clearing cart id=2
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ReviewService - Adding review for productId=4
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.CartService - Finding or creating cart for userId=4
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.CartService - Creating cart for userId=4
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=5 qty=1
+2026-03-03 11:43:51 [main] INFO  c.r.revshop.service.ReviewService - Adding review for productId=5
+2026-03-03 11:43:51 [main] WARN  org.hibernate.orm.jdbc.error - HHH000247: ErrorCode: 23503, SQLState: 23503
+2026-03-03 11:43:51 [main] WARN  org.hibernate.orm.jdbc.error - Referential integrity constraint violation: "FK1RE40CJEGSFVW58XRKDP6BAC6: PUBLIC.CART_ITEMS FOREIGN KEY(PRODUCT_ID) REFERENCES PUBLIC.PRODUCTS(PRODUCT_ID) (CAST(5 AS BIGINT))"; SQL statement:
+delete from products where product_id=? [23503-240]
+2026-03-03 11:43:51 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.UserIntegrationTest]: UserIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:43:51 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.UserIntegrationTest
+2026-03-03 11:43:51 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=intseller@example.com
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:43:51 [main] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/users/7
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:43:51 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:43:51 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:43:51 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=intseller@example.com
+2026-03-03 11:43:51 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: intseller@example.com
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:43:51 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=intseller@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_SELLER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_SELLER]]
+2026-03-03 11:43:51 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:43:51 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:43:51 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing GET /api/users/7
+2026-03-03 11:43:51 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on GET /api/users/7 using org.springframework.security.authorization.AuthenticatedAuthorizationManager@32f2c3d3
+2026-03-03 11:43:51 [main] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/users/7
+2026-03-03 11:43:51 [main] INFO  c.r.r.controller.UserController - GET /api/users/7
+2026-03-03 11:43:51 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:43:52 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=intbuyer@example.com
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:43:52 [main] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/users/10
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:43:52 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:43:52 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:43:52 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=intbuyer@example.com
+2026-03-03 11:43:52 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: intbuyer@example.com
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:43:52 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=intbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:43:52 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:43:52 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:43:52 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing GET /api/users/10
+2026-03-03 11:43:52 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on GET /api/users/10 using org.springframework.security.authorization.AuthenticatedAuthorizationManager@32f2c3d3
+2026-03-03 11:43:52 [main] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/users/10
+2026-03-03 11:43:52 [main] INFO  c.r.r.controller.UserController - GET /api/users/10
+2026-03-03 11:43:52 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:43:52 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.RevShopApplicationTests]: RevShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:43:52 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.RevShopApplicationTests
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.AddressService - Updating address id=1
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.AddressService - Adding address for userId=1
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.AddressService - Adding address for userId=1
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.AddressService - Deleting address id=1
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.AddressService - Updating address id=1
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.AddressService - Deleting address id=1
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.BuyerService - Buyer login attempt email=buyer@example.com
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.BuyerService - Updating buyer profile id=1
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.BuyerService - Updating buyer profile id=1
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.BuyerService - Registering buyer email=new@example.com
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.BuyerService - Buyer login attempt email=buyer@example.com
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.BuyerService - Buyer login attempt email=buyer@example.com
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=1 qty=3
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.CartItemService - Updating cart item id=1 qty=10
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.CartItemService - Clearing cart id=1
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=1 qty=3
+2026-03-03 11:43:52 [main] INFO  c.r.revshop.service.CartItemService - Updating cart item id=1 qty=10
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CartService - Finding or creating cart for userId=1
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CartService - Finding or creating cart for userId=1
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CartService - Creating cart for userId=1
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CartService - Creating cart for userId=1
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CategoryService - Updating category id=999
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CategoryService - Creating category name=Phones
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CategoryService - Deleting category id=999
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CategoryService - Creating category name=Electronics
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CategoryService - Creating category name=Electronics
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CategoryService - Updating category id=1
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CategoryService - Updating category id=1
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CategoryService - Deleting category id=1
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.CategoryService - Updating category id=1
+2026-03-03 11:43:53 [main] INFO  c.r.r.service.NotificationService - Marking notification id=1 as read
+2026-03-03 11:43:53 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=1 title=New Title
+2026-03-03 11:43:53 [main] INFO  c.r.r.service.NotificationService - Marking notification id=1 as read
+2026-03-03 11:43:53 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=1 title=Title
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.OrderItemService - Creating order item orderId=null productId=null qty=2
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.OrdersService - Updating order id=101 status=SHIPPED
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.OrdersService - Placing order for userId=1
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.OrdersService - Placing order for userId=1
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.OrdersService - Cancelling order id=101 userId=1
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=1 status=SUCCESS
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=100
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.PaymentsService - Deleting payment id=999
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=1 status=FAILED
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.PaymentsService - Deleting payment id=1
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=100
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=100
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=999
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=999 status=SUCCESS
+2026-03-03 11:43:53 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=1 status=REFUNDED
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Searching products keyword=   
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Searching products keyword=xyz
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Laptop
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Updating product id=999
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Deleting product id=999
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Laptop
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Searching products keyword=null
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Fetching product id=100
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Deleting product id=100
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Laptop
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Fetching product id=999
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Searching products keyword=laptop
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Laptop
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ProductService - Updating product id=100
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ReviewService - Updating review id=1
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ReviewService - Updating review id=1
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ReviewService - Deleting review id=1
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.ReviewService - Adding review for productId=1
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.SellerService - Registering seller email=new_seller@example.com
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.SellerService - Seller login attempt email=seller@example.com
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.SellerService - Seller login attempt email=seller@example.com
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.SellerService - Seller login attempt email=seller@example.com
+2026-03-03 11:43:54 [main] INFO  c.r.r.service.TrackingDetailsService - Deleting tracking id=1
+2026-03-03 11:43:54 [main] INFO  c.r.r.service.TrackingDetailsService - Adding tracking detail for orderId=100
+2026-03-03 11:43:54 [main] INFO  c.r.r.service.TrackingDetailsService - Updating tracking id=999 status=DELIVERED
+2026-03-03 11:43:54 [main] INFO  c.r.r.service.TrackingDetailsService - Updating tracking id=1 status=DELIVERED
+2026-03-03 11:43:54 [main] INFO  c.r.r.service.TrackingDetailsService - Adding tracking detail for orderId=999
+2026-03-03 11:43:54 [main] INFO  c.r.r.service.TrackingDetailsService - Deleting tracking id=999
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.UserService - Updating user id=1
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.UserService - Updating password for user id=1
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.UserService - Fetching all users
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.UserService - Updating password for user id=1
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.UserService - Updating user id=1
+2026-03-03 11:43:54 [main] INFO  c.r.revshop.service.UserService - Updating user id=1
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown initiated...
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown completed.
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown initiated...
+2026-03-03 11:43:54 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown completed.
+2026-03-03 11:55:05 [main] INFO  c.r.r.c.ProductControllerTest - Starting ProductControllerTest using Java 21.0.9 with PID 41408 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:55:05 [main] INFO  c.r.r.c.ProductControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-03 11:55:06 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-03-03 11:55:06 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-03-03 11:55:06 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+2026-03-03 11:55:06 [main] INFO  c.r.r.c.ProductControllerTest - Started ProductControllerTest in 1.943 seconds (process running for 7.388)
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - GET /api/products/search - keyword=head
+2026-03-03 11:55:06 [main] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - GET /api/products/1
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - DELETE /api/products/1
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - GET /api/products/1
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - GET /api/products/search - keyword=   
+2026-03-03 11:55:06 [main] WARN  c.r.r.e.GlobalExceptionHandler - Invalid input: /api/products/search - Search keyword is required
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - PUT /api/products/1
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - PUT /api/products/999
+2026-03-03 11:55:06 [main] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/products/999 - Product not found
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - DELETE /api/products/999
+2026-03-03 11:55:06 [main] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/products/999 - Product not found
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - GET /api/products/filter - minPrice=3000.0 maxPrice=5000.0 categoryId=1
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - GET /api/products/search - keyword=xyz
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - GET /api/products/999
+2026-03-03 11:55:06 [main] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/products/999 - Product not found
+2026-03-03 11:55:06 [main] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 11:55:07 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.controller.UserControllerTest]: UserControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:55:07 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.controller.UserControllerTest
+2026-03-03 11:55:07 [main] INFO  c.r.r.controller.UserControllerTest - Starting UserControllerTest using Java 21.0.9 with PID 41408 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:55:07 [main] INFO  c.r.r.controller.UserControllerTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-03 11:55:07 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-03-03 11:55:07 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-03-03 11:55:07 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 3 ms
+2026-03-03 11:55:07 [main] INFO  c.r.r.controller.UserControllerTest - Started UserControllerTest in 0.657 seconds (process running for 8.463)
+2026-03-03 11:55:07 [main] INFO  c.r.r.controller.UserController - GET /api/users/2
+2026-03-03 11:55:07 [main] WARN  c.r.r.e.GlobalExceptionHandler - Not found: /api/users/2 - User not found
+2026-03-03 11:55:07 [main] INFO  c.r.r.controller.UserController - GET /api/users
+2026-03-03 11:55:07 [main] TRACE o.s.s.w.c.CsrfTokenRequestAttributeHandler - Wrote a CSRF token to the following request attributes: [_csrf, org.springframework.security.web.csrf.CsrfToken]
+2026-03-03 11:55:07 [main] INFO  c.r.r.controller.UserController - PUT /api/users/1/profile
+2026-03-03 11:55:07 [main] TRACE o.s.s.w.c.CsrfTokenRequestAttributeHandler - Wrote a CSRF token to the following request attributes: [_csrf, org.springframework.security.web.csrf.CsrfToken]
+2026-03-03 11:55:07 [main] INFO  c.r.r.controller.UserController - PUT /api/users/1/password
+2026-03-03 11:55:07 [main] TRACE o.s.s.w.c.CsrfTokenRequestAttributeHandler - Wrote a CSRF token to the following request attributes: [_csrf, org.springframework.security.web.csrf.CsrfToken]
+2026-03-03 11:55:07 [main] INFO  c.r.r.controller.UserController - PATCH /api/users/1/name
+2026-03-03 11:55:07 [main] TRACE o.s.s.w.c.CsrfTokenRequestAttributeHandler - Wrote a CSRF token to the following request attributes: [_csrf, org.springframework.security.web.csrf.CsrfToken]
+2026-03-03 11:55:07 [main] INFO  c.r.r.controller.UserController - PUT /api/users/1/profile
+2026-03-03 11:55:07 [main] WARN  c.r.r.e.GlobalExceptionHandler - Invalid input: /api/users/1/profile - You cannot update another user's profile
+2026-03-03 11:55:07 [main] INFO  c.r.r.controller.UserController - GET /api/users/1
+2026-03-03 11:55:07 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.CartIntegrationTest]: CartIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:55:07 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.CartIntegrationTest
+2026-03-03 11:55:07 [main] INFO  c.r.r.i.CartIntegrationTest - Starting CartIntegrationTest using Java 21.0.9 with PID 41408 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:55:07 [main] INFO  c.r.r.i.CartIntegrationTest - The following 1 profile is active: "test"
+2026-03-03 11:55:09 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-03 11:55:09 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 107 ms. Found 15 JPA repository interfaces.
+2026-03-03 11:55:09 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-03-03 11:55:10 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:116db294-80b2-4154-aa9f-87f812ad0742 user=SA
+2026-03-03 11:55:10 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-03-03 11:55:10 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-03 11:55:10 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.1.Final
+2026-03-03 11:55:10 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-03 11:55:11 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:116db294-80b2-4154-aa9f-87f812ad0742]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: 116DB294-80B2-4154-AA9F-87F812AD0742/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-03 11:55:12 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-03 11:55:12 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:55:12 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-03 11:55:13 [main] TRACE o.s.s.c.a.a.c.AuthenticationConfiguration$EnableGlobalAuthenticationAutowiredConfigurer - Eagerly initializing {securityConfig=com.revature.revshop.security.SecurityConfig$$SpringCGLIB$$0@419b48cd}
+2026-03-03 11:55:13 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-03-03 11:55:13 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-03 11:55:14 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-03 11:55:14 [main] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-03-03 11:55:15 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-03-03 11:55:15 [main] INFO  c.r.r.i.CartIntegrationTest - Started CartIntegrationTest in 7.697 seconds (process running for 16.41)
+2026-03-03 11:55:15 [main] INFO  c.r.revshop.service.CartService - Finding or creating cart for userId=1
+2026-03-03 11:55:15 [main] INFO  c.r.revshop.service.CartService - Creating cart for userId=1
+2026-03-03 11:55:16 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=1 qty=1
+2026-03-03 11:55:16 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=2 qty=2
+2026-03-03 11:55:16 [main] INFO  c.r.revshop.service.CartItemService - Updating cart item id=2 qty=3
+2026-03-03 11:55:16 [main] INFO  c.r.revshop.service.CartItemService - Clearing cart id=1
+2026-03-03 11:55:16 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.CheckoutIntegrationTest]: CheckoutIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:55:16 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.CheckoutIntegrationTest
+2026-03-03 11:55:16 [main] INFO  c.r.r.i.CheckoutIntegrationTest - Starting CheckoutIntegrationTest using Java 21.0.9 with PID 41408 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:55:16 [main] INFO  c.r.r.i.CheckoutIntegrationTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-03 11:55:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-03 11:55:16 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 39 ms. Found 15 JPA repository interfaces.
+2026-03-03 11:55:16 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2026-03-03 11:55:16 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:ba7f7212-cfac-4dea-b381-950833660229 user=SA
+2026-03-03 11:55:16 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2026-03-03 11:55:16 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-03 11:55:16 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-03 11:55:16 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:ba7f7212-cfac-4dea-b381-950833660229]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: BA7F7212-CFAC-4DEA-B381-950833660229/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-03 11:55:16 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-03 11:55:16 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:55:17 [main] TRACE o.s.s.c.a.a.c.AuthenticationConfiguration$EnableGlobalAuthenticationAutowiredConfigurer - Eagerly initializing {securityConfig=com.revature.revshop.security.SecurityConfig$$SpringCGLIB$$0@3867e848}
+2026-03-03 11:55:17 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-03-03 11:55:17 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-03 11:55:17 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-03 11:55:17 [main] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-03-03 11:55:17 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-03-03 11:55:17 [main] INFO  c.r.r.i.CheckoutIntegrationTest - Started CheckoutIntegrationTest in 1.321 seconds (process running for 18.191)
+2026-03-03 11:55:17 [main] INFO  c.r.revshop.service.OrdersService - Placing order for userId=2
+2026-03-03 11:55:17 [main] INFO  c.r.revshop.service.OrderItemService - Creating order item orderId=1 productId=1 qty=5
+2026-03-03 11:55:17 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=1 title=New Order Received
+2026-03-03 11:55:17 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=2 title=Order Placed
+2026-03-03 11:55:17 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.PaymentTrackingIntegrationTest]: PaymentTrackingIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:55:17 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.PaymentTrackingIntegrationTest
+2026-03-03 11:55:17 [main] INFO  c.r.r.i.PaymentTrackingIntegrationTest - Starting PaymentTrackingIntegrationTest using Java 21.0.9 with PID 41408 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:55:17 [main] INFO  c.r.r.i.PaymentTrackingIntegrationTest - No active profile set, falling back to 1 default profile: "default"
+2026-03-03 11:55:17 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-03 11:55:17 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 35 ms. Found 15 JPA repository interfaces.
+2026-03-03 11:55:17 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
+2026-03-03 11:55:17 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:db93d30f-d293-4cff-bb29-7ea7b276e50f user=SA
+2026-03-03 11:55:17 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
+2026-03-03 11:55:17 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-03 11:55:18 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-03 11:55:18 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:db93d30f-d293-4cff-bb29-7ea7b276e50f]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: DB93D30F-D293-4CFF-BB29-7EA7B276E50F/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-03 11:55:18 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-03 11:55:18 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:55:18 [main] TRACE o.s.s.c.a.a.c.AuthenticationConfiguration$EnableGlobalAuthenticationAutowiredConfigurer - Eagerly initializing {securityConfig=com.revature.revshop.security.SecurityConfig$$SpringCGLIB$$0@6fa3905b}
+2026-03-03 11:55:18 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-03-03 11:55:18 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-03 11:55:18 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-03 11:55:18 [main] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-03-03 11:55:18 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-03-03 11:55:18 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-03-03 11:55:18 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-03-03 11:55:18 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 11 ms
+2026-03-03 11:55:18 [main] INFO  c.r.r.i.PaymentTrackingIntegrationTest - Started PaymentTrackingIntegrationTest in 1.131 seconds (process running for 19.412)
+2026-03-03 11:55:18 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:55:18 [main] DEBUG o.s.security.web.FilterChainProxy - Securing PUT /api/tracking/1
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:55:18 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:18 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing PUT /api/tracking/1
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on PUT /api/tracking/1 using org.springframework.security.authorization.AuthenticatedAuthorizationManager@7a8dcb79
+2026-03-03 11:55:18 [main] DEBUG o.s.security.web.FilterChainProxy - Secured PUT /api/tracking/1
+2026-03-03 11:55:18 [main] INFO  c.r.r.controller.TrackingController - PUT /api/tracking/1 - status=SHIPPED
+2026-03-03 11:55:18 [main] INFO  c.r.r.service.TrackingDetailsService - Updating tracking id=1 status=SHIPPED
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:55:18 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:55:18 [main] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/tracking
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:55:18 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:18 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:55:18 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing POST /api/tracking
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on POST /api/tracking using org.springframework.security.authorization.AuthenticatedAuthorizationManager@7a8dcb79
+2026-03-03 11:55:18 [main] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/tracking
+2026-03-03 11:55:18 [main] INFO  c.r.r.controller.TrackingController - POST /api/tracking - orderId=2
+2026-03-03 11:55:18 [main] INFO  c.r.r.service.TrackingDetailsService - Adding tracking detail for orderId=2
+2026-03-03 11:55:18 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:55:19 [main] DEBUG o.s.security.web.FilterChainProxy - Securing PUT /api/payments/1/status
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing PUT /api/payments/1/status
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on PUT /api/payments/1/status using org.springframework.security.authorization.AuthenticatedAuthorizationManager@7a8dcb79
+2026-03-03 11:55:19 [main] DEBUG o.s.security.web.FilterChainProxy - Secured PUT /api/payments/1/status
+2026-03-03 11:55:19 [main] INFO  c.r.r.controller.PaymentsController - PUT /api/payments/1/status - status=SUCCESS
+2026-03-03 11:55:19 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=1 status=SUCCESS
+2026-03-03 11:55:19 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=3 title=Payment Update
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:55:19 [main] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/payments
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing POST /api/payments
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on POST /api/payments using org.springframework.security.authorization.AuthenticatedAuthorizationManager@7a8dcb79
+2026-03-03 11:55:19 [main] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/payments
+2026-03-03 11:55:19 [main] INFO  c.r.r.controller.PaymentsController - POST /api/payments - orderId=4
+2026-03-03 11:55:19 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=4
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:55:19 [main] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/payments
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing POST /api/payments
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on POST /api/payments using org.springframework.security.authorization.AuthenticatedAuthorizationManager@7a8dcb79
+2026-03-03 11:55:19 [main] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/payments
+2026-03-03 11:55:19 [main] INFO  c.r.r.controller.PaymentsController - POST /api/payments - orderId=5
+2026-03-03 11:55:19 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=5
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:55:19 [main] DEBUG o.s.security.web.FilterChainProxy - Securing PUT /api/payments/3/status
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing PUT /api/payments/3/status
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on PUT /api/payments/3/status using org.springframework.security.authorization.AuthenticatedAuthorizationManager@7a8dcb79
+2026-03-03 11:55:19 [main] DEBUG o.s.security.web.FilterChainProxy - Secured PUT /api/payments/3/status
+2026-03-03 11:55:19 [main] INFO  c.r.r.controller.PaymentsController - PUT /api/payments/3/status - status=SUCCESS
+2026-03-03 11:55:19 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=3 status=SUCCESS
+2026-03-03 11:55:19 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=5 title=Payment Update
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:55:19 [main] DEBUG o.s.security.web.FilterChainProxy - Securing POST /api/tracking
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=testbuyer@example.com
+2026-03-03 11:55:19 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: testbuyer@example.com
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=testbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:55:19 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing POST /api/tracking
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on POST /api/tracking using org.springframework.security.authorization.AuthenticatedAuthorizationManager@7a8dcb79
+2026-03-03 11:55:19 [main] DEBUG o.s.security.web.FilterChainProxy - Secured POST /api/tracking
+2026-03-03 11:55:19 [main] INFO  c.r.r.controller.TrackingController - POST /api/tracking - orderId=5
+2026-03-03 11:55:19 [main] INFO  c.r.r.service.TrackingDetailsService - Adding tracking detail for orderId=5
+2026-03-03 11:55:19 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:55:19 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.ProductCatalogIntegrationTest]: ProductCatalogIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:55:19 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.ProductCatalogIntegrationTest
+2026-03-03 11:55:19 [main] INFO  c.r.r.i.ProductCatalogIntegrationTest - Starting ProductCatalogIntegrationTest using Java 21.0.9 with PID 41408 (started by Laddu in C:\Users\Laddu\Desktop\Project\RevShop)
+2026-03-03 11:55:19 [main] INFO  c.r.r.i.ProductCatalogIntegrationTest - The following 1 profile is active: "test"
+2026-03-03 11:55:19 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-03 11:55:19 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 24 ms. Found 15 JPA repository interfaces.
+2026-03-03 11:55:19 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Starting...
+2026-03-03 11:55:19 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-4 - Added connection conn30: url=jdbc:h2:mem:b4e2a6e7-3aca-4eb8-809f-74b566006399 user=SA
+2026-03-03 11:55:19 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Start completed.
+2026-03-03 11:55:19 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-03-03 11:55:19 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-03 11:55:19 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:b4e2a6e7-3aca-4eb8-809f-74b566006399]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: B4E2A6E7-3ACA-4EB8-809F-74B566006399/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-03 11:55:19 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-03 11:55:20 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:55:20 [main] TRACE o.s.s.c.a.a.c.AuthenticationConfiguration$EnableGlobalAuthenticationAutowiredConfigurer - Eagerly initializing {securityConfig=com.revature.revshop.security.SecurityConfig$$SpringCGLIB$$0@49b98db1}
+2026-03-03 11:55:20 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-03-03 11:55:20 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-03-03 11:55:20 [main] WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-03 11:55:20 [main] DEBUG o.s.s.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, JwtAuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-03-03 11:55:20 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-03-03 11:55:20 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-03-03 11:55:20 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-03-03 11:55:20 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 9 ms
+2026-03-03 11:55:20 [main] INFO  c.r.r.i.ProductCatalogIntegrationTest - Started ProductCatalogIntegrationTest in 1.127 seconds (process running for 21.255)
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Creating product name=4K Monitor
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - GET /api/products/1
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Fetching product id=1
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Ergonomic Chair
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.FavoriteController - POST /api/favorites/4/2
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.FavoriteService - Adding favorite buyerId=4 productId=2
+2026-03-03 11:55:20 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=3 title=Product Favorited
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.FavoriteController - POST /api/favorites/4/2
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.FavoriteService - Adding favorite buyerId=4 productId=2
+2026-03-03 11:55:20 [main] WARN  c.r.r.e.GlobalExceptionHandler - Invalid input: /api/favorites/4/2 - Product already in favorites
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.FavoriteController - GET /api/favorites/6
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Mechanical Keyboard
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - GET /api/products/search - keyword=Keyboard
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Searching products keyword=Keyboard
+2026-03-03 11:55:20 [main] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Desk Lamp
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.FavoriteController - POST /api/favorites/10/4
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.FavoriteService - Adding favorite buyerId=10 productId=4
+2026-03-03 11:55:20 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=9 title=Product Favorited
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.FavoriteController - DELETE /api/favorites/10/4
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.FavoriteService - Removing favorite buyerId=10 productId=4
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.FavoriteController - GET /api/favorites/10
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Webcam
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.FavoriteController - POST /api/favorites/12/5
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.FavoriteService - Adding favorite buyerId=12 productId=5
+2026-03-03 11:55:20 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=11 title=Product Favorited
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.FavoriteController - GET /api/favorites/12
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Gaming Mouse
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - GET /api/products - page=0 size=10
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Creating product name=USB Hub
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - GET /api/products/7
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Fetching product id=7
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.CategoryController - GET /api/categories/8
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - POST /api/products
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Portable SSD
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.FavoriteController - POST /api/favorites/18/8
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.FavoriteService - Adding favorite buyerId=18 productId=8
+2026-03-03 11:55:20 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=17 title=Product Favorited
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.FavoriteController - GET /api/favorites/18
+2026-03-03 11:55:20 [main] INFO  c.r.r.controller.ProductController - GET /api/products/8
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ProductService - Fetching product id=8
+2026-03-03 11:55:20 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.ProductDependencyIntegrationTest]: ProductDependencyIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:55:20 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.ProductDependencyIntegrationTest
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.CartService - Finding or creating cart for userId=2
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.CartService - Creating cart for userId=2
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=3 qty=1
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ReviewService - Adding review for productId=3
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.CartItemService - Clearing cart id=2
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ReviewService - Adding review for productId=4
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.CartService - Finding or creating cart for userId=4
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.CartService - Creating cart for userId=4
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=5 qty=1
+2026-03-03 11:55:20 [main] INFO  c.r.revshop.service.ReviewService - Adding review for productId=5
+2026-03-03 11:55:20 [main] WARN  org.hibernate.orm.jdbc.error - HHH000247: ErrorCode: 23503, SQLState: 23503
+2026-03-03 11:55:20 [main] WARN  org.hibernate.orm.jdbc.error - Referential integrity constraint violation: "FK1RE40CJEGSFVW58XRKDP6BAC6: PUBLIC.CART_ITEMS FOREIGN KEY(PRODUCT_ID) REFERENCES PUBLIC.PRODUCTS(PRODUCT_ID) (CAST(5 AS BIGINT))"; SQL statement:
+delete from products where product_id=? [23503-240]
+2026-03-03 11:55:20 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.integration.UserIntegrationTest]: UserIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:55:20 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.integration.UserIntegrationTest
+2026-03-03 11:55:21 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=intseller@example.com
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:55:21 [main] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/users/7
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:55:21 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=intseller@example.com
+2026-03-03 11:55:21 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: intseller@example.com
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=intseller@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_SELLER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_SELLER]]
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing GET /api/users/7
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on GET /api/users/7 using org.springframework.security.authorization.AuthenticatedAuthorizationManager@7a8dcb79
+2026-03-03 11:55:21 [main] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/users/7
+2026-03-03 11:55:21 [main] INFO  c.r.r.controller.UserController - GET /api/users/7
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:55:21 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=intbuyer@example.com
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Trying to match request against DefaultSecurityFilterChain defined as 'securityFilterChain' in [class path resource [com/revature/revshop/security/SecurityConfig.class]] matching [any request] and having filters [DisableEncodeUrl, WebAsyncManagerIntegration, SecurityContextHolder, HeaderWriter, Cors, Logout, JwtAuthentication, RequestCacheAware, SecurityContextHolderAwareRequest, AnonymousAuthentication, SessionManagement, ExceptionTranslation, Authorization] (1/1)
+2026-03-03 11:55:21 [main] DEBUG o.s.security.web.FilterChainProxy - Securing GET /api/users/10
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking DisableEncodeUrlFilter (1/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderFilter (3/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking HeaderWriterFilter (4/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking CorsFilter (5/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking LogoutFilter (6/13)
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.a.logout.LogoutFilter - Did not match request to Or [PathPattern [GET /logout], PathPattern [POST /logout], PathPattern [PUT /logout], PathPattern [DELETE /logout]]
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking JwtAuthenticationFilter (7/13)
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.c.SupplierDeferredSecurityContext - Created SecurityContextImpl [Null authentication]
+2026-03-03 11:55:21 [main] INFO  c.r.r.s.CustomUserDetailsService - Loading user details for email=intbuyer@example.com
+2026-03-03 11:55:21 [main] INFO  c.r.r.s.JwtAuthenticationFilter - Authenticated user: intbuyer@example.com
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking RequestCacheAwareFilter (8/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AnonymousAuthenticationFilter (10/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking SessionManagementFilter (11/13)
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.a.AnonymousAuthenticationFilter - Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=intbuyer@example.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_BUYER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=127.0.0.1, SessionId=null], Granted Authorities=[ROLE_BUYER]]
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.a.s.CompositeSessionAuthenticationStrategy - Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking ExceptionTranslationFilter (12/13)
+2026-03-03 11:55:21 [main] TRACE o.s.security.web.FilterChainProxy - Invoking AuthorizationFilter (13/13)
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Authorizing GET /api/users/10
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.a.i.RequestMatcherDelegatingAuthorizationManager - Checking authorization on GET /api/users/10 using org.springframework.security.authorization.AuthenticatedAuthorizationManager@7a8dcb79
+2026-03-03 11:55:21 [main] DEBUG o.s.security.web.FilterChainProxy - Secured GET /api/users/10
+2026-03-03 11:55:21 [main] INFO  c.r.r.controller.UserController - GET /api/users/10
+2026-03-03 11:55:21 [main] TRACE o.s.s.w.h.writers.HstsHeaderWriter - Not injecting HSTS header since it did not match request to [Is Secure]
+2026-03-03 11:55:21 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.revature.revshop.RevShopApplicationTests]: RevShopApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-03-03 11:55:21 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.revature.revshop.RevShopApplication for test class com.revature.revshop.RevShopApplicationTests
+2026-03-03 11:55:21 [main] INFO  c.r.revshop.service.AddressService - Updating address id=1
+2026-03-03 11:55:21 [main] INFO  c.r.revshop.service.AddressService - Adding address for userId=1
+2026-03-03 11:55:21 [main] INFO  c.r.revshop.service.AddressService - Adding address for userId=1
+2026-03-03 11:55:21 [main] INFO  c.r.revshop.service.AddressService - Deleting address id=1
+2026-03-03 11:55:21 [main] INFO  c.r.revshop.service.AddressService - Updating address id=1
+2026-03-03 11:55:21 [main] INFO  c.r.revshop.service.AddressService - Deleting address id=1
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.BuyerService - Buyer login attempt email=buyer@example.com
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.BuyerService - Updating buyer profile id=1
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.BuyerService - Updating buyer profile id=1
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.BuyerService - Registering buyer email=new@example.com
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.BuyerService - Buyer login attempt email=buyer@example.com
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.BuyerService - Buyer login attempt email=buyer@example.com
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=1 qty=3
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CartItemService - Updating cart item id=1 qty=10
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CartItemService - Clearing cart id=1
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CartItemService - Adding item to cart productId=1 qty=3
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CartItemService - Updating cart item id=1 qty=10
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CartService - Finding or creating cart for userId=1
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CartService - Finding or creating cart for userId=1
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CartService - Creating cart for userId=1
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CartService - Creating cart for userId=1
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CategoryService - Updating category id=999
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CategoryService - Creating category name=Phones
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CategoryService - Deleting category id=999
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CategoryService - Creating category name=Electronics
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CategoryService - Creating category name=Electronics
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CategoryService - Updating category id=1
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CategoryService - Updating category id=1
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CategoryService - Deleting category id=1
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.CategoryService - Updating category id=1
+2026-03-03 11:55:22 [main] INFO  c.r.r.service.NotificationService - Marking notification id=1 as read
+2026-03-03 11:55:22 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=1 title=New Title
+2026-03-03 11:55:22 [main] INFO  c.r.r.service.NotificationService - Marking notification id=1 as read
+2026-03-03 11:55:22 [main] INFO  c.r.r.service.NotificationService - Creating notification for userId=1 title=Title
+2026-03-03 11:55:22 [main] INFO  c.r.revshop.service.OrderItemService - Creating order item orderId=null productId=null qty=2
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.OrdersService - Updating order id=101 status=SHIPPED
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.OrdersService - Placing order for userId=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.OrdersService - Placing order for userId=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.OrdersService - Cancelling order id=101 userId=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=1 status=SUCCESS
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=100
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.PaymentsService - Deleting payment id=999
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=1 status=FAILED
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.PaymentsService - Deleting payment id=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=100
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=100
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.PaymentsService - Creating payment for orderId=999
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=999 status=SUCCESS
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.PaymentsService - Updating payment id=1 status=REFUNDED
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Searching products keyword=   
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Searching products keyword=xyz
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Laptop
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Updating product id=999
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Deleting product id=999
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Laptop
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Searching products keyword=null
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Fetching product id=100
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Deleting product id=100
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Laptop
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Fetching product id=999
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Searching products keyword=laptop
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Creating product name=Laptop
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ProductService - Updating product id=100
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ReviewService - Updating review id=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ReviewService - Updating review id=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ReviewService - Deleting review id=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.ReviewService - Adding review for productId=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.SellerService - Registering seller email=new_seller@example.com
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.SellerService - Seller login attempt email=seller@example.com
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.SellerService - Seller login attempt email=seller@example.com
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.SellerService - Seller login attempt email=seller@example.com
+2026-03-03 11:55:23 [main] INFO  c.r.r.service.TrackingDetailsService - Deleting tracking id=1
+2026-03-03 11:55:23 [main] INFO  c.r.r.service.TrackingDetailsService - Adding tracking detail for orderId=100
+2026-03-03 11:55:23 [main] INFO  c.r.r.service.TrackingDetailsService - Updating tracking id=999 status=DELIVERED
+2026-03-03 11:55:23 [main] INFO  c.r.r.service.TrackingDetailsService - Updating tracking id=1 status=DELIVERED
+2026-03-03 11:55:23 [main] INFO  c.r.r.service.TrackingDetailsService - Adding tracking detail for orderId=999
+2026-03-03 11:55:23 [main] INFO  c.r.r.service.TrackingDetailsService - Deleting tracking id=999
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.UserService - Updating user id=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.UserService - Updating password for user id=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.UserService - Fetching all users
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.UserService - Updating password for user id=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.UserService - Updating user id=1
+2026-03-03 11:55:23 [main] INFO  c.r.revshop.service.UserService - Updating user id=1
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown initiated...
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown completed.
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown initiated...
+2026-03-03 11:55:23 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown completed.
