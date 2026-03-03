@@ -29,9 +29,9 @@ public class CartController {
         private final ProductRepository productRepository;
 
         public CartController(CartService cartService,
-                        CartItemService cartItemService,
-                        UserRepository userRepository,
-                        ProductRepository productRepository) {
+                              CartItemService cartItemService,
+                              UserRepository userRepository,
+                              ProductRepository productRepository) {
                 this.cartService = cartService;
                 this.cartItemService = cartItemService;
                 this.userRepository = userRepository;
@@ -39,23 +39,24 @@ public class CartController {
         }
 
         @PostMapping("/user/{userId}/add")
-        public ResponseEntity<ApiResponse<CartItem>> addItemToCart(
-                        @PathVariable Long userId,
-                        @Valid @RequestBody CartItemDTO request) {
+        public ResponseEntity<ApiResponse<Void>> addItemToCart(
+                @PathVariable Long userId,
+                @Valid @RequestBody CartItemDTO request) {
 
                 log.info("POST /api/carts/user/{}/add - productId={}", userId, request.getProductId());
 
                 User user = userRepository.findById(userId)
-                                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
+                        .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
 
                 Product product = productRepository.findById(request.getProductId())
-                                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+                        .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
                 Cart cart = cartService.findOrCreateCart(user);
-                CartItem item = cartItemService.addItemToCart(cart, product, request.getQuantity());
+                // We still perform the logic, but we don't send the 'item' back in the response
+                cartItemService.addItemToCart(cart, product, request.getQuantity());
 
                 return ResponseEntity.status(HttpStatus.CREATED)
-                                .body(new ApiResponse<>("Item added to cart successfully", item));
+                        .body(new ApiResponse<>("Item added to cart successfully", null));
         }
 
         @GetMapping("/user/{userId}")
@@ -64,15 +65,15 @@ public class CartController {
                 log.info("GET /api/carts/user/{}", userId);
 
                 User user = userRepository.findById(userId)
-                                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
+                        .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
 
                 Cart cart = cartService.getCartByUser(user)
-                                .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
+                        .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
 
                 CartDTO dto = convertToDto(cart);
 
                 return ResponseEntity.ok(
-                                new ApiResponse<>("Cart fetched successfully", dto));
+                        new ApiResponse<>("Cart fetched successfully", dto));
         }
 
         @DeleteMapping("/user/{userId}/clear")
@@ -81,15 +82,15 @@ public class CartController {
                 log.info("DELETE /api/carts/user/{}/clear", userId);
 
                 User user = userRepository.findById(userId)
-                                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
+                        .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
 
                 Cart cart = cartService.getCartByUser(user)
-                                .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
+                        .orElseThrow(() -> new ResourceNotFoundException("Cart not found"));
 
                 cartItemService.clearCart(cart);
 
                 return ResponseEntity.ok(
-                                new ApiResponse<>("Cart cleared successfully", null));
+                        new ApiResponse<>("Cart cleared successfully", null));
         }
 
         private CartDTO convertToDto(Cart cart) {
@@ -98,20 +99,20 @@ public class CartController {
                 dto.setCartId(cart.getCartId());
 
                 List<CartItemDTO> itemDtos = cart.getCartItems().stream()
-                                .map(item -> new CartItemDTO(
-                                                item.getCartItemId(),
-                                                item.getProduct().getProductId(),
-                                                item.getQuantity(),
-                                                item.getProduct().getName(),
-                                                item.getProduct().getSellingPrice()))
-                                .toList();
+                        .map(item -> new CartItemDTO(
+                                item.getCartItemId(),
+                                item.getProduct().getProductId(),
+                                item.getQuantity(),
+                                item.getProduct().getName(),
+                                item.getProduct().getSellingPrice()))
+                        .toList();
 
                 dto.setItems(itemDtos);
 
                 BigDecimal total = itemDtos.stream()
-                                .map(item -> item.getPrice()
-                                                .multiply(BigDecimal.valueOf(item.getQuantity())))
-                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                        .map(item -> item.getPrice()
+                                .multiply(BigDecimal.valueOf(item.getQuantity())))
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
 
                 dto.setTotalPrice(total);
 

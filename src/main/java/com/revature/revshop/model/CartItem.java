@@ -2,6 +2,7 @@ package com.revature.revshop.model;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore; // Added this import
 
 @Entity
 @Table(name = "cart_items")
@@ -14,6 +15,7 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
+    @JsonIgnore // Added this to prevent circular reference crash
     private Cart cart;
 
     @ManyToOne

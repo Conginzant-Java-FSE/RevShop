@@ -84,4 +84,17 @@ public class OrdersController {
         OrderResponseDTO updated = ordersService.updateOrderStatus(orderId, status, sellerId);
         return ResponseEntity.ok(new ApiResponse<>("Order status updated", updated));
     }
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<ApiResponse<OrderResponseDTO>> getOrderById(@PathVariable Long orderId) {
+        OrderResponseDTO order = ordersService.getOrderById(orderId);
+        return ResponseEntity.ok(new ApiResponse<>("Order fetched successfully", order));
+    }
+
+    @GetMapping("/{orderId}/tracking")
+    public ResponseEntity<ApiResponse<List<TrackingDetailsDTO>>> getOrderTracking(@PathVariable Long orderId) {
+        List<TrackingDetailsDTO> tracking = ordersService.getOrderTracking(orderId);
+        return ResponseEntity.ok(new ApiResponse<>("Tracking details fetched successfully", tracking));
+    }
+
 }
