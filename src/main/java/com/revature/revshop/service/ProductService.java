@@ -130,6 +130,7 @@ public class ProductService {
         product.setStockQuantity(dto.getStockQuantity());
         product.setThresholdQuantity(dto.getThresholdQuantity());
         product.setIsActive(dto.getIsActive());
+        product.setImageUrl(dto.getImageUrl());
     }
 
     private ProductDTO convertToDTO(Product product) {
@@ -145,7 +146,32 @@ public class ProductService {
         dto.setIsActive(product.getIsActive());
         dto.setCategoryId(product.getCategory().getCategoryId());
         dto.setSellerId(product.getSeller().getUserId());
+        dto.setImageUrl(product.getImageUrl());
+        dto.setCategoryName(product.getCategory().getName());
+        dto.setSellerName(product.getSeller().getUser() != null ? product.getSeller().getUser().getName() : "");
 
         return dto;
+    }
+
+    public Page<ProductDTO> getProductsBySeller(Long sellerId, Pageable pageable) {
+        log.info("Fetching products for sellerId={}", sellerId);
+
+        Seller seller = sellerRepository.findById(sellerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Seller not found"));
+
+        return productRepository.findBySeller(seller, pageable)
+                .map(this::convertToDTO);
+    }
+
+    public ProductDTO toggleActive(Long id) {
+        log.info("Toggling active status for product id={}", id);
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+        product.setIsActive(!product.getIsActive());
+        Product saved = productRepository.save(product);
+
+        return convertToDTO(saved);
     }
 }
