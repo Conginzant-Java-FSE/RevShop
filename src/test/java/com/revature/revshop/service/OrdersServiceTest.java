@@ -36,6 +36,8 @@ class OrdersServiceTest {
     private TrackingDetailsRepository trackingDetailsRepository;
     @Mock
     private OrderItemService orderItemService;
+    @Mock
+    private EmailService emailService;
 
     private OrdersService ordersService;
 
@@ -50,7 +52,8 @@ class OrdersServiceTest {
         ordersService = new OrdersService(
                 ordersRepository, userRepository,
                 addressRepository, productRepository, notificationService,
-                paymentsRepository, trackingDetailsRepository, orderItemService);
+                paymentsRepository, trackingDetailsRepository, orderItemService,
+                emailService);
 
         testUser = new User();
         testUser.setUserId(1L);

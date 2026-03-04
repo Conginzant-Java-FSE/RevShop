@@ -34,6 +34,7 @@ public class OrdersService {
     private final PaymentsRepository paymentsRepository;
     private final TrackingDetailsRepository trackingDetailsRepository;
     private final OrderItemService orderItemService;
+    private final EmailService emailService;
 
     public OrdersService(OrdersRepository ordersRepository,
             UserRepository userRepository,
@@ -42,7 +43,8 @@ public class OrdersService {
             NotificationService notificationService,
             PaymentsRepository paymentsRepository,
             TrackingDetailsRepository trackingDetailsRepository,
-            OrderItemService orderItemService) {
+            OrderItemService orderItemService,
+            EmailService emailService) {
         this.ordersRepository = ordersRepository;
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
@@ -51,6 +53,7 @@ public class OrdersService {
         this.paymentsRepository = paymentsRepository;
         this.trackingDetailsRepository = trackingDetailsRepository;
         this.orderItemService = orderItemService;
+        this.emailService = emailService;
     }
 
     public OrderResponseDTO placeOrder(Long userId, OrderRequestDTO request) {
@@ -140,6 +143,12 @@ public class OrdersService {
                 userId,
                 "Order Placed",
                 "Your order " + finalOrder.getOrderNumber() + " has been placed successfully.");
+
+        try {
+            emailService.sendOrderConfirmation(finalOrder, user.getEmail());
+        } catch (Exception e) {
+            log.warn("Email send failed", e);
+        }
 
         String rawMethod = request.getPaymentMethod() != null ? request.getPaymentMethod().toUpperCase() : "COD";
         Payments.PaymentMethod payMethod;
@@ -284,6 +293,14 @@ public class OrdersService {
                 saved.getUser().getUserId(),
                 "Order Status Updated",
                 "Your order " + saved.getOrderNumber() + " is now " + newStatus.name() + ".");
+
+        if (newStatus == Orders.OrderStatus.SHIPPED) {
+            try {
+                emailService.sendShippingNotification(saved, saved.getUser().getEmail());
+            } catch (Exception e) {
+                log.warn("Email send failed", e);
+            }
+        }
 
         return new OrderResponseDTO(
                 saved.getOrderId(),
