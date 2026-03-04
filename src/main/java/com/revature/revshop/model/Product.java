@@ -44,6 +44,9 @@ public class Product {
     @Column(nullable = false)
     private Boolean isActive = true;
 
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Favorite> favorites = new ArrayList<>();
 
@@ -152,5 +155,13 @@ public class Product {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

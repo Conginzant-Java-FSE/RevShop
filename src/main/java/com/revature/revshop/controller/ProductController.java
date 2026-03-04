@@ -143,4 +143,38 @@ public class ProductController {
                                                 "Filtered products fetched successfully",
                                                 products));
         }
+
+        @GetMapping("/seller/{sellerId}")
+        public ResponseEntity<ApiResponse<Page<ProductDTO>>> getProductsBySeller(
+                        @PathVariable Long sellerId,
+                        @RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "10") int size,
+                        @RequestParam(defaultValue = "productId") String sortBy,
+                        @RequestParam(defaultValue = "asc") String direction) {
+
+                Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+                                : Sort.by(sortBy).descending();
+                Pageable pageable = PageRequest.of(page, size, sort);
+
+                log.info("GET /api/products/seller/{} - page={} size={}", sellerId, page, size);
+                Page<ProductDTO> products = productService.getProductsBySeller(sellerId, pageable);
+
+                return ResponseEntity.ok(
+                                new ApiResponse<>(
+                                                "Seller products fetched successfully",
+                                                products));
+        }
+
+        @PatchMapping("/{id}/toggle-active")
+        public ResponseEntity<ApiResponse<ProductDTO>> toggleActive(
+                        @PathVariable Long id) {
+
+                log.info("PATCH /api/products/{}/toggle-active", id);
+                ProductDTO toggled = productService.toggleActive(id);
+
+                return ResponseEntity.ok(
+                                new ApiResponse<>(
+                                                "Product active status toggled successfully",
+                                                toggled));
+        }
 }

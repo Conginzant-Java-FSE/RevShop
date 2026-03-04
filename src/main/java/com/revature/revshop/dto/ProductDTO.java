@@ -36,6 +36,10 @@ public class ProductDTO {
     @NotNull(message = "Seller ID is required")
     private Long sellerId;
 
+    private String imageUrl;
+    private String categoryName;
+    private String sellerName;
+
     /**
      * Default constructor for Jackson deserialization.
      */
@@ -120,5 +124,29 @@ public class ProductDTO {
 
     public void setSellerId(Long sellerId) {
         this.sellerId = sellerId;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
     }
 }
