@@ -105,4 +105,15 @@ public class OrdersController {
         return ResponseEntity.ok(new ApiResponse<>("Stats fetched", stats));
     }
 
+    @PutMapping("/{orderId}/return")
+    public ResponseEntity<ApiResponse<Void>> requestReturn(
+            @PathVariable Long orderId,
+            @RequestBody Map<String, Object> body) {
+        Long userId = Long.parseLong(body.get("userId").toString());
+        String reason = body.getOrDefault("reason", "No reason provided").toString();
+        log.info("PUT /api/orders/{}/return - userId={}", orderId, userId);
+        ordersService.requestReturn(orderId, userId, reason);
+        return ResponseEntity.ok(new ApiResponse<>("Return request submitted", null));
+    }
+
 }

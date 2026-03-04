@@ -200,6 +200,29 @@ public class OrdersService {
                 "Your order " + order.getOrderNumber() + " has been cancelled.");
     }
 
+    public void requestReturn(Long orderId, Long userId, String reason) {
+        log.info("Requesting return for orderId={} userId={}", orderId, userId);
+        Orders order = ordersRepository.findById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException("Order not found"));
+
+        if (!order.getUser().getUserId().equals(userId)) {
+            throw new AccessDeniedException("You are not authorized to return this order");
+        }
+
+        if (order.getStatus() != Orders.OrderStatus.DELIVERED) {
+            throw new InvalidOrderStateException("Only delivered orders can be returned");
+        }
+
+        order.setStatus(Orders.OrderStatus.RETURN_REQUESTED);
+        Orders savedOrder = ordersRepository.save(order);
+        createTrackingDetail(savedOrder, "RETURN_REQUESTED", "Return requested: " + reason);
+
+        notificationService.createNotification(
+                userId,
+                "Return Requested",
+                "Your return for order " + order.getOrderNumber() + " has been submitted.");
+    }
+
     public List<OrderResponseDTO> getOrdersByUser(Long userId) {
         log.info("Fetching orders for userId={}", userId);
         List<Orders> orders = ordersRepository.findByUser_UserId(userId);
@@ -334,6 +357,10 @@ public class OrdersService {
                 return "Order has been delivered successfully.";
             case CANCELLED:
                 return "Order has been cancelled.";
+            case RETURN_REQUESTED:
+                return "Return request has been submitted.";
+            case RETURN_APPROVED:
+                return "Return request has been approved.";
             default:
                 return "Order status updated to " + status.name();
         }
