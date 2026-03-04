@@ -148,7 +148,7 @@ public class ProductController {
         public ResponseEntity<ApiResponse<Page<ProductDTO>>> getProductsBySeller(
                         @PathVariable Long sellerId,
                         @RequestParam(defaultValue = "0") int page,
-                        @RequestParam(defaultValue = "10") int size,
+                        @RequestParam(defaultValue = "20") int size,
                         @RequestParam(defaultValue = "productId") String sortBy,
                         @RequestParam(defaultValue = "asc") String direction) {
 
@@ -158,23 +158,14 @@ public class ProductController {
 
                 log.info("GET /api/products/seller/{} - page={} size={}", sellerId, page, size);
                 Page<ProductDTO> products = productService.getProductsBySeller(sellerId, pageable);
-
-                return ResponseEntity.ok(
-                                new ApiResponse<>(
-                                                "Seller products fetched successfully",
-                                                products));
+                return ResponseEntity.ok(new ApiResponse<>("Products fetched successfully", products));
         }
 
         @PatchMapping("/{id}/toggle-active")
-        public ResponseEntity<ApiResponse<ProductDTO>> toggleActive(
-                        @PathVariable Long id) {
+        public ResponseEntity<ApiResponse<ProductDTO>> toggleActive(@PathVariable Long id) {
 
                 log.info("PATCH /api/products/{}/toggle-active", id);
-                ProductDTO toggled = productService.toggleActive(id);
-
-                return ResponseEntity.ok(
-                                new ApiResponse<>(
-                                                "Product active status toggled successfully",
-                                                toggled));
+                ProductDTO updated = productService.toggleActive(id);
+                return ResponseEntity.ok(new ApiResponse<>("Product status toggled", updated));
         }
 }

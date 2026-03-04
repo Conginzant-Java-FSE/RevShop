@@ -27,4 +27,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     List<Product> findByStockQuantityLessThanEqual(Integer thresholdQuantity);
 
+    Page<Product> findBySeller(Seller seller, Pageable pageable);
+
 }

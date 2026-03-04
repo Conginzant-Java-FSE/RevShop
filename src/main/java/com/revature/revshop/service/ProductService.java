@@ -13,6 +13,7 @@ import com.revature.revshop.repository.SellerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -122,6 +123,28 @@ public class ProductService {
                 .map(this::convertToDTO);
     }
 
+    public Page<ProductDTO> getProductsBySeller(Long sellerId, Pageable pageable) {
+        log.info("Fetching products for sellerId={}", sellerId);
+
+        Seller seller = sellerRepository.findById(sellerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Seller not found"));
+
+        return productRepository.findBySeller(seller, pageable)
+                .map(this::convertToDTO);
+    }
+
+    public ProductDTO toggleActive(Long id) {
+        log.info("Toggling active status for product id={}", id);
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+        product.setIsActive(!product.getIsActive());
+        Product saved = productRepository.save(product);
+
+        return convertToDTO(saved);
+    }
+
     private void mapDtoToEntity(ProductDTO dto, Product product) {
         product.setName(dto.getName());
         product.setDescription(dto.getDescription());
@@ -151,27 +174,5 @@ public class ProductService {
         dto.setSellerName(product.getSeller().getUser() != null ? product.getSeller().getUser().getName() : "");
 
         return dto;
-    }
-
-    public Page<ProductDTO> getProductsBySeller(Long sellerId, Pageable pageable) {
-        log.info("Fetching products for sellerId={}", sellerId);
-
-        Seller seller = sellerRepository.findById(sellerId)
-                .orElseThrow(() -> new ResourceNotFoundException("Seller not found"));
-
-        return productRepository.findBySeller(seller, pageable)
-                .map(this::convertToDTO);
-    }
-
-    public ProductDTO toggleActive(Long id) {
-        log.info("Toggling active status for product id={}", id);
-
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
-
-        product.setIsActive(!product.getIsActive());
-        Product saved = productRepository.save(product);
-
-        return convertToDTO(saved);
     }
 }
