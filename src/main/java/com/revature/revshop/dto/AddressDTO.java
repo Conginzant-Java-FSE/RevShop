@@ -3,6 +3,8 @@ package com.revature.revshop.dto;
 import jakarta.validation.constraints.NotBlank;
 
 public class AddressDTO {
+    private Long addressId;
+
     @NotBlank(message = "address line is required")
     private String addressLine;
 
@@ -39,6 +41,14 @@ public class AddressDTO {
         this.country = country;
         this.zipCode = zipCode;
         this.isDefault = isDefault;
+    }
+
+    public Long getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId) {
+        this.addressId = addressId;
     }
 
     public Long getUserId() {
