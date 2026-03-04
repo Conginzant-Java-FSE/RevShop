@@ -13,6 +13,7 @@ import com.revature.revshop.repository.SellerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -120,6 +121,22 @@ public class ProductService {
 
         return productRepository.findAll(spec, pageable)
                 .map(this::convertToDTO);
+    }
+
+    public Page<ProductDTO> getProductsBySeller(Long sellerId, int page, int size) {
+        log.info("Fetching products for sellerId={}", sellerId);
+        Seller seller = sellerRepository.findById(sellerId)
+                .orElseThrow(() -> new UserNotFoundException("Seller not found"));
+        return productRepository.findBySeller(seller, PageRequest.of(page, size))
+                .map(this::convertToDTO);
+    }
+
+    public ProductDTO toggleActive(Long id) {
+        log.info("Toggling active status for product id={}", id);
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        product.setIsActive(!product.getIsActive());
+        return convertToDTO(productRepository.save(product));
     }
 
     private void mapDtoToEntity(ProductDTO dto, Product product) {

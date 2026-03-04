@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -95,6 +96,13 @@ public class OrdersController {
     public ResponseEntity<ApiResponse<List<TrackingDetailsDTO>>> getOrderTracking(@PathVariable Long orderId) {
         List<TrackingDetailsDTO> tracking = ordersService.getOrderTracking(orderId);
         return ResponseEntity.ok(new ApiResponse<>("Tracking details fetched successfully", tracking));
+    }
+
+    @GetMapping("/seller/{sellerId}/stats")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getSellerStats(@PathVariable Long sellerId) {
+        log.info("GET /api/orders/seller/{}/stats", sellerId);
+        Map<String, Object> stats = ordersService.getSellerStats(sellerId);
+        return ResponseEntity.ok(new ApiResponse<>("Stats fetched", stats));
     }
 
 }

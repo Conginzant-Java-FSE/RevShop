@@ -143,4 +143,23 @@ public class ProductController {
                                                 "Filtered products fetched successfully",
                                                 products));
         }
+
+        @GetMapping("/seller/{sellerId}")
+        public ResponseEntity<ApiResponse<Page<ProductDTO>>> getProductsBySeller(
+                        @PathVariable Long sellerId,
+                        @RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "20") int size) {
+
+                log.info("GET /api/products/seller/{}", sellerId);
+                Page<ProductDTO> products = productService.getProductsBySeller(sellerId, page, size);
+                return ResponseEntity.ok(new ApiResponse<>("Products fetched successfully", products));
+        }
+
+        @PatchMapping("/{id}/toggle-active")
+        public ResponseEntity<ApiResponse<ProductDTO>> toggleActive(@PathVariable Long id) {
+
+                log.info("PATCH /api/products/{}/toggle-active", id);
+                ProductDTO updated = productService.toggleActive(id);
+                return ResponseEntity.ok(new ApiResponse<>("Product status toggled", updated));
+        }
 }

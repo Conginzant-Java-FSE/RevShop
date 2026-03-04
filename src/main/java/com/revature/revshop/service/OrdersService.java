@@ -13,7 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,13 +36,13 @@ public class OrdersService {
     private final OrderItemService orderItemService;
 
     public OrdersService(OrdersRepository ordersRepository,
-                         UserRepository userRepository,
-                         AddressRepository addressRepository,
-                         ProductRepository productRepository,
-                         NotificationService notificationService,
-                         PaymentsRepository paymentsRepository,
-                         TrackingDetailsRepository trackingDetailsRepository,
-                         OrderItemService orderItemService) {
+            UserRepository userRepository,
+            AddressRepository addressRepository,
+            ProductRepository productRepository,
+            NotificationService notificationService,
+            PaymentsRepository paymentsRepository,
+            TrackingDetailsRepository trackingDetailsRepository,
+            OrderItemService orderItemService) {
         this.ordersRepository = ordersRepository;
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
@@ -277,8 +282,8 @@ public class OrdersService {
                         item.getProduct().getName(),
                         item.getQuantity(),
                         item.getPriceAtPurchase(),
-                        item.getPriceAtPurchase().multiply(BigDecimal.valueOf(item.getQuantity()))
-                )).toList();
+                        item.getPriceAtPurchase().multiply(BigDecimal.valueOf(item.getQuantity()))))
+                .toList();
 
         return new OrderResponseDTO(
                 order.getOrderId(),
@@ -317,12 +322,61 @@ public class OrdersService {
 
     private String getTrackingDescriptionForStatus(Orders.OrderStatus status) {
         switch (status) {
-            case PENDING: return "Order placed and pending approval.";
-            case PROCESSING: return "Order is being processed and packed.";
-            case SHIPPED: return "Order has been shipped and is on its way.";
-            case DELIVERED: return "Order has been delivered successfully.";
-            case CANCELLED: return "Order has been cancelled.";
-            default: return "Order status updated to " + status.name();
+            case PENDING:
+                return "Order placed and pending approval.";
+            case PROCESSING:
+                return "Order is being processed and packed.";
+            case SHIPPED:
+                return "Order has been shipped and is on its way.";
+            case DELIVERED:
+                return "Order has been delivered successfully.";
+            case CANCELLED:
+                return "Order has been cancelled.";
+            default:
+                return "Order status updated to " + status.name();
         }
+    }
+
+    public Map<String, Object> getSellerStats(Long sellerId) {
+        List<Orders> sellerOrders = ordersRepository.findOrdersBySellerId(sellerId);
+
+        BigDecimal totalRevenue = sellerOrders.stream()
+                .map(Orders::getTotalAmount)
+                .filter(a -> a != null)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        Map<String, Long> ordersByStatus = sellerOrders.stream()
+                .collect(Collectors.groupingBy(o -> o.getStatus().name(), Collectors.counting()));
+
+        Map<String, Integer> productUnits = new HashMap<>();
+        for (Orders order : sellerOrders) {
+            if (order.getOrderItems() == null)
+                continue;
+            for (OrderItems item : order.getOrderItems()) {
+                if (item.getProduct() != null
+                        && item.getProduct().getSeller() != null
+                        && item.getProduct().getSeller().getUser().getUserId().equals(sellerId)) {
+                    productUnits.merge(item.getProduct().getName(), item.getQuantity(), Integer::sum);
+                }
+            }
+        }
+
+        List<Map<String, Object>> topProducts = productUnits.entrySet().stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue(Comparator.reverseOrder()))
+                .limit(5)
+                .map(e -> {
+                    Map<String, Object> entry = new LinkedHashMap<>();
+                    entry.put("productName", e.getKey());
+                    entry.put("unitsSold", e.getValue());
+                    return entry;
+                })
+                .collect(Collectors.toList());
+
+        Map<String, Object> stats = new LinkedHashMap<>();
+        stats.put("totalRevenue", totalRevenue);
+        stats.put("totalOrders", sellerOrders.size());
+        stats.put("ordersByStatus", ordersByStatus);
+        stats.put("topProducts", topProducts);
+        return stats;
     }
 }
