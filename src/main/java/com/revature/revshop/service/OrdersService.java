@@ -22,7 +22,6 @@ public class OrdersService {
     private static final Logger log = LoggerFactory.getLogger(OrdersService.class);
 
     private final OrdersRepository ordersRepository;
-
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final ProductRepository productRepository;
@@ -32,17 +31,14 @@ public class OrdersService {
     private final OrderItemService orderItemService;
 
     public OrdersService(OrdersRepository ordersRepository,
-
-            UserRepository userRepository,
-            AddressRepository addressRepository,
-            ProductRepository productRepository,
-            NotificationService notificationService,
-            PaymentsRepository paymentsRepository,
-            TrackingDetailsRepository trackingDetailsRepository,
-            OrderItemService orderItemService) {
-
+                         UserRepository userRepository,
+                         AddressRepository addressRepository,
+                         ProductRepository productRepository,
+                         NotificationService notificationService,
+                         PaymentsRepository paymentsRepository,
+                         TrackingDetailsRepository trackingDetailsRepository,
+                         OrderItemService orderItemService) {
         this.ordersRepository = ordersRepository;
-
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.productRepository = productRepository;
@@ -88,7 +84,6 @@ public class OrdersService {
         List<OrderItemResponseDTO> responseItems = new ArrayList<>();
 
         for (OrderItemRequestDTO itemDTO : request.getItems()) {
-
             Product product = productRepository.findById(itemDTO.getProductId())
                     .orElseThrow(() -> new ProductNotFoundException("Product not found"));
 
@@ -99,7 +94,6 @@ public class OrdersService {
             product.setStockQuantity(product.getStockQuantity() - itemDTO.getQuantity());
             Product savedProduct = productRepository.save(product);
 
-            // Threshold Alert: Notify seller if stock is low
             if (savedProduct.getStockQuantity() < savedProduct.getThresholdQuantity()) {
                 if (savedProduct.getSeller() != null && savedProduct.getSeller().getUser() != null) {
                     notificationService.createNotification(
@@ -114,8 +108,7 @@ public class OrdersService {
             BigDecimal price = product.getSellingPrice();
             BigDecimal subtotal = price.multiply(BigDecimal.valueOf(itemDTO.getQuantity()));
 
-            orderItemService.createOrderItem(savedOrder, product,
-                    itemDTO.getQuantity());
+            orderItemService.createOrderItem(savedOrder, product, itemDTO.getQuantity());
 
             totalAmount = totalAmount.add(subtotal);
 
@@ -126,7 +119,6 @@ public class OrdersService {
                     price,
                     subtotal));
 
-            // Notify the seller whose product was ordered
             if (product.getSeller() != null && product.getSeller().getUser() != null) {
                 notificationService.createNotification(
                         product.getSeller().getUser().getUserId(),
@@ -144,10 +136,7 @@ public class OrdersService {
                 "Order Placed",
                 "Your order " + finalOrder.getOrderNumber() + " has been placed successfully.");
 
-        // ── Create Payment Record ──────────────────────────────────────
-        String rawMethod = request.getPaymentMethod() != null
-                ? request.getPaymentMethod().toUpperCase()
-                : "COD";
+        String rawMethod = request.getPaymentMethod() != null ? request.getPaymentMethod().toUpperCase() : "COD";
         Payments.PaymentMethod payMethod;
         try {
             payMethod = Payments.PaymentMethod.valueOf(rawMethod);
@@ -156,24 +145,18 @@ public class OrdersService {
         }
 
         boolean isCod = payMethod == Payments.PaymentMethod.COD;
-        String txnId = isCod ? null
-                : "TXN-" + System.currentTimeMillis() + "-" + finalOrder.getOrderId();
+        String txnId = isCod ? null : "TXN-" + System.currentTimeMillis() + "-" + finalOrder.getOrderId();
 
         Payments payment = new Payments();
         payment.setOrder(finalOrder);
         payment.setAmount(totalAmount);
         payment.setPaymentMethod(payMethod);
-        payment.setPaymentStatus(isCod
-                ? Payments.PaymentStatus.PENDING
-                : Payments.PaymentStatus.SUCCESS);
+        payment.setPaymentStatus(isCod ? Payments.PaymentStatus.PENDING : Payments.PaymentStatus.SUCCESS);
         payment.setTransactionId(txnId);
         payment.setPaymentDate(LocalDateTime.now());
         paymentsRepository.save(payment);
-        // ───────────────────────────────────────────────────────────────
 
-        // ── Create Initial Tracking Record ─────────────────────────────
         createTrackingDetail(finalOrder, "PENDING", "Order placed successfully. Waiting for processing.");
-        // ───────────────────────────────────────────────────────────────
 
         return new OrderResponseDTO(
                 finalOrder.getOrderId(),
@@ -189,7 +172,6 @@ public class OrdersService {
 
     public void cancelOrder(Long orderId, Long userId) {
         log.info("Cancelling order id={} userId={}", orderId, userId);
-
         Orders order = ordersRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException("Order not found"));
 
@@ -197,15 +179,12 @@ public class OrdersService {
             throw new AccessDeniedException("You are not authorized to cancel this order");
         }
 
-        if (order.getStatus() == Orders.OrderStatus.SHIPPED ||
-                order.getStatus() == Orders.OrderStatus.DELIVERED) {
+        if (order.getStatus() == Orders.OrderStatus.SHIPPED || order.getStatus() == Orders.OrderStatus.DELIVERED) {
             throw new InvalidOrderStateException("Order cannot be cancelled");
         }
 
         order.setStatus(Orders.OrderStatus.CANCELLED);
         Orders savedOrder = ordersRepository.save(order);
-
-        // Create tracking record for cancellation
         createTrackingDetail(savedOrder, "CANCELLED", "Order has been cancelled.");
 
         notificationService.createNotification(
@@ -234,15 +213,13 @@ public class OrdersService {
         return orders.stream().map(order -> {
             List<OrderItemResponseDTO> items = order.getOrderItems().stream()
                     .filter(oi -> oi.getProduct().getSeller() != null &&
-                            oi.getProduct().getSeller().getUser().getUserId()
-                                    .equals(sellerId))
+                            oi.getProduct().getSeller().getUser().getUserId().equals(sellerId))
                     .map(oi -> new OrderItemResponseDTO(
                             oi.getProduct().getProductId(),
                             oi.getProduct().getName(),
                             oi.getQuantity(),
                             oi.getPriceAtPurchase(),
-                            oi.getPriceAtPurchase().multiply(
-                                    BigDecimal.valueOf(oi.getQuantity()))))
+                            oi.getPriceAtPurchase().multiply(BigDecimal.valueOf(oi.getQuantity()))))
                     .toList();
             return new OrderResponseDTO(
                     order.getOrderId(),
@@ -271,12 +248,8 @@ public class OrdersService {
 
         order.setStatus(newStatus);
         Orders saved = ordersRepository.save(order);
+        createTrackingDetail(saved, newStatus.name(), getTrackingDescriptionForStatus(newStatus));
 
-        // Create tracking record for status update
-        String description = getTrackingDescriptionForStatus(newStatus);
-        createTrackingDetail(saved, newStatus.name(), description);
-
-        // Notify the buyer of the status change
         notificationService.createNotification(
                 saved.getUser().getUserId(),
                 "Order Status Updated",
@@ -294,6 +267,46 @@ public class OrdersService {
                 new ArrayList<>());
     }
 
+    public OrderResponseDTO getOrderById(Long orderId) {
+        Orders order = ordersRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+
+        List<OrderItemResponseDTO> responseItems = order.getOrderItems().stream()
+                .map(item -> new OrderItemResponseDTO(
+                        item.getProduct().getProductId(),
+                        item.getProduct().getName(),
+                        item.getQuantity(),
+                        item.getPriceAtPurchase(),
+                        item.getPriceAtPurchase().multiply(BigDecimal.valueOf(item.getQuantity()))
+                )).toList();
+
+        return new OrderResponseDTO(
+                order.getOrderId(),
+                order.getOrderNumber(),
+                order.getTotalAmount(),
+                order.getStatus().name(),
+                order.getOrderDate(),
+                order.getPaymentMethod(),
+                order.getUser().getName(),
+                order.getUser().getEmail(),
+                responseItems);
+    }
+
+    public List<TrackingDetailsDTO> getOrderTracking(Long orderId) {
+        return trackingDetailsRepository.findByOrder_OrderId(orderId).stream()
+                .map(t -> {
+                    TrackingDetailsDTO dto = new TrackingDetailsDTO();
+                    dto.setTrackingId(t.getTrackingId());
+                    dto.setOrderId(t.getOrder().getOrderId().intValue());
+                    dto.setStatus(t.getStatus());
+                    dto.setDescription(t.getDescription());
+                    dto.setUpdatedAt(t.getUpdatedAt());
+                    dto.setCreatedAt(t.getCreatedAt());
+                    return dto;
+                })
+                .toList();
+    }
+
     private void createTrackingDetail(Orders order, String status, String description) {
         TrackingDetails tracking = new TrackingDetails();
         tracking.setOrder(order);
@@ -304,18 +317,12 @@ public class OrdersService {
 
     private String getTrackingDescriptionForStatus(Orders.OrderStatus status) {
         switch (status) {
-            case PENDING:
-                return "Order placed and pending approval.";
-            case PROCESSING:
-                return "Order is being processed and packed.";
-            case SHIPPED:
-                return "Order has been shipped and is on its way.";
-            case DELIVERED:
-                return "Order has been delivered successfully.";
-            case CANCELLED:
-                return "Order has been cancelled.";
-            default:
-                return "Order status updated to " + status.name();
+            case PENDING: return "Order placed and pending approval.";
+            case PROCESSING: return "Order is being processed and packed.";
+            case SHIPPED: return "Order has been shipped and is on its way.";
+            case DELIVERED: return "Order has been delivered successfully.";
+            case CANCELLED: return "Order has been cancelled.";
+            default: return "Order status updated to " + status.name();
         }
     }
 }

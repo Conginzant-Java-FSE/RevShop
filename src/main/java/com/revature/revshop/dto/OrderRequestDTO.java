@@ -3,7 +3,6 @@ package com.revature.revshop.dto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-
 import java.util.List;
 
 public class OrderRequestDTO {
@@ -21,7 +20,7 @@ public class OrderRequestDTO {
     @Valid
     private List<OrderItemRequestDTO> items;
 
-    private String paymentMethod;
+    private String paymentMethod; // Already incorporated
 
     public OrderRequestDTO() {
     }
@@ -29,50 +28,27 @@ public class OrderRequestDTO {
     public OrderRequestDTO(Long userId,
                            Long shippingAddressId,
                            Long billingAddressId,
-                           List<OrderItemRequestDTO> items) {
+                           List<OrderItemRequestDTO> items,
+                           String paymentMethod) {
         this.userId = userId;
         this.shippingAddressId = shippingAddressId;
         this.billingAddressId = billingAddressId;
         this.items = items;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getShippingAddressId() {
-        return shippingAddressId;
-    }
-
-    public void setShippingAddressId(Long shippingAddressId) {
-        this.shippingAddressId = shippingAddressId;
-    }
-
-    public Long getBillingAddressId() {
-        return billingAddressId;
-    }
-
-    public void setBillingAddressId(Long billingAddressId) {
-        this.billingAddressId = billingAddressId;
-    }
-
-    public List<OrderItemRequestDTO> getItems() {
-        return items;
-    }
-
-    public void setItems(List<OrderItemRequestDTO> items) {
-        this.items = items;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
+
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
+
+    public Long getShippingAddressId() { return shippingAddressId; }
+    public void setShippingAddressId(Long shippingAddressId) { this.shippingAddressId = shippingAddressId; }
+
+    public Long getBillingAddressId() { return billingAddressId; }
+    public void setBillingAddressId(Long billingAddressId) { this.billingAddressId = billingAddressId; }
+
+    public List<OrderItemRequestDTO> getItems() { return items; }
+    public void setItems(List<OrderItemRequestDTO> items) { this.items = items; }
+
+    public String getPaymentMethod() { return paymentMethod; }
+    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
 }
