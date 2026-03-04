@@ -48,7 +48,9 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/api/users",
                                 "/actuator/health",
-                                "/actuator/info")
+                                "/actuator/info",
+                                "/api/coupons/validate",
+                                "/api/payments/verify")
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
@@ -66,7 +68,8 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }

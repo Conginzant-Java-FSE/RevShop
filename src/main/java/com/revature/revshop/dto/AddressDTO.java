@@ -6,6 +6,8 @@ public class AddressDTO {
     @NotBlank(message = "address line is required")
     private String addressLine;
 
+    private String street;
+
     @NotBlank(message = "City is required")
     private String city;
 
@@ -26,10 +28,12 @@ public class AddressDTO {
     public AddressDTO() {
     }
 
-    public AddressDTO(Long userId, String addressLine, String city, String state, String country, String zipCode,
+    public AddressDTO(Long userId, String addressLine, String street, String city, String state, String country,
+            String zipCode,
             Boolean isDefault) {
         this.userId = userId;
         this.addressLine = addressLine;
+        this.street = street;
         this.city = city;
         this.state = state;
         this.country = country;
@@ -51,6 +55,14 @@ public class AddressDTO {
 
     public void setAddressLine(String addressLine) {
         this.addressLine = addressLine;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getCity() {

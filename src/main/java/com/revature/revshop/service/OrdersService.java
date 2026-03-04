@@ -149,14 +149,16 @@ public class OrdersService {
             payMethod = Payments.PaymentMethod.COD;
         }
 
-        boolean isCod = payMethod == Payments.PaymentMethod.COD;
-        String txnId = isCod ? null : "TXN-" + System.currentTimeMillis() + "-" + finalOrder.getOrderId();
+        // RAZORPAY and COD stay PENDING until verified/delivered
+        boolean isPending = (payMethod == Payments.PaymentMethod.COD ||
+                payMethod == Payments.PaymentMethod.RAZORPAY);
+        String txnId = isPending ? null : "TXN-" + System.currentTimeMillis() + "-" + finalOrder.getOrderId();
 
         Payments payment = new Payments();
         payment.setOrder(finalOrder);
         payment.setAmount(totalAmount);
         payment.setPaymentMethod(payMethod);
-        payment.setPaymentStatus(isCod ? Payments.PaymentStatus.PENDING : Payments.PaymentStatus.SUCCESS);
+        payment.setPaymentStatus(isPending ? Payments.PaymentStatus.PENDING : Payments.PaymentStatus.SUCCESS);
         payment.setTransactionId(txnId);
         payment.setPaymentDate(LocalDateTime.now());
         paymentsRepository.save(payment);

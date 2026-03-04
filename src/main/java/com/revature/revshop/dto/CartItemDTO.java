@@ -9,18 +9,20 @@ public class CartItemDTO {
     private Integer quantity;
     private String productName;
     private BigDecimal price;
+    private String imageUrl;
 
-    public CartItemDTO() {}
+    public CartItemDTO() {
+    }
 
     public CartItemDTO(Long cartItemId, Long productId, Integer quantity,
-                       String productName, BigDecimal price) {
+            String productName, BigDecimal price, String imageUrl) {
         this.cartItemId = cartItemId;
         this.productId = productId;
         this.quantity = quantity;
         this.productName = productName;
         this.price = price;
+        this.imageUrl = imageUrl;
     }
-
 
     public Long getCartItemId() {
         return cartItemId;
@@ -60,5 +62,13 @@ public class CartItemDTO {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

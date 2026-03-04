@@ -7,6 +7,7 @@ import com.revature.revshop.model.Product;
 import com.revature.revshop.model.Review;
 import com.revature.revshop.model.User;
 import com.revature.revshop.repository.ProductRepository;
+import com.revature.revshop.repository.ReviewRepository;
 import com.revature.revshop.repository.UserRepository;
 import com.revature.revshop.service.ReviewService;
 
@@ -17,7 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -28,13 +31,16 @@ public class ReviewController {
         private final ReviewService reviewService;
         private final UserRepository userRepository;
         private final ProductRepository productRepository;
+        private final ReviewRepository reviewRepository;
 
         public ReviewController(ReviewService reviewService,
                         UserRepository userRepository,
-                        ProductRepository productRepository) {
+                        ProductRepository productRepository,
+                        ReviewRepository reviewRepository) {
                 this.reviewService = reviewService;
                 this.userRepository = userRepository;
                 this.productRepository = productRepository;
+                this.reviewRepository = reviewRepository;
         }
 
         @PostMapping
@@ -83,6 +89,39 @@ public class ReviewController {
                                 new ApiResponse<>("Reviews fetched successfully", responses));
         }
 
+        @GetMapping("/product/{productId}/average-rating")
+        public ResponseEntity<ApiResponse<Map<String, Object>>> getAverageRating(
+                        @PathVariable Long productId) {
+
+                log.info("GET /api/reviews/product/{}/average-rating", productId);
+                Product product = productRepository.findById(productId)
+                                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+                Double avg = reviewService.getAverageRatingByProduct(product);
+                int count = reviewService.getReviewsByProduct(product).size();
+
+                Map<String, Object> result = new HashMap<>();
+                result.put("averageRating", Math.round(avg * 10.0) / 10.0);
+                result.put("reviewCount", count);
+
+                return ResponseEntity.ok(new ApiResponse<>("Average rating fetched", result));
+        }
+
+        @GetMapping("/check")
+        public ResponseEntity<ApiResponse<Boolean>> checkUserReviewed(
+                        @RequestParam Long userId,
+                        @RequestParam Long productId) {
+
+                log.info("GET /api/reviews/check - userId={} productId={}", userId, productId);
+                User user = userRepository.findById(userId)
+                                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                Product product = productRepository.findById(productId)
+                                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+                boolean hasReviewed = reviewRepository.findByProductAndUser(product, user).isPresent();
+                return ResponseEntity.ok(new ApiResponse<>("Check complete", hasReviewed));
+        }
+
         @GetMapping("/user/{userId}")
         public ResponseEntity<ApiResponse<List<ReviewResponseDTO>>> getReviewsByUser(
                         @PathVariable Long userId) {
@@ -115,23 +154,17 @@ public class ReviewController {
         }
 
         private ReviewResponseDTO convertToDto(Review review) {
-
                 ReviewResponseDTO dto = new ReviewResponseDTO();
-
                 dto.setReviewId(review.getReviewId());
-
                 if (review.getProduct() != null)
                         dto.setProductId(review.getProduct().getProductId());
-
                 if (review.getUser() != null) {
                         dto.setUserId(review.getUser().getUserId());
                         dto.setUserName(review.getUser().getName());
                 }
-
                 dto.setRating(review.getRating());
                 dto.setReviewText(review.getReviewText());
                 dto.setCreatedAt(review.getCreatedAt());
-
                 return dto;
         }
 }

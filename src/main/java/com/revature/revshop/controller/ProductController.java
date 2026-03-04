@@ -148,10 +148,16 @@ public class ProductController {
         public ResponseEntity<ApiResponse<Page<ProductDTO>>> getProductsBySeller(
                         @PathVariable Long sellerId,
                         @RequestParam(defaultValue = "0") int page,
-                        @RequestParam(defaultValue = "20") int size) {
+                        @RequestParam(defaultValue = "20") int size,
+                        @RequestParam(defaultValue = "productId") String sortBy,
+                        @RequestParam(defaultValue = "asc") String direction) {
 
-                log.info("GET /api/products/seller/{}", sellerId);
-                Page<ProductDTO> products = productService.getProductsBySeller(sellerId, page, size);
+                Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+                                : Sort.by(sortBy).descending();
+                Pageable pageable = PageRequest.of(page, size, sort);
+
+                log.info("GET /api/products/seller/{} - page={} size={}", sellerId, page, size);
+                Page<ProductDTO> products = productService.getProductsBySeller(sellerId, pageable);
                 return ResponseEntity.ok(new ApiResponse<>("Products fetched successfully", products));
         }
 

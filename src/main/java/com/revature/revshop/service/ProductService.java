@@ -123,20 +123,26 @@ public class ProductService {
                 .map(this::convertToDTO);
     }
 
-    public Page<ProductDTO> getProductsBySeller(Long sellerId, int page, int size) {
+    public Page<ProductDTO> getProductsBySeller(Long sellerId, Pageable pageable) {
         log.info("Fetching products for sellerId={}", sellerId);
+
         Seller seller = sellerRepository.findById(sellerId)
-                .orElseThrow(() -> new UserNotFoundException("Seller not found"));
-        return productRepository.findBySeller(seller, PageRequest.of(page, size))
+                .orElseThrow(() -> new ResourceNotFoundException("Seller not found"));
+
+        return productRepository.findBySeller(seller, pageable)
                 .map(this::convertToDTO);
     }
 
     public ProductDTO toggleActive(Long id) {
         log.info("Toggling active status for product id={}", id);
+
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
         product.setIsActive(!product.getIsActive());
-        return convertToDTO(productRepository.save(product));
+        Product saved = productRepository.save(product);
+
+        return convertToDTO(saved);
     }
 
     private void mapDtoToEntity(ProductDTO dto, Product product) {
@@ -147,6 +153,7 @@ public class ProductService {
         product.setStockQuantity(dto.getStockQuantity());
         product.setThresholdQuantity(dto.getThresholdQuantity());
         product.setIsActive(dto.getIsActive());
+        product.setImageUrl(dto.getImageUrl());
     }
 
     private ProductDTO convertToDTO(Product product) {
@@ -162,6 +169,9 @@ public class ProductService {
         dto.setIsActive(product.getIsActive());
         dto.setCategoryId(product.getCategory().getCategoryId());
         dto.setSellerId(product.getSeller().getUserId());
+        dto.setImageUrl(product.getImageUrl());
+        dto.setCategoryName(product.getCategory().getName());
+        dto.setSellerName(product.getSeller().getUser() != null ? product.getSeller().getUser().getName() : "");
 
         return dto;
     }
