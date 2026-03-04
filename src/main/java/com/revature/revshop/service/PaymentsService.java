@@ -86,4 +86,9 @@ public class PaymentsService {
         }
         paymentsRepository.deleteById(paymentId);
     }
+
+    public Payments savePayment(Payments payment) {
+        log.info("Saving payment id={}", payment.getPaymentId());
+        return paymentsRepository.save(payment);
+    }
 }

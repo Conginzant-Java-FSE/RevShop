@@ -137,4 +137,98 @@ public class PaymentsController {
 
         return payment;
     }
+
+    // ─── Razorpay Integration ────────────────────────────────────────────────
+
+    @org.springframework.beans.factory.annotation.Value("${razorpay.key.id:test_key}")
+    private String razorpayKeyId;
+
+    @org.springframework.beans.factory.annotation.Value("${razorpay.key.secret:test_secret}")
+    private String razorpayKeySecret;
+
+    /**
+     * POST /api/payments/create-order
+     * Body: { "amount": 50000, "currency": "INR", "orderId": 123 }
+     * amount should be in paise (rupees * 100)
+     */
+    @PostMapping("/create-order")
+    public ResponseEntity<ApiResponse<java.util.Map<String, Object>>> createRazorpayOrder(
+            @RequestBody java.util.Map<String, Object> body) {
+
+        long amountPaise = Long.parseLong(body.get("amount").toString());
+        Long internalOrderId = Long.parseLong(body.get("orderId").toString());
+        log.info("POST /api/payments/create-order - internalOrderId={} amount={}", internalOrderId, amountPaise);
+
+        try {
+            com.razorpay.RazorpayClient client = new com.razorpay.RazorpayClient(razorpayKeyId, razorpayKeySecret);
+
+            org.json.JSONObject options = new org.json.JSONObject();
+            options.put("amount", amountPaise);
+            options.put("currency", body.getOrDefault("currency", "INR").toString());
+            options.put("receipt", "rcpt_" + internalOrderId);
+
+            com.razorpay.Order razorpayOrder = client.orders.create(options);
+
+            java.util.Map<String, Object> result = new java.util.HashMap<>();
+            result.put("razorpayOrderId", razorpayOrder.get("id"));
+            result.put("amount", amountPaise);
+            result.put("currency", razorpayOrder.get("currency"));
+            result.put("keyId", razorpayKeyId);
+
+            return ResponseEntity.ok(new ApiResponse<>("Razorpay order created", result));
+
+        } catch (Exception e) {
+            log.error("Razorpay create-order failed: {}", e.getMessage(), e);
+            throw new PaymentFailedException("Failed to create payment order: " + e.getMessage());
+        }
+    }
+
+    /**
+     * POST /api/payments/verify
+     * Body: { "razorpayOrderId": "...", "razorpayPaymentId": "...",
+     * "razorpaySignature": "...", "internalOrderId": 123 }
+     */
+    @PostMapping("/verify")
+    public ResponseEntity<ApiResponse<Boolean>> verifyRazorpayPayment(
+            @RequestBody java.util.Map<String, Object> body) {
+
+        String razorpayOrderId = body.get("razorpayOrderId").toString();
+        String razorpayPaymentId = body.get("razorpayPaymentId").toString();
+        String razorpaySignature = body.get("razorpaySignature").toString();
+        Long internalOrderId = Long.parseLong(body.get("internalOrderId").toString());
+
+        log.info("POST /api/payments/verify - internalOrderId={} paymentId={}", internalOrderId, razorpayPaymentId);
+
+        try {
+            // HMAC-SHA256 verification
+            String payload = razorpayOrderId + "|" + razorpayPaymentId;
+            javax.crypto.Mac mac = javax.crypto.Mac.getInstance("HmacSHA256");
+            mac.init(new javax.crypto.spec.SecretKeySpec(
+                    razorpayKeySecret.getBytes(java.nio.charset.StandardCharsets.UTF_8), "HmacSHA256"));
+            byte[] hash = mac.doFinal(payload.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            StringBuilder hexStr = new StringBuilder();
+            for (byte b : hash)
+                hexStr.append(String.format("%02x", b));
+            String expectedSignature = hexStr.toString();
+
+            if (!expectedSignature.equals(razorpaySignature)) {
+                throw new PaymentFailedException("Payment signature verification failed");
+            }
+
+            // Mark payment as SUCCESS in DB
+            paymentsService.getPaymentByOrderId(internalOrderId).ifPresent(payment -> {
+                payment.setPaymentStatus(Payments.PaymentStatus.SUCCESS);
+                payment.setTransactionId(razorpayPaymentId);
+                paymentsService.savePayment(payment);
+            });
+
+            return ResponseEntity.ok(new ApiResponse<>("Payment verified successfully", true));
+
+        } catch (PaymentFailedException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("Payment verification error: {}", e.getMessage(), e);
+            throw new PaymentFailedException("Payment verification error: " + e.getMessage());
+        }
+    }
 }
