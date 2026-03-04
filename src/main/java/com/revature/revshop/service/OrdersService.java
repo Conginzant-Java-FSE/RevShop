@@ -31,13 +31,13 @@ public class OrdersService {
     private final OrderItemService orderItemService;
 
     public OrdersService(OrdersRepository ordersRepository,
-                         UserRepository userRepository,
-                         AddressRepository addressRepository,
-                         ProductRepository productRepository,
-                         NotificationService notificationService,
-                         PaymentsRepository paymentsRepository,
-                         TrackingDetailsRepository trackingDetailsRepository,
-                         OrderItemService orderItemService) {
+            UserRepository userRepository,
+            AddressRepository addressRepository,
+            ProductRepository productRepository,
+            NotificationService notificationService,
+            PaymentsRepository paymentsRepository,
+            TrackingDetailsRepository trackingDetailsRepository,
+            OrderItemService orderItemService) {
         this.ordersRepository = ordersRepository;
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
@@ -144,14 +144,16 @@ public class OrdersService {
             payMethod = Payments.PaymentMethod.COD;
         }
 
-        boolean isCod = payMethod == Payments.PaymentMethod.COD;
-        String txnId = isCod ? null : "TXN-" + System.currentTimeMillis() + "-" + finalOrder.getOrderId();
+        // RAZORPAY and COD stay PENDING until verified/delivered
+        boolean isPending = (payMethod == Payments.PaymentMethod.COD ||
+                payMethod == Payments.PaymentMethod.RAZORPAY);
+        String txnId = isPending ? null : "TXN-" + System.currentTimeMillis() + "-" + finalOrder.getOrderId();
 
         Payments payment = new Payments();
         payment.setOrder(finalOrder);
         payment.setAmount(totalAmount);
         payment.setPaymentMethod(payMethod);
-        payment.setPaymentStatus(isCod ? Payments.PaymentStatus.PENDING : Payments.PaymentStatus.SUCCESS);
+        payment.setPaymentStatus(isPending ? Payments.PaymentStatus.PENDING : Payments.PaymentStatus.SUCCESS);
         payment.setTransactionId(txnId);
         payment.setPaymentDate(LocalDateTime.now());
         paymentsRepository.save(payment);
@@ -277,8 +279,8 @@ public class OrdersService {
                         item.getProduct().getName(),
                         item.getQuantity(),
                         item.getPriceAtPurchase(),
-                        item.getPriceAtPurchase().multiply(BigDecimal.valueOf(item.getQuantity()))
-                )).toList();
+                        item.getPriceAtPurchase().multiply(BigDecimal.valueOf(item.getQuantity()))))
+                .toList();
 
         return new OrderResponseDTO(
                 order.getOrderId(),
@@ -317,12 +319,18 @@ public class OrdersService {
 
     private String getTrackingDescriptionForStatus(Orders.OrderStatus status) {
         switch (status) {
-            case PENDING: return "Order placed and pending approval.";
-            case PROCESSING: return "Order is being processed and packed.";
-            case SHIPPED: return "Order has been shipped and is on its way.";
-            case DELIVERED: return "Order has been delivered successfully.";
-            case CANCELLED: return "Order has been cancelled.";
-            default: return "Order status updated to " + status.name();
+            case PENDING:
+                return "Order placed and pending approval.";
+            case PROCESSING:
+                return "Order is being processed and packed.";
+            case SHIPPED:
+                return "Order has been shipped and is on its way.";
+            case DELIVERED:
+                return "Order has been delivered successfully.";
+            case CANCELLED:
+                return "Order has been cancelled.";
+            default:
+                return "Order status updated to " + status.name();
         }
     }
 }

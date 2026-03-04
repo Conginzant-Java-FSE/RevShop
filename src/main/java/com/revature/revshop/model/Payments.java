@@ -52,7 +52,7 @@ public class Payments {
     }
 
     public enum PaymentMethod {
-        CREDIT_CARD, DEBIT_CARD, NET_BANKING, UPI, WALLET, COD
+        CREDIT_CARD, DEBIT_CARD, NET_BANKING, UPI, WALLET, COD, RAZORPAY
     }
 
     public enum PaymentStatus {
