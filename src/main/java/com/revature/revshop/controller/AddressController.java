@@ -82,6 +82,7 @@ public class AddressController {
 
     private AddressDTO convertToDTO(Address address) {
         AddressDTO dto = new AddressDTO();
+        dto.setAddressId(address.getAddressId()); // ← was missing!
         dto.setAddressLine(address.getAddressLine());
         dto.setStreet(address.getStreet());
         dto.setCity(address.getCity());

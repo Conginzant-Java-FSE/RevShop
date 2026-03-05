@@ -25,7 +25,7 @@ public class CartItemController {
     }
 
     @PutMapping("/{cartItemId}")
-    public ResponseEntity<ApiResponse<CartItem>> updateItemQuantity(
+    public ResponseEntity<ApiResponse<Map<String, Object>>> updateItemQuantity(
             @PathVariable Long cartItemId,
             @RequestBody Map<String, Integer> request) {
 
@@ -42,8 +42,12 @@ public class CartItemController {
             throw new ResourceNotFoundException("Cart item not found");
         }
 
+        Map<String, Object> result = new java.util.HashMap<>();
+        result.put("cartItemId", item.getCartItemId());
+        result.put("quantity", item.getQuantity());
+
         return ResponseEntity.ok(
-                new ApiResponse<>("Cart item updated successfully", item));
+                new ApiResponse<>("Cart item updated successfully", result));
     }
 
     @DeleteMapping("/{cartItemId}")
