@@ -3,8 +3,11 @@ package com.revature.revshop.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "shippers")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Shipper {
 
     @Id
@@ -24,6 +27,10 @@ public class Shipper {
 
     @Column(name = "is_available", nullable = false)
     private Boolean isAvailable = true;
+
+    @Column(nullable = true)
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private String password;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -83,6 +90,15 @@ public class Shipper {
 
     public void setIsAvailable(Boolean isAvailable) {
         this.isAvailable = isAvailable;
+    }
+
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public LocalDateTime getCreatedAt() {

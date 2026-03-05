@@ -144,6 +144,9 @@ public class OrdersService {
                 "Order Placed",
                 "Your order " + finalOrder.getOrderNumber() + " has been placed successfully.");
 
+        createTrackingDetail(finalOrder, finalOrder.getStatus().name(),
+                "Order placed successfully. Waiting for processing.");
+
         try {
             emailService.sendOrderConfirmation(finalOrder, user.getEmail());
         } catch (Exception e) {
@@ -370,6 +373,8 @@ public class OrdersService {
                 return "Order is being processed and packed.";
             case SHIPPED:
                 return "Order has been shipped and is on its way.";
+            case OUT_FOR_DELIVERY:
+                return "Order is out for delivery and will reach you soon.";
             case DELIVERED:
                 return "Order has been delivered successfully.";
             case CANCELLED:
@@ -378,8 +383,11 @@ public class OrdersService {
                 return "Return request has been submitted.";
             case RETURN_APPROVED:
                 return "Return request has been approved.";
+            case RETURN_REJECTED:
+                return "Return request has been rejected.";
             default:
                 return "Order status updated to " + status.name();
+
         }
     }
 
