@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "order_items")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class OrderItems {
 
     @Id
@@ -15,6 +18,7 @@ public class OrderItems {
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Orders order;
 
     @ManyToOne
@@ -50,6 +54,7 @@ public class OrderItems {
         this.orderItemId = orderItemId;
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     public Orders getOrder() {
         return order;
     }

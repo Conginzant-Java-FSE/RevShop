@@ -14,10 +14,12 @@ public class Favorite {
 
     @ManyToOne
     @JoinColumn(name = "buyer_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Buyer buyer;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Product product;
 
     @Column(name = "added_at", updatable = false)
@@ -42,6 +44,7 @@ public class Favorite {
         this.favoriteId = favoriteId;
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     public Buyer getBuyer() {
         return buyer;
     }
@@ -50,6 +53,7 @@ public class Favorite {
         this.buyer = buyer;
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     public Product getProduct() {
         return product;
     }

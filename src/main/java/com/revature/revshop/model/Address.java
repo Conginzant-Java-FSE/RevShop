@@ -3,8 +3,11 @@ package com.revature.revshop.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "address")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +57,7 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private User user;
 
     /**
@@ -159,6 +163,7 @@ public class Address {
         this.updatedAt = updatedAt;
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     public User getUser() {
         return user;
     }

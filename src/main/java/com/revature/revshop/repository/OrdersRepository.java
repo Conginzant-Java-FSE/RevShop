@@ -22,4 +22,6 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
     @org.springframework.data.jpa.repository.Query("SELECT DISTINCT o FROM Orders o JOIN o.orderItems oi JOIN oi.product p WHERE p.seller.user.userId = :sellerId")
     List<Orders> findOrdersBySellerId(@org.springframework.data.repository.query.Param("sellerId") Long sellerId);
+
+    List<Orders> findByShipper_ShipperId(Long shipperId);
 }

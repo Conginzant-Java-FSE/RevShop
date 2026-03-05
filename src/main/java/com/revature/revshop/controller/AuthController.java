@@ -5,11 +5,13 @@ import com.revature.revshop.exception.InvalidInputException;
 import com.revature.revshop.model.Address;
 import com.revature.revshop.model.Buyer;
 import com.revature.revshop.model.Seller;
+import com.revature.revshop.model.Shipper;
 import com.revature.revshop.model.User;
 import com.revature.revshop.security.CustomUserDetailsService;
 import com.revature.revshop.security.JwtUtil;
 import com.revature.revshop.service.BuyerService;
 import com.revature.revshop.service.SellerService;
+import com.revature.revshop.service.ShipperService;
 import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
@@ -36,6 +38,7 @@ public class AuthController {
 
         private final BuyerService buyerService;
         private final SellerService sellerService;
+        private final ShipperService shipperService;
         private final AuthenticationManager authenticationManager;
         private final JwtUtil jwtUtil;
         private final PasswordEncoder passwordEncoder;
@@ -43,12 +46,14 @@ public class AuthController {
 
         public AuthController(BuyerService buyerService,
                         SellerService sellerService,
+                        ShipperService shipperService,
                         AuthenticationManager authenticationManager,
                         JwtUtil jwtUtil,
                         PasswordEncoder passwordEncoder,
                         CustomUserDetailsService userDetailsService) {
                 this.buyerService = buyerService;
                 this.sellerService = sellerService;
+                this.shipperService = shipperService;
                 this.authenticationManager = authenticationManager;
                 this.jwtUtil = jwtUtil;
                 this.passwordEncoder = passwordEncoder;
@@ -159,6 +164,64 @@ public class AuthController {
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>(LOGIN_SUCCESSFUL, response));
+        }
+
+        @PostMapping("/login/shipper")
+        public ResponseEntity<ApiResponse<ShipperLoginResponse>> loginShipper(
+                        @RequestBody ShipperLoginRequest loginRequest) {
+
+                log.info("POST /api/auth/login/shipper - email={}", loginRequest.getEmail());
+
+                Shipper shipper = shipperService.loginShipper(
+                                loginRequest.getEmail(),
+                                loginRequest.getPassword())
+                                .orElseThrow(() -> new InvalidInputException(INVALID_CREDENTIALS));
+
+                UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
+                String jwt = jwtUtil.generateToken(userDetails);
+
+                ShipperLoginResponse response = new ShipperLoginResponse();
+                response.setShipperId(shipper.getShipperId());
+                response.setName(shipper.getName());
+                response.setEmail(shipper.getEmail());
+                response.setPhone(shipper.getPhone());
+                response.setVehicleNumber(shipper.getVehicleNumber());
+                response.setIsAvailable(shipper.getIsAvailable());
+                response.setRole("SHIPPER");
+                response.setToken(jwt);
+
+                return ResponseEntity.ok(
+                                new ApiResponse<>(LOGIN_SUCCESSFUL, response));
+        }
+
+        @PostMapping("/register/shipper")
+        public ResponseEntity<ApiResponse<ShipperLoginResponse>> registerShipper(
+                        @RequestBody ShipperRegisterRequest req) {
+
+                log.info("POST /api/auth/register/shipper - email={}", req.getEmail());
+
+                Shipper shipper = shipperService.registerShipper(
+                                req.getName(),
+                                req.getEmail(),
+                                req.getPhone(),
+                                req.getVehicleNumber(),
+                                req.getPassword());
+
+                UserDetails userDetails = userDetailsService.loadUserByUsername(req.getEmail());
+                String jwt = jwtUtil.generateToken(userDetails);
+
+                ShipperLoginResponse response = new ShipperLoginResponse();
+                response.setShipperId(shipper.getShipperId());
+                response.setName(shipper.getName());
+                response.setEmail(shipper.getEmail());
+                response.setPhone(shipper.getPhone());
+                response.setVehicleNumber(shipper.getVehicleNumber());
+                response.setIsAvailable(shipper.getIsAvailable());
+                response.setRole("SHIPPER");
+                response.setToken(jwt);
+
+                return ResponseEntity.status(HttpStatus.CREATED)
+                                .body(new ApiResponse<>("Shipper registered successfully", response));
         }
 
         private User buildUserFromBuyerDTO(BuyerDTO dto) {

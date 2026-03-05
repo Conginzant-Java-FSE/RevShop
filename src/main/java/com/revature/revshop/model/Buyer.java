@@ -13,6 +13,7 @@ public class Buyer {
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private User user;
 
     @Column(name = "created_at", updatable = false)
@@ -53,6 +54,7 @@ public class Buyer {
         this.userId = userId;
     }
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     public User getUser() {
         return user;
     }
