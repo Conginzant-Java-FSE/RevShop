@@ -263,6 +263,7 @@ public class OrdersService {
                             oi.getPriceAtPurchase(),
                             oi.getPriceAtPurchase().multiply(BigDecimal.valueOf(oi.getQuantity()))))
                     .toList();
+            String shipperName = (order.getShipper() != null) ? order.getShipper().getName() : null;
             return new OrderResponseDTO(
                     order.getOrderId(),
                     order.getOrderNumber(),
@@ -272,7 +273,8 @@ public class OrdersService {
                     order.getPaymentMethod(),
                     order.getUser().getName(),
                     order.getUser().getEmail(),
-                    items);
+                    items,
+                    shipperName);
         }).toList();
     }
 

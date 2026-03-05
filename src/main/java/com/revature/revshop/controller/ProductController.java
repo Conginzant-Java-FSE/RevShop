@@ -122,6 +122,7 @@ public class ProductController {
 
         @GetMapping("/filter")
         public ResponseEntity<ApiResponse<Page<ProductDTO>>> filter(
+                        @RequestParam(required = false) String keyword,
                         @RequestParam(required = false) Double minPrice,
                         @RequestParam(required = false) Double maxPrice,
                         @RequestParam(required = false) Long categoryId,
@@ -134,9 +135,11 @@ public class ProductController {
                                 : Sort.by(sortBy).descending();
                 Pageable pageable = PageRequest.of(page, size, sort);
 
-                log.info("GET /api/products/filter - minPrice={} maxPrice={} categoryId={}", minPrice, maxPrice,
+                log.info("GET /api/products/filter - keyword={} minPrice={} maxPrice={} categoryId={}", keyword,
+                                minPrice, maxPrice,
                                 categoryId);
-                Page<ProductDTO> products = productService.filterProducts(minPrice, maxPrice, categoryId, pageable);
+                Page<ProductDTO> products = productService.filterProducts(keyword, minPrice, maxPrice, categoryId,
+                                pageable);
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>(

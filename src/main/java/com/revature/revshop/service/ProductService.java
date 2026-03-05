@@ -13,7 +13,7 @@ import com.revature.revshop.repository.SellerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,10 +102,16 @@ public class ProductService {
                 .map(this::convertToDTO);
     }
 
-    public Page<ProductDTO> filterProducts(Double minPrice, Double maxPrice, Long categoryId, Pageable pageable) {
+    public Page<ProductDTO> filterProducts(String keyword, Double minPrice, Double maxPrice, Long categoryId,
+            Pageable pageable) {
 
         org.springframework.data.jpa.domain.Specification<Product> spec = org.springframework.data.jpa.domain.Specification
                 .where((root, query, cb) -> cb.conjunction());
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            spec = spec
+                    .and((root, query, cb) -> cb.like(cb.lower(root.get("name")), "%" + keyword.toLowerCase() + "%"));
+        }
 
         if (minPrice != null) {
             spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("sellingPrice"), minPrice));
