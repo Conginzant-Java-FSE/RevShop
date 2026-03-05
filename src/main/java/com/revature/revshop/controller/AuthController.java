@@ -12,6 +12,7 @@ import com.revature.revshop.security.JwtUtil;
 import com.revature.revshop.service.BuyerService;
 import com.revature.revshop.service.SellerService;
 import com.revature.revshop.service.ShipperService;
+import com.revature.revshop.service.UserService;
 import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
@@ -43,6 +44,7 @@ public class AuthController {
         private final JwtUtil jwtUtil;
         private final PasswordEncoder passwordEncoder;
         private final CustomUserDetailsService userDetailsService;
+        private final UserService userService;
 
         public AuthController(BuyerService buyerService,
                         SellerService sellerService,
@@ -50,7 +52,8 @@ public class AuthController {
                         AuthenticationManager authenticationManager,
                         JwtUtil jwtUtil,
                         PasswordEncoder passwordEncoder,
-                        CustomUserDetailsService userDetailsService) {
+                        CustomUserDetailsService userDetailsService,
+                        UserService userService) {
                 this.buyerService = buyerService;
                 this.sellerService = sellerService;
                 this.shipperService = shipperService;
@@ -58,6 +61,7 @@ public class AuthController {
                 this.jwtUtil = jwtUtil;
                 this.passwordEncoder = passwordEncoder;
                 this.userDetailsService = userDetailsService;
+                this.userService = userService;
         }
 
         @PostMapping("/register/buyer")
@@ -313,5 +317,25 @@ public class AuthController {
                         address.setUser(user);
                         return address;
                 }).toList();
+        }
+
+        // ===================== Forgot Password =====================
+
+        @GetMapping("/security-question")
+        public ResponseEntity<ApiResponse<String>> getSecurityQuestion(@RequestParam String email) {
+                log.info("GET /api/auth/security-question - email={}", email);
+                String question = userService.getSecurityQuestionByEmail(email);
+                return ResponseEntity.ok(new ApiResponse<>("Security question fetched", question));
+        }
+
+        @PostMapping("/reset-password")
+        public ResponseEntity<ApiResponse<String>> resetPassword(
+                        @RequestBody ForgotPasswordRequest request) {
+                log.info("POST /api/auth/reset-password - email={}", request.getEmail());
+                userService.resetPasswordBySecurity(
+                                request.getEmail(),
+                                request.getSecurityAnswer(),
+                                request.getNewPassword());
+                return ResponseEntity.ok(new ApiResponse<>("Password reset successful", null));
         }
 }
