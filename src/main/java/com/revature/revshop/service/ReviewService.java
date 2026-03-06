@@ -17,10 +17,17 @@ public class ReviewService {
     private static final Logger log = LoggerFactory.getLogger(ReviewService.class);
 
     private final ReviewRepository reviewRepository;
+    private final com.revature.revshop.repository.OrdersRepository ordersRepository;
 
     @Autowired
-    public ReviewService(ReviewRepository reviewRepository) {
+    public ReviewService(ReviewRepository reviewRepository,
+            com.revature.revshop.repository.OrdersRepository ordersRepository) {
         this.reviewRepository = reviewRepository;
+        this.ordersRepository = ordersRepository;
+    }
+
+    public boolean isProductPurchasedByUser(Long userId, Long productId) {
+        return ordersRepository.existsByPurchasedProduct(userId, productId);
     }
 
     public Review addReview(Review review) {

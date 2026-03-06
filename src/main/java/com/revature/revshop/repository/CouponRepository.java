@@ -9,4 +9,8 @@ import java.util.Optional;
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Long> {
     Optional<Coupon> findByCode(String code);
+
+    @org.springframework.data.jpa.repository.Query("SELECT c FROM Coupon c WHERE c.isActive = true AND (c.expiryDate IS NULL OR c.expiryDate > :now)")
+    java.util.List<Coupon> findActiveCoupons(
+            @org.springframework.data.repository.query.Param("now") java.time.LocalDateTime now);
 }

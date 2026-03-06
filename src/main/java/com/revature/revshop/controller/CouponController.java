@@ -54,14 +54,17 @@ public class CouponController {
         return ResponseEntity.ok(new ApiResponse<>("Coupon validation complete", result));
     }
 
-    /**
-     * POST /api/coupons
-     * Create a new coupon (admin use)
-     */
     @PostMapping
     public ResponseEntity<ApiResponse<Coupon>> createCoupon(@RequestBody Coupon coupon) {
         log.info("POST /api/coupons - code={}", coupon.getCode());
         Coupon created = couponService.createCoupon(coupon);
         return ResponseEntity.ok(new ApiResponse<>("Coupon created successfully", created));
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<ApiResponse<java.util.List<Coupon>>> getActiveCoupons() {
+        log.info("GET /api/coupons/active");
+        java.util.List<Coupon> activeCoupons = couponService.getActiveCoupons();
+        return ResponseEntity.ok(new ApiResponse<>("Active coupons fetched successfully", activeCoupons));
     }
 }

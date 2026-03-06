@@ -61,6 +61,11 @@ public class ReviewController {
                 Product product = productRepository.findById(request.getProductId())
                                 .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
 
+                if (!reviewService.isProductPurchasedByUser(user.getUserId(), product.getProductId())) {
+                        throw new InvalidInputException(
+                                        "You can only review products you have purchased and received.");
+                }
+
                 Review review = new Review(
                                 product,
                                 user,
@@ -110,7 +115,7 @@ public class ReviewController {
         }
 
         @GetMapping("/check")
-        public ResponseEntity<ApiResponse<Boolean>> checkUserReviewed(
+        public ResponseEntity<ApiResponse<Map<String, Object>>> checkReviewEligibility(
                         @RequestParam Long userId,
                         @RequestParam Long productId) {
 
@@ -120,8 +125,15 @@ public class ReviewController {
                 Product product = productRepository.findById(productId)
                                 .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
 
+                boolean hasPurchased = reviewService.isProductPurchasedByUser(userId, productId);
                 boolean hasReviewed = reviewRepository.findByProductAndUser(product, user).isPresent();
-                return ResponseEntity.ok(new ApiResponse<>("Check complete", hasReviewed));
+
+                Map<String, Object> eligibility = new HashMap<>();
+                eligibility.put("hasPurchased", hasPurchased);
+                eligibility.put("hasReviewed", hasReviewed);
+                eligibility.put("canReview", hasPurchased && !hasReviewed);
+
+                return ResponseEntity.ok(new ApiResponse<>("Check complete", eligibility));
         }
 
         @GetMapping("/user/{userId}")

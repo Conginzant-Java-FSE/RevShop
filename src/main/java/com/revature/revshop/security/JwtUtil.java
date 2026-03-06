@@ -16,7 +16,12 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private final SecretKey secretKey = Jwts.SIG.HS256.key().build();
+    private final SecretKey secretKey;
+
+    public JwtUtil(@Value("${jwt.secret}") String secret) {
+        this.secretKey = io.jsonwebtoken.security.Keys.hmacShaKeyFor(
+                secret.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+    }
 
     @Value("${jwt.expiration:3600000}")
     private long jwtExpiration;
