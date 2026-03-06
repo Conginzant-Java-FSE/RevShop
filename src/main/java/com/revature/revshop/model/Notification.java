@@ -2,6 +2,7 @@ package com.revature.revshop.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "notifications")
@@ -22,6 +23,7 @@ public class Notification {
     private String message;
 
     @Column(name = "is_read")
+    @JsonProperty("isRead")
     private Boolean isRead = false;
 
     @Column(name = "created_at", updatable = false)
@@ -32,6 +34,13 @@ public class Notification {
      */
     public Notification() {
         this.isRead = false;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.createdAt == null) {
+            this.createdAt = LocalDateTime.now();
+        }
     }
 
     public Notification(Long notificationId, User recipient, String title, String message, Boolean isRead,

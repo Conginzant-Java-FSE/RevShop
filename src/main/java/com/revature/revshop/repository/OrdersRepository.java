@@ -10,18 +10,18 @@ import java.util.Optional;
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
-    List<Orders> findByUser_UserId(Long userId);
+    List<Orders> findByUserUserId(Long userId);
 
     Optional<Orders> findByOrderNumber(String orderNumber);
 
-    List<Orders> findByShippingAddress_AddressId(Long addressId);
+    List<Orders> findByShippingAddressAddressId(Long addressId);
 
-    List<Orders> findByBillingAddress_AddressId(Long addressId);
+    List<Orders> findByBillingAddressAddressId(Long addressId);
 
     List<Orders> findByStatus(Orders.OrderStatus status);
 
     @org.springframework.data.jpa.repository.Query("SELECT DISTINCT o FROM Orders o JOIN o.orderItems oi JOIN oi.product p WHERE p.seller.user.userId = :sellerId")
     List<Orders> findOrdersBySellerId(@org.springframework.data.repository.query.Param("sellerId") Long sellerId);
 
-    List<Orders> findByShipper_ShipperId(Long shipperId);
+    List<Orders> findByShipperShipperId(Long shipperId);
 }

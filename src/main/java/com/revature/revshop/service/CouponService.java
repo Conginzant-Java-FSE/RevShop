@@ -34,7 +34,7 @@ public class CouponService {
         Coupon coupon = couponRepository.findByCode(code.toUpperCase().trim())
                 .orElseThrow(() -> new InvalidInputException("Coupon code not found"));
 
-        if (!coupon.getIsActive()) {
+        if (!Boolean.TRUE.equals(coupon.getIsActive())) {
             throw new InvalidInputException("This coupon is no longer active");
         }
         if (coupon.getExpiryDate() != null && coupon.getExpiryDate().isBefore(LocalDateTime.now())) {

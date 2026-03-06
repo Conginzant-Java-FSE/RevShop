@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 public class EmailService {
 
     private static final Logger log = LoggerFactory.getLogger(EmailService.class);
+    private static final String TD_END = "</td>";
 
     private final JavaMailSender mailSender;
 
@@ -43,13 +44,13 @@ public class EmailService {
                     BigDecimal subtotal = price.multiply(BigDecimal.valueOf(item.getQuantity()));
                     itemsHtml.append("<tr>")
                             .append("<td style='padding:8px;border-bottom:1px solid #eee;'>")
-                            .append(item.getProduct().getName()).append("</td>")
+                            .append(item.getProduct().getName()).append(TD_END)
                             .append("<td style='padding:8px;border-bottom:1px solid #eee;text-align:center;'>")
-                            .append(item.getQuantity()).append("</td>")
+                            .append(item.getQuantity()).append(TD_END)
                             .append("<td style='padding:8px;border-bottom:1px solid #eee;text-align:right;'>₹")
-                            .append(price).append("</td>")
+                            .append(price).append(TD_END)
                             .append("<td style='padding:8px;border-bottom:1px solid #eee;text-align:right;'>₹")
-                            .append(subtotal).append("</td>")
+                            .append(subtotal).append(TD_END)
                             .append("</tr>");
                 }
             }

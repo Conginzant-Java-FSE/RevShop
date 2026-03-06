@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
         private static final Logger log = LoggerFactory.getLogger(ProductController.class);
+        private static final String FETCHED_SUCCESSFULLY = "Products fetched successfully";
 
         private final ProductService productService;
 
@@ -55,7 +56,7 @@ public class ProductController {
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>(
-                                                "Products fetched successfully",
+                                                FETCHED_SUCCESSFULLY,
                                                 products));
         }
 
@@ -116,12 +117,13 @@ public class ProductController {
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>(
-                                                "Products fetched successfully",
+                                                FETCHED_SUCCESSFULLY,
                                                 products));
         }
 
         @GetMapping("/filter")
         public ResponseEntity<ApiResponse<Page<ProductDTO>>> filter(
+                        @RequestParam(required = false) String keyword,
                         @RequestParam(required = false) Double minPrice,
                         @RequestParam(required = false) Double maxPrice,
                         @RequestParam(required = false) Long categoryId,
@@ -134,9 +136,11 @@ public class ProductController {
                                 : Sort.by(sortBy).descending();
                 Pageable pageable = PageRequest.of(page, size, sort);
 
-                log.info("GET /api/products/filter - minPrice={} maxPrice={} categoryId={}", minPrice, maxPrice,
+                log.info("GET /api/products/filter - keyword={} minPrice={} maxPrice={} categoryId={}", keyword,
+                                minPrice, maxPrice,
                                 categoryId);
-                Page<ProductDTO> products = productService.filterProducts(minPrice, maxPrice, categoryId, pageable);
+                Page<ProductDTO> products = productService.filterProducts(keyword, minPrice, maxPrice, categoryId,
+                                pageable);
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>(
@@ -158,7 +162,7 @@ public class ProductController {
 
                 log.info("GET /api/products/seller/{} - page={} size={}", sellerId, page, size);
                 Page<ProductDTO> products = productService.getProductsBySeller(sellerId, pageable);
-                return ResponseEntity.ok(new ApiResponse<>("Products fetched successfully", products));
+                return ResponseEntity.ok(new ApiResponse<>(FETCHED_SUCCESSFULLY, products));
         }
 
         @PatchMapping("/{id}/toggle-active")

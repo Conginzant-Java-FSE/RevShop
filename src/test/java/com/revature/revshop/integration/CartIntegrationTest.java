@@ -68,17 +68,15 @@ class CartIntegrationTest {
         testUser.setEmail("test_cart@example.com");
         testUser.setPassword("password");
         testUser.setRole(Role.BUYER);
-        testUser = userRepository.save(testUser);
 
         Seller testSeller = new Seller();
         testSeller.setBusinessName("Test Business");
         testSeller.setUser(testUser);
         testSeller.setBusinessDescription("123 Test St");
         testUser.setSellerProfile(testSeller);
-        // Cascading will handle Seller when User is saved again if needed, or we just
-        // save User once at the end
+
         testUser = userRepository.save(testUser);
-        testSeller = testUser.getSellerProfile(); // Re-fetch saved seller through user if needed
+        testSeller = testUser.getSellerProfile();
 
         Category testCategory = new Category();
         testCategory.setName("Electronics");

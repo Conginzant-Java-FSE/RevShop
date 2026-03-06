@@ -22,15 +22,14 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-
 @ExtendWith(MockitoExtension.class)
 class CategoryServiceTest {
 
-    @Mock private CategoryRepository categoryRepository;
+    @Mock
+    private CategoryRepository categoryRepository;
 
-    @InjectMocks private CategoryService categoryService;
-
-
+    @InjectMocks
+    private CategoryService categoryService;
 
     private Category electronics;
     private Category phones;
@@ -55,8 +54,6 @@ class CategoryServiceTest {
         electronicsDTO.setName("Electronics");
         electronicsDTO.setDescription("Electronic gadgets and devices");
     }
-
-
 
     @Test
     void createCategory_shouldSaveAndReturnDTO_whenNameIsNew() {
@@ -100,8 +97,6 @@ class CategoryServiceTest {
         verify(categoryRepository, times(1)).save(any(Category.class));
     }
 
-
-
     @Test
     void getAllCategories_shouldReturnAllCategoriesAsDTOs() {
         when(categoryRepository.findAll()).thenReturn(Arrays.asList(electronics, phones));
@@ -122,8 +117,6 @@ class CategoryServiceTest {
         assertThat(results).isEmpty();
     }
 
-
-
     @Test
     void getRootCategories_shouldReturnOnlyRootCategories() {
         when(categoryRepository.findByParentCategoryIsNull()).thenReturn(List.of(electronics));
@@ -138,7 +131,7 @@ class CategoryServiceTest {
     @Test
     void getSubCategories_shouldReturnSubcategories_whenParentExists() {
         when(categoryRepository.existsById(1L)).thenReturn(true);
-        when(categoryRepository.findByParentCategory_CategoryId(1L)).thenReturn(List.of(phones));
+        when(categoryRepository.findByParentCategoryCategoryId(1L)).thenReturn(List.of(phones));
 
         List<CategoryDTO> results = categoryService.getSubCategories(1L);
 
@@ -155,8 +148,6 @@ class CategoryServiceTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Parent category not found");
     }
-
-
 
     @Test
     void getCategoryById_shouldReturnDTO_whenCategoryFound() {
@@ -176,8 +167,6 @@ class CategoryServiceTest {
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessageContaining("Category not found");
     }
-
-
 
     @Test
     void updateCategory_shouldUpdateNameAndDescription_whenNameIsNotTaken() {
@@ -254,8 +243,6 @@ class CategoryServiceTest {
                 .hasMessageContaining("Category not found");
     }
 
-
-
     @Test
     void deleteCategory_shouldDelete_whenCategoryFound() {
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(electronics));
@@ -278,8 +265,6 @@ class CategoryServiceTest {
         verify(categoryRepository, never()).delete(any());
     }
 
-
-
     @Test
     void categoryHierarchy_parentCategoryShouldHoldProducts() {
 
@@ -289,7 +274,6 @@ class CategoryServiceTest {
         product.setCategory(phones);
 
         phones.setProducts(List.of(product));
-
 
         assertThat(phones.getProducts()).hasSize(1);
         assertThat(phones.getProducts().get(0).getName()).isEqualTo("Galaxy S24");

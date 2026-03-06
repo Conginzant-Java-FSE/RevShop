@@ -17,6 +17,7 @@ import java.util.List;
 public class UserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
+    private static final String USER_NOT_FOUND = "User not found";
 
     private final UserRepository userRepository;
 
@@ -44,7 +45,7 @@ public class UserService {
     public User updateUser(Long userId, User updatedUser) {
         log.info("Updating user id={}", userId);
         User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
 
         // update all fields except password
         if (updatedUser.getName() != null) {
@@ -72,7 +73,7 @@ public class UserService {
 
     public User updateName(Long userId, String name) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
         user.setName(name);
         return userRepository.save(user);
     }
@@ -80,7 +81,7 @@ public class UserService {
     public User updateEmail(Long userId, String email) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
 
         // check if email is already taken
         Optional<User> userWithEmail = userRepository.findByEmail(email);
@@ -95,14 +96,14 @@ public class UserService {
 
     public User updatePhone(Long userId, String phone) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
         user.setPhone(phone);
         return userRepository.save(user);
     }
 
     public User updateAge(Long userId, Integer age) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
         user.setAge(age);
         return userRepository.save(user);
     }
@@ -110,7 +111,7 @@ public class UserService {
     public User updatePassword(Long userId, String oldPassword, String newPassword) {
         log.info("Updating password for user id={}", userId);
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
 
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
             throw new InvalidInputException("Invalid old password");

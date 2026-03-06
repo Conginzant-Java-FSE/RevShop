@@ -57,18 +57,7 @@ public class Orders {
     }
 
     public Orders() {
-    }
-
-    public Orders(Long orderId, User user, String orderNumber, Address shippingAddress, Address billingAddress,
-            OrderStatus status, LocalDateTime orderDate, String paymentMethod) {
-        this.orderId = orderId;
-        this.user = user;
-        this.orderNumber = orderNumber;
-        this.shippingAddress = shippingAddress;
-        this.billingAddress = billingAddress;
-        this.status = status;
-        this.orderDate = orderDate;
-        this.paymentMethod = paymentMethod;
+        // Required by JPA
     }
 
     // Getters and Setters

@@ -12,6 +12,7 @@ public class ShipperLoginResponse {
     private String role;
 
     public ShipperLoginResponse() {
+        // Required by Jackson for JSON deserialization
     }
 
     public Long getShipperId() {

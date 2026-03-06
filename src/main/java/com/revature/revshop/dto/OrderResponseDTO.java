@@ -25,40 +25,91 @@ public class OrderResponseDTO {
     private String buyerEmail;
     @JsonProperty("items")
     private List<OrderItemResponseDTO> items;
+    @JsonProperty("shipperName")
+    private String shipperName;
 
-    public OrderResponseDTO() {}
-
-    public OrderResponseDTO(Long orderId, String orderNumber, BigDecimal totalAmount, String status,
-                            LocalDateTime orderDate, String paymentMethod, String buyerName,
-                            String buyerEmail, List<OrderItemResponseDTO> items) {
-        this.orderId = orderId;
-        this.orderNumber = orderNumber;
-        this.totalAmount = totalAmount;
-        this.status = status;
-        this.orderDate = orderDate;
-        this.paymentMethod = paymentMethod;
-        this.buyerName = buyerName;
-        this.buyerEmail = buyerEmail;
-        this.items = items;
+    public OrderResponseDTO() {
+        // Required by Jackson for JSON deserialization
     }
 
     // Getters and Setters
-    public Long getOrderId() { return orderId; }
-    public void setOrderId(Long orderId) { this.orderId = orderId; }
-    public String getOrderNumber() { return orderNumber; }
-    public void setOrderNumber(String orderNumber) { this.orderNumber = orderNumber; }
-    public BigDecimal getTotalAmount() { return totalAmount; }
-    public void setTotalAmount(BigDecimal totalAmount) { this.totalAmount = totalAmount; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-    public LocalDateTime getOrderDate() { return orderDate; }
-    public void setOrderDate(LocalDateTime orderDate) { this.orderDate = orderDate; }
-    public String getPaymentMethod() { return paymentMethod; }
-    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
-    public String getBuyerName() { return buyerName; }
-    public void setBuyerName(String buyerName) { this.buyerName = buyerName; }
-    public String getBuyerEmail() { return buyerEmail; }
-    public void setBuyerEmail(String buyerEmail) { this.buyerEmail = buyerEmail; }
-    public List<OrderItemResponseDTO> getItems() { return items; }
-    public void setItems(List<OrderItemResponseDTO> items) { this.items = items; }
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getBuyerName() {
+        return buyerName;
+    }
+
+    public void setBuyerName(String buyerName) {
+        this.buyerName = buyerName;
+    }
+
+    public String getBuyerEmail() {
+        return buyerEmail;
+    }
+
+    public void setBuyerEmail(String buyerEmail) {
+        this.buyerEmail = buyerEmail;
+    }
+
+    public List<OrderItemResponseDTO> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItemResponseDTO> items) {
+        this.items = items;
+    }
+
+    public String getShipperName() {
+        return shipperName;
+    }
+
+    public void setShipperName(String shipperName) {
+        this.shipperName = shipperName;
+    }
 }

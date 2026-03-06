@@ -21,7 +21,7 @@ public class AuthService {
         if (user.isPresent()) {
             return user.get().getSecurityQuestion();
         }
-        throw new RuntimeException("User not found with email: " + email);
+        throw new com.revature.revshop.exception.UserNotFoundException("User not found with email: " + email);
     }
 
     public boolean resetPassword(String email, String answer, String newPassword) {

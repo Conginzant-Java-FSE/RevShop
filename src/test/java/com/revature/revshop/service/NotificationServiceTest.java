@@ -67,7 +67,7 @@ class NotificationServiceTest {
 
     @Test
     void testGetNotificationsByUserId_Success() {
-        when(notificationRepository.findByRecipient_UserId(1L)).thenReturn(Arrays.asList(sampleNotification));
+        when(notificationRepository.findByRecipientUserId(1L)).thenReturn(Arrays.asList(sampleNotification));
 
         List<Notification> notifications = notificationService.getNotificationsByUserId(1L);
 
