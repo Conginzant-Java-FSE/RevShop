@@ -23,6 +23,8 @@ import java.util.List;
 public class FavoriteService {
 
         private static final Logger log = LoggerFactory.getLogger(FavoriteService.class);
+        private static final String BUYER_NOT_FOUND = "Buyer not found";
+        private static final String PRODUCT_NOT_FOUND = "Product not found";
 
         private final FavoriteRepository favoriteRepository;
         private final ProductRepository productRepository;
@@ -44,10 +46,10 @@ public class FavoriteService {
                 log.info("Adding favorite buyerId={} productId={}", buyerId, productId);
 
                 Buyer buyer = buyerRepository.findById(buyerId)
-                                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
+                                .orElseThrow(() -> new UserNotFoundException(BUYER_NOT_FOUND));
 
                 Product product = productRepository.findById(productId)
-                                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+                                .orElseThrow(() -> new ProductNotFoundException(PRODUCT_NOT_FOUND));
 
                 if (favoriteRepository.findByBuyerAndProduct(buyer, product).isPresent()) {
                         throw new InvalidInputException("Product already in favorites");
@@ -74,10 +76,10 @@ public class FavoriteService {
                 log.info("Removing favorite buyerId={} productId={}", buyerId, productId);
 
                 Buyer buyer = buyerRepository.findById(buyerId)
-                                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
+                                .orElseThrow(() -> new UserNotFoundException(BUYER_NOT_FOUND));
 
                 Product product = productRepository.findById(productId)
-                                .orElseThrow(() -> new ProductNotFoundException("Product not found"));
+                                .orElseThrow(() -> new ProductNotFoundException(PRODUCT_NOT_FOUND));
 
                 favoriteRepository.deleteByBuyerAndProduct(buyer, product);
         }
@@ -85,7 +87,7 @@ public class FavoriteService {
         public List<FavoriteDTO> getBuyerFavorites(Long buyerId) {
 
                 Buyer buyer = buyerRepository.findById(buyerId)
-                                .orElseThrow(() -> new UserNotFoundException("Buyer not found"));
+                                .orElseThrow(() -> new UserNotFoundException(BUYER_NOT_FOUND));
 
                 return favoriteRepository.findByBuyer(buyer)
                                 .stream()

@@ -18,6 +18,8 @@ import java.util.List;
 public class PaymentsController {
 
     private static final Logger log = LoggerFactory.getLogger(PaymentsController.class);
+    private static final String AMOUNT = "amount";
+    private static final String CURRENCY = "currency";
 
     private final PaymentsService paymentsService;
 
@@ -155,7 +157,7 @@ public class PaymentsController {
     public ResponseEntity<ApiResponse<java.util.Map<String, Object>>> createRazorpayOrder(
             @RequestBody java.util.Map<String, Object> body) {
 
-        long amountPaise = Long.parseLong(body.get("amount").toString());
+        long amountPaise = Long.parseLong(body.get(AMOUNT).toString());
         Long internalOrderId = Long.parseLong(body.get("orderId").toString());
         log.info("POST /api/payments/create-order - internalOrderId={} amount={}", internalOrderId, amountPaise);
 
@@ -163,23 +165,23 @@ public class PaymentsController {
             com.razorpay.RazorpayClient client = new com.razorpay.RazorpayClient(razorpayKeyId, razorpayKeySecret);
 
             org.json.JSONObject options = new org.json.JSONObject();
-            options.put("amount", amountPaise);
-            options.put("currency", body.getOrDefault("currency", "INR").toString());
+            options.put(AMOUNT, amountPaise);
+            options.put(CURRENCY, body.getOrDefault(CURRENCY, "INR").toString());
             options.put("receipt", "rcpt_" + internalOrderId);
 
             com.razorpay.Order razorpayOrder = client.orders.create(options);
 
             java.util.Map<String, Object> result = new java.util.HashMap<>();
             result.put("razorpayOrderId", razorpayOrder.get("id"));
-            result.put("amount", amountPaise);
-            result.put("currency", razorpayOrder.get("currency"));
+            result.put(AMOUNT, amountPaise);
+            result.put(CURRENCY, razorpayOrder.get(CURRENCY));
             result.put("keyId", razorpayKeyId);
 
             return ResponseEntity.ok(new ApiResponse<>("Razorpay order created", result));
 
         } catch (Exception e) {
-            log.error("Razorpay create-order failed: {}", e.getMessage(), e);
-            throw new PaymentFailedException("Failed to create payment order: " + e.getMessage());
+            log.error("Failed to create Razorpay order for internalOrderId={}: {}", internalOrderId, e.getMessage(), e);
+            throw new PaymentFailedException("Failed to create payment order: " + e.getMessage(), e);
         }
     }
 
@@ -227,8 +229,9 @@ public class PaymentsController {
         } catch (PaymentFailedException e) {
             throw e;
         } catch (Exception e) {
-            log.error("Payment verification error: {}", e.getMessage(), e);
-            throw new PaymentFailedException("Payment verification error: " + e.getMessage());
+            log.error("Payment verification failed for internalOrderId={} and paymentId={}: {}",
+                    internalOrderId, razorpayPaymentId, e.getMessage(), e);
+            throw new PaymentFailedException("Payment verification error: " + e.getMessage(), e);
         }
     }
 }

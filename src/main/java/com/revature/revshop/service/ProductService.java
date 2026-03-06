@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
+    private static final String PRODUCT_NOT_FOUND = "Product not found";
+    private static final String CATEGORY_NOT_FOUND = "Category not found";
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
@@ -40,7 +42,7 @@ public class ProductService {
         log.info("Creating product name={}", dto.getName());
 
         Category category = categoryRepository.findById(dto.getCategoryId())
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(CATEGORY_NOT_FOUND));
 
         Seller seller = sellerRepository.findById(dto.getSellerId())
                 .orElseThrow(() -> new UserNotFoundException("Seller not found"));
@@ -64,7 +66,7 @@ public class ProductService {
         log.info("Fetching product id={}", id);
 
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
 
         return convertToDTO(product);
     }
@@ -73,7 +75,7 @@ public class ProductService {
         log.info("Updating product id={}", id);
 
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
 
         mapDtoToEntity(dto, product);
 
@@ -86,7 +88,7 @@ public class ProductService {
         log.info("Deleting product id={}", id);
 
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
 
         productRepository.delete(product);
     }
@@ -143,7 +145,7 @@ public class ProductService {
         log.info("Toggling active status for product id={}", id);
 
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
 
         product.setIsActive(!product.getIsActive());
         Product saved = productRepository.save(product);

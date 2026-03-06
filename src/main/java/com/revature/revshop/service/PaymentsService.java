@@ -18,6 +18,7 @@ import java.util.Optional;
 public class PaymentsService {
 
     private static final Logger log = LoggerFactory.getLogger(PaymentsService.class);
+    private static final String ORDER_NOT_FOUND = "Order not found";
 
     private final PaymentsRepository paymentsRepository;
     private final OrdersRepository ordersRepository;
@@ -35,7 +36,7 @@ public class PaymentsService {
         log.info("Creating payment for orderId={}", orderId);
 
         Orders order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("Order not found"));
+                .orElseThrow(() -> new OrderNotFoundException(ORDER_NOT_FOUND));
 
         payment.setOrder(order);
 
@@ -72,7 +73,7 @@ public class PaymentsService {
     }
 
     public Optional<Payments> getPaymentByOrderId(Long orderId) {
-        return paymentsRepository.findByOrder_OrderId(orderId);
+        return paymentsRepository.findByOrderOrderId(orderId);
     }
 
     public List<Payments> getAllPayments() {

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
         private static final Logger log = LoggerFactory.getLogger(ProductController.class);
+        private static final String FETCHED_SUCCESSFULLY = "Products fetched successfully";
 
         private final ProductService productService;
 
@@ -55,7 +56,7 @@ public class ProductController {
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>(
-                                                "Products fetched successfully",
+                                                FETCHED_SUCCESSFULLY,
                                                 products));
         }
 
@@ -116,7 +117,7 @@ public class ProductController {
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>(
-                                                "Products fetched successfully",
+                                                FETCHED_SUCCESSFULLY,
                                                 products));
         }
 
@@ -161,7 +162,7 @@ public class ProductController {
 
                 log.info("GET /api/products/seller/{} - page={} size={}", sellerId, page, size);
                 Page<ProductDTO> products = productService.getProductsBySeller(sellerId, pageable);
-                return ResponseEntity.ok(new ApiResponse<>("Products fetched successfully", products));
+                return ResponseEntity.ok(new ApiResponse<>(FETCHED_SUCCESSFULLY, products));
         }
 
         @PatchMapping("/{id}/toggle-active")

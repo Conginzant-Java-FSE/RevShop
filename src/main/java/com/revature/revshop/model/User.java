@@ -67,24 +67,8 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Seller sellerProfile;
 
-    /**
-     * Empty constructor for JPA.
-     */
     public User() {
-    }
-
-    public User(Long userId, String name, String email, String password, Role role, String phone, Integer age,
-            String securityQuestion, String securityAnswer, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.phone = phone;
-        this.securityQuestion = securityQuestion;
-        this.securityAnswer = securityAnswer;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        /* Empty constructor for JPA */
     }
 
     public Long getUserId() {

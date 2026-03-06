@@ -68,13 +68,13 @@ class ProductDependencyIntegrationTest {
         testUser.setEmail("test_dep@example.com");
         testUser.setPassword("password");
         testUser.setRole(Role.BUYER);
-        testUser = userRepository.save(testUser);
 
         Seller testSeller = new Seller();
         testSeller.setBusinessName("Test Business 2");
         testSeller.setUser(testUser);
         testSeller.setBusinessDescription("456 Test Ave");
         testUser.setSellerProfile(testSeller);
+
         testUser = userRepository.save(testUser);
         testSeller = testUser.getSellerProfile();
 

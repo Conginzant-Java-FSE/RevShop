@@ -17,6 +17,8 @@ import java.util.List;
 public class CategoryService {
 
     private static final Logger log = LoggerFactory.getLogger(CategoryService.class);
+    private static final String CATEGORY_NOT_FOUND = "Category not found";
+    private static final String PARENT_CATEGORY_NOT_FOUND = "Parent category not found";
 
     private final CategoryRepository categoryRepository;
 
@@ -37,7 +39,7 @@ public class CategoryService {
 
         if (dto.getParentCategoryId() != null) {
             Category parent = categoryRepository.findById(dto.getParentCategoryId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Parent category not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException(PARENT_CATEGORY_NOT_FOUND));
             category.setParentCategory(parent);
         }
 
@@ -62,9 +64,9 @@ public class CategoryService {
 
     public List<CategoryDTO> getSubCategories(Long parentId) {
         if (!categoryRepository.existsById(parentId)) {
-            throw new ResourceNotFoundException("Parent category not found");
+            throw new ResourceNotFoundException(PARENT_CATEGORY_NOT_FOUND);
         }
-        return categoryRepository.findByParentCategory_CategoryId(parentId)
+        return categoryRepository.findByParentCategoryCategoryId(parentId)
                 .stream()
                 .map(this::convertToDTO)
                 .toList();
@@ -73,7 +75,7 @@ public class CategoryService {
     public CategoryDTO getCategoryById(Long id) {
 
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(CATEGORY_NOT_FOUND));
 
         return convertToDTO(category);
     }
@@ -82,7 +84,7 @@ public class CategoryService {
         log.info("Updating category id={}", id);
 
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(CATEGORY_NOT_FOUND));
 
         if (!category.getName().equals(dto.getName()) &&
                 categoryRepository.existsByName(dto.getName())) {
@@ -101,7 +103,7 @@ public class CategoryService {
         log.info("Deleting category id={}", id);
 
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(CATEGORY_NOT_FOUND));
 
         categoryRepository.delete(category);
     }

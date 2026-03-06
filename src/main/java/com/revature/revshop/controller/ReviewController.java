@@ -33,6 +33,9 @@ public class ReviewController {
         private final ProductRepository productRepository;
         private final ReviewRepository reviewRepository;
 
+        private static final String USER_NOT_FOUND = "User not found";
+        private static final String PRODUCT_NOT_FOUND = "Product not found";
+
         public ReviewController(ReviewService reviewService,
                         UserRepository userRepository,
                         ProductRepository productRepository,
@@ -53,10 +56,10 @@ public class ReviewController {
                 }
 
                 User user = userRepository.findById(request.getUserId())
-                                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
 
                 Product product = productRepository.findById(request.getProductId())
-                                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
 
                 Review review = new Review(
                                 product,
@@ -78,7 +81,7 @@ public class ReviewController {
 
                 log.info("GET /api/reviews/product/{}", productId);
                 Product product = productRepository.findById(productId)
-                                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
 
                 List<ReviewResponseDTO> responses = reviewService.getReviewsByProduct(product)
                                 .stream()
@@ -95,8 +98,7 @@ public class ReviewController {
 
                 log.info("GET /api/reviews/product/{}/average-rating", productId);
                 Product product = productRepository.findById(productId)
-                                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
-
+                                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
                 Double avg = reviewService.getAverageRatingByProduct(product);
                 int count = reviewService.getReviewsByProduct(product).size();
 
@@ -114,9 +116,9 @@ public class ReviewController {
 
                 log.info("GET /api/reviews/check - userId={} productId={}", userId, productId);
                 User user = userRepository.findById(userId)
-                                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
                 Product product = productRepository.findById(productId)
-                                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
 
                 boolean hasReviewed = reviewRepository.findByProductAndUser(product, user).isPresent();
                 return ResponseEntity.ok(new ApiResponse<>("Check complete", hasReviewed));
@@ -128,7 +130,7 @@ public class ReviewController {
 
                 log.info("GET /api/reviews/user/{}", userId);
                 User user = userRepository.findById(userId)
-                                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                                .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
 
                 List<ReviewResponseDTO> responses = reviewService.getReviewsByUser(user)
                                 .stream()
@@ -144,9 +146,10 @@ public class ReviewController {
                         @PathVariable Long reviewId) {
 
                 log.info("DELETE /api/reviews/{}", reviewId);
-                reviewService.getReviewById(reviewId)
+                // Validate the review exists before deleting
+                Review review = reviewService.getReviewById(reviewId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Review not found"));
-
+                log.debug("Deleting review with id: {}", review.getReviewId());
                 reviewService.deleteReview(reviewId);
 
                 return ResponseEntity.ok(

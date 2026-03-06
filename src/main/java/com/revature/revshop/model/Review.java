@@ -29,10 +29,8 @@ public class Review {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    /**
-     * Empty constructor for JPA.
-     */
     public Review() {
+        /* Empty constructor for JPA */
     }
 
     public Review(Product product, User user, Integer rating, String reviewText) {
