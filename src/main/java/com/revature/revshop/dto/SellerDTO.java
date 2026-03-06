@@ -1,7 +1,5 @@
 package com.revature.revshop.dto;
 
-import java.util.List;
-
 public class SellerDTO extends UserDTO {
     private String businessDescription;
     private String taxId;
@@ -9,17 +7,6 @@ public class SellerDTO extends UserDTO {
 
     public SellerDTO() {
         super();
-    }
-
-    public SellerDTO(Long userId, String name, String email, String password, String phone, Integer age,
-                     String businessName,
-                     List<AddressDTO> addresses, String businessDescription, String taxId,
-                     String securityQuestion, String securityAnswer) {
-        super(userId, name, email, password, phone, age, "SELLER", securityQuestion, securityAnswer,
-                addresses);
-        this.businessName = businessName;
-        this.businessDescription = businessDescription;
-        this.taxId = taxId;
     }
 
     public String getBusinessDescription() {

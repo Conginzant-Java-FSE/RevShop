@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface TrackingDetailsRepository extends JpaRepository<TrackingDetails, Integer> {
 
-    List<TrackingDetails> findByOrder_OrderId(Long orderId);
+    List<TrackingDetails> findByOrderOrderId(Long orderId);
 
     List<TrackingDetails> findByStatus(String status);
 }

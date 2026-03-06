@@ -30,6 +30,9 @@ public class ShipperService {
     private final PasswordEncoder passwordEncoder;
     private final TrackingDetailsRepository trackingDetailsRepository;
 
+    private static final String SHIPPER_NOT_FOUND = "Shipper not found with id: ";
+    private static final String YOUR_ORDER = "Your order ";
+
     public ShipperService(ShipperRepository shipperRepository,
             OrdersRepository ordersRepository,
             NotificationService notificationService,
@@ -82,7 +85,7 @@ public class ShipperService {
 
     public void deleteShipper(Long id) {
         if (!shipperRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Shipper not found with id: " + id);
+            throw new ResourceNotFoundException(SHIPPER_NOT_FOUND + id);
         }
         shipperRepository.deleteById(id);
     }
@@ -112,7 +115,7 @@ public class ShipperService {
                 .orElseThrow(() -> new OrderNotFoundException("Order not found with id: " + orderId));
 
         Shipper shipper = shipperRepository.findById(shipperId)
-                .orElseThrow(() -> new ResourceNotFoundException("Shipper not found with id: " + shipperId));
+                .orElseThrow(() -> new ResourceNotFoundException(SHIPPER_NOT_FOUND + shipperId));
 
         order.setShipper(shipper);
         order.setStatus(Orders.OrderStatus.SHIPPED);
@@ -125,7 +128,7 @@ public class ShipperService {
         notificationService.createNotification(
                 order.getUser().getUserId(),
                 "Shipper Assigned",
-                "Your order " + order.getOrderNumber() + " has been assigned to shipper "
+                YOUR_ORDER + order.getOrderNumber() + " has been assigned to shipper "
                         + shipper.getName() + " and will be picked up shortly.");
 
         // Record tracking
@@ -138,7 +141,7 @@ public class ShipperService {
      * Get all orders assigned to a specific shipper.
      */
     public List<Orders> getOrdersByShipper(Long shipperId) {
-        return ordersRepository.findByShipper_ShipperId(shipperId);
+        return ordersRepository.findByShipperShipperId(shipperId);
     }
 
     /**
@@ -160,7 +163,7 @@ public class ShipperService {
             notificationService.createNotification(
                     order.getUser().getUserId(),
                     "Out for Delivery 🛵",
-                    "Your order " + order.getOrderNumber() + " is out for delivery and will reach you soon!");
+                    YOUR_ORDER + order.getOrderNumber() + " is out for delivery and will reach you soon!");
         }
 
         if (newStatus == Orders.OrderStatus.DELIVERED) {
@@ -168,7 +171,7 @@ public class ShipperService {
             notificationService.createNotification(
                     order.getUser().getUserId(),
                     "Order Delivered! ✅",
-                    "Your order " + order.getOrderNumber() + " has been delivered successfully. Enjoy your purchase!");
+                    YOUR_ORDER + order.getOrderNumber() + " has been delivered successfully. Enjoy your purchase!");
             // NOTE: Availability is manually controlled by the shipper — do NOT auto-change
             // it here.
         }
@@ -194,7 +197,7 @@ public class ShipperService {
      */
     public Shipper updateAvailability(Long shipperId, Boolean available) {
         Shipper shipper = shipperRepository.findById(shipperId)
-                .orElseThrow(() -> new ResourceNotFoundException("Shipper not found with id: " + shipperId));
+                .orElseThrow(() -> new ResourceNotFoundException(SHIPPER_NOT_FOUND + shipperId));
         shipper.setIsAvailable(available);
         return shipperRepository.save(shipper);
     }

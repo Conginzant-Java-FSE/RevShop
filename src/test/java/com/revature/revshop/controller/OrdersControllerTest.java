@@ -54,16 +54,16 @@ class OrdersControllerTest {
         validRequest.setPaymentMethod("COD");
         validRequest.setItems(Collections.singletonList(item));
 
-        mockResponse = new OrderResponseDTO(
-                101L,
-                "ORD-123",
-                new BigDecimal("200.00"),
-                "PENDING",
-                LocalDateTime.now(),
-                "COD",
-                "Test Buyer",
-                "test@buyer.com",
-                new ArrayList<>());
+        mockResponse = new OrderResponseDTO();
+        mockResponse.setOrderId(101L);
+        mockResponse.setOrderNumber("ORD-123");
+        mockResponse.setTotalAmount(new BigDecimal("200.00"));
+        mockResponse.setStatus("PENDING");
+        mockResponse.setOrderDate(LocalDateTime.now());
+        mockResponse.setPaymentMethod("COD");
+        mockResponse.setBuyerName("Test Buyer");
+        mockResponse.setBuyerEmail("test@buyer.com");
+        mockResponse.setItems(new ArrayList<>());
     }
 
     @Test

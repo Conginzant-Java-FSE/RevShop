@@ -29,27 +29,7 @@ public class OrderResponseDTO {
     private String shipperName;
 
     public OrderResponseDTO() {
-    }
-
-    public OrderResponseDTO(Long orderId, String orderNumber, BigDecimal totalAmount, String status,
-            LocalDateTime orderDate, String paymentMethod, String buyerName,
-            String buyerEmail, List<OrderItemResponseDTO> items) {
-        this.orderId = orderId;
-        this.orderNumber = orderNumber;
-        this.totalAmount = totalAmount;
-        this.status = status;
-        this.orderDate = orderDate;
-        this.paymentMethod = paymentMethod;
-        this.buyerName = buyerName;
-        this.buyerEmail = buyerEmail;
-        this.items = items;
-    }
-
-    public OrderResponseDTO(Long orderId, String orderNumber, BigDecimal totalAmount, String status,
-            LocalDateTime orderDate, String paymentMethod, String buyerName,
-            String buyerEmail, List<OrderItemResponseDTO> items, String shipperName) {
-        this(orderId, orderNumber, totalAmount, status, orderDate, paymentMethod, buyerName, buyerEmail, items);
-        this.shipperName = shipperName;
+        // Required by Jackson for JSON deserialization
     }
 
     // Getters and Setters

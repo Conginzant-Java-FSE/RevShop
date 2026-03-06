@@ -99,7 +99,7 @@ class TrackingDetailsServiceTest {
 
     @Test
     void testGetTrackingByOrderId_Success() {
-        when(trackingDetailsRepository.findByOrder_OrderId(100L))
+        when(trackingDetailsRepository.findByOrderOrderId(100L))
                 .thenReturn(Arrays.asList(sampleTracking));
 
         List<TrackingDetails> result = trackingDetailsService.getTrackingByOrderId(100L);

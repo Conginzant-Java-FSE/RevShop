@@ -6,6 +6,7 @@ public class ShipperLoginRequest {
     private String password;
 
     public ShipperLoginRequest() {
+        // Required by Jackson for JSON deserialization
     }
 
     public String getEmail() {

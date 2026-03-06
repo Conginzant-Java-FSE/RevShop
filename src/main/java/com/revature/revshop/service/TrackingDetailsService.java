@@ -18,6 +18,8 @@ import java.util.Optional;
 public class TrackingDetailsService {
 
     private static final Logger log = LoggerFactory.getLogger(TrackingDetailsService.class);
+    private static final String ORDER_NOT_FOUND = "Order not found";
+    private static final String TRACKING_NOT_FOUND = "Tracking detail not found";
 
     private final TrackingDetailsRepository trackingDetailsRepository;
     private final OrdersRepository ordersRepository;
@@ -32,7 +34,7 @@ public class TrackingDetailsService {
     public TrackingDetails addTrackingDetail(TrackingDetails trackingDetails, Long orderId) {
         log.info("Adding tracking detail for orderId={}", orderId);
         Orders order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("Order not found"));
+                .orElseThrow(() -> new OrderNotFoundException(ORDER_NOT_FOUND));
         trackingDetails.setOrder(order);
         return trackingDetailsRepository.save(trackingDetails);
     }
@@ -42,7 +44,7 @@ public class TrackingDetailsService {
     }
 
     public List<TrackingDetails> getTrackingByOrderId(Long orderId) {
-        return trackingDetailsRepository.findByOrder_OrderId(orderId);
+        return trackingDetailsRepository.findByOrderOrderId(orderId);
     }
 
     public List<TrackingDetails> getAllTrackingDetails() {
@@ -52,7 +54,7 @@ public class TrackingDetailsService {
     public TrackingDetails updateTrackingStatus(Integer trackingId, String status, String description) {
         log.info("Updating tracking id={} status={}", trackingId, status);
         TrackingDetails tracking = trackingDetailsRepository.findById(trackingId)
-                .orElseThrow(() -> new ResourceNotFoundException("Tracking detail not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(TRACKING_NOT_FOUND));
         tracking.setStatus(status);
         tracking.setDescription(description);
         return trackingDetailsRepository.save(tracking);
@@ -61,7 +63,7 @@ public class TrackingDetailsService {
     public void deleteTracking(Integer trackingId) {
         log.info("Deleting tracking id={}", trackingId);
         if (!trackingDetailsRepository.existsById(trackingId)) {
-            throw new ResourceNotFoundException("Tracking detail not found");
+            throw new ResourceNotFoundException(TRACKING_NOT_FOUND);
         }
         trackingDetailsRepository.deleteById(trackingId);
     }

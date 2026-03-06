@@ -41,6 +41,7 @@ public class Shipper {
     }
 
     public Shipper() {
+        // Required by JPA
     }
 
     // Getters and Setters

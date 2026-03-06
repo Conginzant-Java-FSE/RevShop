@@ -199,7 +199,7 @@ class PaymentsServiceTest {
 
     @Test
     void testGetPaymentByOrderId_Success() {
-        when(paymentsRepository.findByOrder_OrderId(100L)).thenReturn(Optional.of(samplePayment));
+        when(paymentsRepository.findByOrderOrderId(100L)).thenReturn(Optional.of(samplePayment));
 
         Optional<Payments> result = paymentsService.getPaymentByOrderId(100L);
 

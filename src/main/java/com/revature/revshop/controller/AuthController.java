@@ -41,26 +41,24 @@ public class AuthController {
         private final SellerService sellerService;
         private final ShipperService shipperService;
         private final AuthenticationManager authenticationManager;
-        private final JwtUtil jwtUtil;
-        private final PasswordEncoder passwordEncoder;
-        private final CustomUserDetailsService userDetailsService;
         private final UserService userService;
+
+        @org.springframework.beans.factory.annotation.Autowired
+        private JwtUtil jwtUtil;
+        @org.springframework.beans.factory.annotation.Autowired
+        private PasswordEncoder passwordEncoder;
+        @org.springframework.beans.factory.annotation.Autowired
+        private CustomUserDetailsService userDetailsService;
 
         public AuthController(BuyerService buyerService,
                         SellerService sellerService,
                         ShipperService shipperService,
                         AuthenticationManager authenticationManager,
-                        JwtUtil jwtUtil,
-                        PasswordEncoder passwordEncoder,
-                        CustomUserDetailsService userDetailsService,
                         UserService userService) {
                 this.buyerService = buyerService;
                 this.sellerService = sellerService;
                 this.shipperService = shipperService;
                 this.authenticationManager = authenticationManager;
-                this.jwtUtil = jwtUtil;
-                this.passwordEncoder = passwordEncoder;
-                this.userDetailsService = userDetailsService;
                 this.userService = userService;
         }
 

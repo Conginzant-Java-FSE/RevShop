@@ -31,7 +31,7 @@
         <sonar.projectKey>springboot-monolith</sonar.projectKey>
         <sonar.projectName>Spring Boot Monolithic App</sonar.projectName>
         <sonar.host.url>http://localhost:9000</sonar.host.url>
-        <sonar.login>squ_a5c47bc5837181b75171f79bea352d8a48619e33</sonar.login>
+        <!-- sonar.token is passed via command line: -Dsonar.token=<your_token> -->
     </properties>
     <dependencies>
         <dependency>

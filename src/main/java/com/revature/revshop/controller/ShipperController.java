@@ -10,16 +10,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/shippers")
 public class ShipperController {
 
     private static final Logger log = LoggerFactory.getLogger(ShipperController.class);
+    private static final String ORDER_ID_KEY = "orderId";
+    private static final String STATUS_KEY = "status";
 
     private final ShipperService shipperService;
 
@@ -66,10 +68,11 @@ public class ShipperController {
             @PathVariable Long orderId) {
         log.info("POST /api/shippers/{}/assign/{}", shipperId, orderId);
         Orders updated = shipperService.assignOrderToShipper(orderId, shipperId);
+        String orderNumber = updated.getOrderNumber() != null ? updated.getOrderNumber() : "";
         Map<String, Object> result = Map.of(
-                "orderId", updated.getOrderId(),
-                "orderNumber", updated.getOrderNumber() != null ? updated.getOrderNumber() : "",
-                "status", updated.getStatus().name(),
+                ORDER_ID_KEY, updated.getOrderId(),
+                "orderNumber", orderNumber,
+                STATUS_KEY, updated.getStatus().name(),
                 "shipperId", shipperId);
         return ResponseEntity.ok(new ApiResponse<>("Shipper assigned to order successfully", result));
     }
@@ -82,41 +85,53 @@ public class ShipperController {
             @PathVariable Long shipperId) {
         log.info("GET /api/shippers/{}/orders", shipperId);
         List<Orders> orders = shipperService.getOrdersByShipper(shipperId);
-        List<Map<String, Object>> result = orders.stream().map(o -> {
-            List<Map<String, Object>> items = o.getOrderItems() != null
-                    ? o.getOrderItems().stream().map(item -> {
-                        Map<String, Object> itemMap = new HashMap<>();
-                        itemMap.put("productName", item.getProduct() != null ? item.getProduct().getName() : "Unknown");
-                        itemMap.put("quantity", item.getQuantity());
-                        itemMap.put("price", item.getPriceAtPurchase());
-                        return itemMap;
-                    }).collect(Collectors.toList())
-                    : new java.util.ArrayList<>();
-
-            Map<String, Object> addressMap = new HashMap<>();
-            if (o.getShippingAddress() != null) {
-                addressMap.put("addressLine", safeStr(o.getShippingAddress().getAddressLine()));
-                addressMap.put("street", safeStr(o.getShippingAddress().getStreet()));
-                addressMap.put("city", safeStr(o.getShippingAddress().getCity()));
-                addressMap.put("state", safeStr(o.getShippingAddress().getState()));
-                addressMap.put("zipCode", safeStr(o.getShippingAddress().getZipCode()));
-            }
-
-            Map<String, Object> orderMap = new HashMap<>();
-            orderMap.put("orderId", o.getOrderId());
-            orderMap.put("orderNumber", o.getOrderNumber() != null ? o.getOrderNumber() : "");
-            orderMap.put("status", o.getStatus().name());
-            orderMap.put("totalAmount", o.getTotalAmount());
-            orderMap.put("customerName", o.getUser() != null ? o.getUser().getName() : "");
-            orderMap.put("customerPhone",
-                    o.getUser() != null && o.getUser().getPhone() != null ? o.getUser().getPhone() : "");
-            orderMap.put("shippingAddress", addressMap);
-            orderMap.put("orderItems", items);
-            orderMap.put("orderDate", o.getOrderDate() != null ? o.getOrderDate().toString() : "");
-            return orderMap;
-        }).collect(Collectors.toList());
-
+        List<Map<String, Object>> result = orders.stream()
+                .map(this::mapOrderToResponse)
+                .toList();
         return ResponseEntity.ok(new ApiResponse<>("Orders fetched successfully", result));
+    }
+
+    private Map<String, Object> mapOrderToResponse(Orders o) {
+        List<Map<String, Object>> items = buildItemsList(o);
+        Map<String, Object> addressMap = buildAddressMap(o);
+
+        Map<String, Object> orderMap = new HashMap<>();
+        orderMap.put(ORDER_ID_KEY, o.getOrderId());
+        orderMap.put("orderNumber", o.getOrderNumber() != null ? o.getOrderNumber() : "");
+        orderMap.put(STATUS_KEY, o.getStatus().name());
+        orderMap.put("totalAmount", o.getTotalAmount());
+        orderMap.put("customerName", o.getUser() != null ? o.getUser().getName() : "");
+        String phone = (o.getUser() != null && o.getUser().getPhone() != null) ? o.getUser().getPhone() : "";
+        orderMap.put("customerPhone", phone);
+        orderMap.put("shippingAddress", addressMap);
+        orderMap.put("orderItems", items);
+        orderMap.put("orderDate", o.getOrderDate() != null ? o.getOrderDate().toString() : "");
+        return orderMap;
+    }
+
+    private List<Map<String, Object>> buildItemsList(Orders o) {
+        if (o.getOrderItems() == null) {
+            return new ArrayList<>();
+        }
+        return o.getOrderItems().stream().map(item -> {
+            Map<String, Object> itemMap = new HashMap<>();
+            itemMap.put("productName", item.getProduct() != null ? item.getProduct().getName() : "Unknown");
+            itemMap.put("quantity", item.getQuantity());
+            itemMap.put("price", item.getPriceAtPurchase());
+            return itemMap;
+        }).toList();
+    }
+
+    private Map<String, Object> buildAddressMap(Orders o) {
+        Map<String, Object> addressMap = new HashMap<>();
+        if (o.getShippingAddress() != null) {
+            addressMap.put("addressLine", safeStr(o.getShippingAddress().getAddressLine()));
+            addressMap.put("street", safeStr(o.getShippingAddress().getStreet()));
+            addressMap.put("city", safeStr(o.getShippingAddress().getCity()));
+            addressMap.put("state", safeStr(o.getShippingAddress().getState()));
+            addressMap.put("zipCode", safeStr(o.getShippingAddress().getZipCode()));
+        }
+        return addressMap;
     }
 
     /**
@@ -130,8 +145,8 @@ public class ShipperController {
         log.info("PATCH /api/shippers/{}/orders/{}/status - status={}", shipperId, orderId, status);
         Orders updated = shipperService.updateOrderStatus(orderId, shipperId, status);
         Map<String, Object> result = Map.of(
-                "orderId", updated.getOrderId(),
-                "status", updated.getStatus().name());
+                ORDER_ID_KEY, updated.getOrderId(),
+                STATUS_KEY, updated.getStatus().name());
         return ResponseEntity.ok(new ApiResponse<>("Order status updated successfully", result));
     }
 

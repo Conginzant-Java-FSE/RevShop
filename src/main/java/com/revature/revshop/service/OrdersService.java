@@ -25,6 +25,11 @@ import java.util.stream.Collectors;
 public class OrdersService {
 
     private static final Logger log = LoggerFactory.getLogger(OrdersService.class);
+    private static final String ORDER_NOT_FOUND = "Order not found";
+    private static final String USER_NOT_FOUND = "User not found";
+    private static final String PRODUCT_NOT_FOUND = "Product not found";
+    private static final String SHIPPING_ADDRESS_NOT_FOUND = "Shipping address not found";
+    private static final String BILLING_ADDRESS_NOT_FOUND = "Billing address not found";
 
     private final OrdersRepository ordersRepository;
     private final UserRepository userRepository;
@@ -60,13 +65,13 @@ public class OrdersService {
         log.info("Placing order for userId={}", userId);
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
 
         Address shippingAddress = addressRepository.findById(request.getShippingAddressId())
-                .orElseThrow(() -> new ResourceNotFoundException("Shipping address not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(SHIPPING_ADDRESS_NOT_FOUND));
 
         Address billingAddress = addressRepository.findById(request.getBillingAddressId())
-                .orElseThrow(() -> new ResourceNotFoundException("Billing address not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(BILLING_ADDRESS_NOT_FOUND));
 
         if (!shippingAddress.getUser().getUserId().equals(userId)) {
             throw new InvalidInputException("Shipping address does not belong to user");
@@ -90,51 +95,7 @@ public class OrdersService {
 
         BigDecimal totalAmount = BigDecimal.ZERO;
         List<OrderItemResponseDTO> responseItems = new ArrayList<>();
-
-        for (OrderItemRequestDTO itemDTO : request.getItems()) {
-            Product product = productRepository.findById(itemDTO.getProductId())
-                    .orElseThrow(() -> new ProductNotFoundException("Product not found"));
-
-            if (product.getStockQuantity() < itemDTO.getQuantity()) {
-                throw new InvalidInputException("Insufficient stock for product: " + product.getName());
-            }
-
-            product.setStockQuantity(product.getStockQuantity() - itemDTO.getQuantity());
-            Product savedProduct = productRepository.save(product);
-
-            if (savedProduct.getStockQuantity() < savedProduct.getThresholdQuantity()) {
-                if (savedProduct.getSeller() != null && savedProduct.getSeller().getUser() != null) {
-                    notificationService.createNotification(
-                            savedProduct.getSeller().getUser().getUserId(),
-                            "Low Stock Alert",
-                            "Product '" + savedProduct.getName() + "' has low stock: "
-                                    + savedProduct.getStockQuantity()
-                                    + " units remaining.");
-                }
-            }
-
-            BigDecimal price = product.getSellingPrice();
-            BigDecimal subtotal = price.multiply(BigDecimal.valueOf(itemDTO.getQuantity()));
-
-            orderItemService.createOrderItem(savedOrder, product, itemDTO.getQuantity());
-
-            totalAmount = totalAmount.add(subtotal);
-
-            responseItems.add(new OrderItemResponseDTO(
-                    product.getProductId(),
-                    product.getName(),
-                    itemDTO.getQuantity(),
-                    price,
-                    subtotal));
-
-            if (product.getSeller() != null && product.getSeller().getUser() != null) {
-                notificationService.createNotification(
-                        product.getSeller().getUser().getUserId(),
-                        "New Order Received",
-                        "Your product '" + product.getName() + "' was ordered (Qty: "
-                                + itemDTO.getQuantity() + ").");
-            }
-        }
+        totalAmount = processOrderItems(request.getItems(), savedOrder, responseItems);
 
         savedOrder.setTotalAmount(totalAmount);
         Orders finalOrder = ordersRepository.save(savedOrder);
@@ -153,46 +114,25 @@ public class OrdersService {
             log.warn("Email send failed", e);
         }
 
-        String rawMethod = request.getPaymentMethod() != null ? request.getPaymentMethod().toUpperCase() : "COD";
-        Payments.PaymentMethod payMethod;
-        try {
-            payMethod = Payments.PaymentMethod.valueOf(rawMethod);
-        } catch (IllegalArgumentException e) {
-            payMethod = Payments.PaymentMethod.COD;
-        }
+        processPaymentAndTracking(finalOrder, totalAmount, request.getPaymentMethod());
 
-        // RAZORPAY and COD stay PENDING until verified/delivered
-        boolean isPending = (payMethod == Payments.PaymentMethod.COD ||
-                payMethod == Payments.PaymentMethod.RAZORPAY);
-        String txnId = isPending ? null : "TXN-" + System.currentTimeMillis() + "-" + finalOrder.getOrderId();
-
-        Payments payment = new Payments();
-        payment.setOrder(finalOrder);
-        payment.setAmount(totalAmount);
-        payment.setPaymentMethod(payMethod);
-        payment.setPaymentStatus(isPending ? Payments.PaymentStatus.PENDING : Payments.PaymentStatus.SUCCESS);
-        payment.setTransactionId(txnId);
-        payment.setPaymentDate(LocalDateTime.now());
-        paymentsRepository.save(payment);
-
-        createTrackingDetail(finalOrder, "PENDING", "Order placed successfully. Waiting for processing.");
-
-        return new OrderResponseDTO(
-                finalOrder.getOrderId(),
-                finalOrder.getOrderNumber(),
-                finalOrder.getTotalAmount(),
-                finalOrder.getStatus().name(),
-                finalOrder.getOrderDate(),
-                finalOrder.getPaymentMethod(),
-                user.getName(),
-                user.getEmail(),
-                responseItems);
+        OrderResponseDTO response = new OrderResponseDTO();
+        response.setOrderId(finalOrder.getOrderId());
+        response.setOrderNumber(finalOrder.getOrderNumber());
+        response.setTotalAmount(finalOrder.getTotalAmount());
+        response.setStatus(finalOrder.getStatus().name());
+        response.setOrderDate(finalOrder.getOrderDate());
+        response.setPaymentMethod(finalOrder.getPaymentMethod());
+        response.setBuyerName(user.getName());
+        response.setBuyerEmail(user.getEmail());
+        response.setItems(responseItems);
+        return response;
     }
 
     public void cancelOrder(Long orderId, Long userId) {
         log.info("Cancelling order id={} userId={}", orderId, userId);
         Orders order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("Order not found"));
+                .orElseThrow(() -> new OrderNotFoundException(ORDER_NOT_FOUND));
 
         if (!order.getUser().getUserId().equals(userId)) {
             throw new AccessDeniedException("You are not authorized to cancel this order");
@@ -215,7 +155,7 @@ public class OrdersService {
     public void requestReturn(Long orderId, Long userId, String reason) {
         log.info("Requesting return for orderId={} userId={}", orderId, userId);
         Orders order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("Order not found"));
+                .orElseThrow(() -> new OrderNotFoundException(ORDER_NOT_FOUND));
 
         if (!order.getUser().getUserId().equals(userId)) {
             throw new AccessDeniedException("You are not authorized to return this order");
@@ -237,17 +177,20 @@ public class OrdersService {
 
     public List<OrderResponseDTO> getOrdersByUser(Long userId) {
         log.info("Fetching orders for userId={}", userId);
-        List<Orders> orders = ordersRepository.findByUser_UserId(userId);
-        return orders.stream().map(order -> new OrderResponseDTO(
-                order.getOrderId(),
-                order.getOrderNumber(),
-                order.getTotalAmount(),
-                order.getStatus().name(),
-                order.getOrderDate(),
-                order.getPaymentMethod(),
-                order.getUser().getName(),
-                order.getUser().getEmail(),
-                new ArrayList<>())).toList();
+        List<Orders> orders = ordersRepository.findByUserUserId(userId);
+        return orders.stream().map(order -> {
+            OrderResponseDTO dto = new OrderResponseDTO();
+            dto.setOrderId(order.getOrderId());
+            dto.setOrderNumber(order.getOrderNumber());
+            dto.setTotalAmount(order.getTotalAmount());
+            dto.setStatus(order.getStatus().name());
+            dto.setOrderDate(order.getOrderDate());
+            dto.setPaymentMethod(order.getPaymentMethod());
+            dto.setBuyerName(order.getUser().getName());
+            dto.setBuyerEmail(order.getUser().getEmail());
+            dto.setItems(new ArrayList<>());
+            return dto;
+        }).toList();
     }
 
     public List<OrderResponseDTO> getOrdersBySeller(Long sellerId) {
@@ -264,24 +207,25 @@ public class OrdersService {
                             oi.getPriceAtPurchase().multiply(BigDecimal.valueOf(oi.getQuantity()))))
                     .toList();
             String shipperName = (order.getShipper() != null) ? order.getShipper().getName() : null;
-            return new OrderResponseDTO(
-                    order.getOrderId(),
-                    order.getOrderNumber(),
-                    order.getTotalAmount(),
-                    order.getStatus().name(),
-                    order.getOrderDate(),
-                    order.getPaymentMethod(),
-                    order.getUser().getName(),
-                    order.getUser().getEmail(),
-                    items,
-                    shipperName);
+            OrderResponseDTO dto = new OrderResponseDTO();
+            dto.setOrderId(order.getOrderId());
+            dto.setOrderNumber(order.getOrderNumber());
+            dto.setTotalAmount(order.getTotalAmount());
+            dto.setStatus(order.getStatus().name());
+            dto.setOrderDate(order.getOrderDate());
+            dto.setPaymentMethod(order.getPaymentMethod());
+            dto.setBuyerName(order.getUser().getName());
+            dto.setBuyerEmail(order.getUser().getEmail());
+            dto.setItems(items);
+            dto.setShipperName(shipperName);
+            return dto;
         }).toList();
     }
 
     public OrderResponseDTO updateOrderStatus(Long orderId, String status, Long sellerId) {
         log.info("Updating order id={} status={}", orderId, status);
         Orders order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("Order not found"));
+                .orElseThrow(() -> new OrderNotFoundException(ORDER_NOT_FOUND));
 
         Orders.OrderStatus newStatus;
         try {
@@ -307,21 +251,22 @@ public class OrdersService {
             }
         }
 
-        return new OrderResponseDTO(
-                saved.getOrderId(),
-                saved.getOrderNumber(),
-                saved.getTotalAmount(),
-                saved.getStatus().name(),
-                saved.getOrderDate(),
-                saved.getPaymentMethod(),
-                saved.getUser().getName(),
-                saved.getUser().getEmail(),
-                new ArrayList<>());
+        OrderResponseDTO dto = new OrderResponseDTO();
+        dto.setOrderId(saved.getOrderId());
+        dto.setOrderNumber(saved.getOrderNumber());
+        dto.setTotalAmount(saved.getTotalAmount());
+        dto.setStatus(saved.getStatus().name());
+        dto.setOrderDate(saved.getOrderDate());
+        dto.setPaymentMethod(saved.getPaymentMethod());
+        dto.setBuyerName(saved.getUser().getName());
+        dto.setBuyerEmail(saved.getUser().getEmail());
+        dto.setItems(new ArrayList<>());
+        return dto;
     }
 
     public OrderResponseDTO getOrderById(Long orderId) {
         Orders order = ordersRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(ORDER_NOT_FOUND));
 
         List<OrderItemResponseDTO> responseItems = order.getOrderItems().stream()
                 .map(item -> new OrderItemResponseDTO(
@@ -332,20 +277,21 @@ public class OrdersService {
                         item.getPriceAtPurchase().multiply(BigDecimal.valueOf(item.getQuantity()))))
                 .toList();
 
-        return new OrderResponseDTO(
-                order.getOrderId(),
-                order.getOrderNumber(),
-                order.getTotalAmount(),
-                order.getStatus().name(),
-                order.getOrderDate(),
-                order.getPaymentMethod(),
-                order.getUser().getName(),
-                order.getUser().getEmail(),
-                responseItems);
+        OrderResponseDTO dto = new OrderResponseDTO();
+        dto.setOrderId(order.getOrderId());
+        dto.setOrderNumber(order.getOrderNumber());
+        dto.setTotalAmount(order.getTotalAmount());
+        dto.setStatus(order.getStatus().name());
+        dto.setOrderDate(order.getOrderDate());
+        dto.setPaymentMethod(order.getPaymentMethod());
+        dto.setBuyerName(order.getUser().getName());
+        dto.setBuyerEmail(order.getUser().getEmail());
+        dto.setItems(responseItems);
+        return dto;
     }
 
     public List<TrackingDetailsDTO> getOrderTracking(Long orderId) {
-        return trackingDetailsRepository.findByOrder_OrderId(orderId).stream()
+        return trackingDetailsRepository.findByOrderOrderId(orderId).stream()
                 .map(t -> {
                     TrackingDetailsDTO dto = new TrackingDetailsDTO();
                     dto.setTrackingId(t.getTrackingId());
@@ -393,6 +339,88 @@ public class OrdersService {
         }
     }
 
+    private BigDecimal processOrderItems(List<OrderItemRequestDTO> items, Orders order,
+            List<OrderItemResponseDTO> responseItems) {
+        BigDecimal totalAmount = BigDecimal.ZERO;
+        for (OrderItemRequestDTO itemDTO : items) {
+            Product product = productRepository.findById(itemDTO.getProductId())
+                    .orElseThrow(() -> new ProductNotFoundException(PRODUCT_NOT_FOUND));
+
+            if (product.getStockQuantity() < itemDTO.getQuantity()) {
+                throw new InvalidInputException("Insufficient stock for product: " + product.getName());
+            }
+
+            product.setStockQuantity(product.getStockQuantity() - itemDTO.getQuantity());
+            Product savedProduct = productRepository.save(product);
+
+            if (savedProduct.getStockQuantity() < savedProduct.getThresholdQuantity()) {
+                notifySellerLowStock(savedProduct);
+            }
+
+            BigDecimal price = product.getSellingPrice();
+            BigDecimal subtotal = price.multiply(BigDecimal.valueOf(itemDTO.getQuantity()));
+
+            orderItemService.createOrderItem(order, product, itemDTO.getQuantity());
+            totalAmount = totalAmount.add(subtotal);
+
+            responseItems.add(new OrderItemResponseDTO(
+                    product.getProductId(),
+                    product.getName(),
+                    itemDTO.getQuantity(),
+                    price,
+                    subtotal));
+
+            notifySellerNewOrder(product, itemDTO.getQuantity());
+        }
+        return totalAmount;
+    }
+
+    private void notifySellerLowStock(Product product) {
+        if (product.getSeller() != null && product.getSeller().getUser() != null) {
+            notificationService.createNotification(
+                    product.getSeller().getUser().getUserId(),
+                    "Low Stock Alert",
+                    "Product '" + product.getName() + "' has low stock: "
+                            + product.getStockQuantity()
+                            + " units remaining.");
+        }
+    }
+
+    private void notifySellerNewOrder(Product product, int quantity) {
+        if (product.getSeller() != null && product.getSeller().getUser() != null) {
+            notificationService.createNotification(
+                    product.getSeller().getUser().getUserId(),
+                    "New Order Received",
+                    "Your product '" + product.getName() + "' was ordered (Qty: "
+                            + quantity + ").");
+        }
+    }
+
+    private void processPaymentAndTracking(Orders order, BigDecimal amount, String paymentMethod) {
+        String rawMethod = paymentMethod != null ? paymentMethod.toUpperCase() : "COD";
+        Payments.PaymentMethod payMethod;
+        try {
+            payMethod = Payments.PaymentMethod.valueOf(rawMethod);
+        } catch (IllegalArgumentException e) {
+            payMethod = Payments.PaymentMethod.COD;
+        }
+
+        boolean isPending = (payMethod == Payments.PaymentMethod.COD ||
+                payMethod == Payments.PaymentMethod.RAZORPAY);
+        String txnId = isPending ? null : "TXN-" + System.currentTimeMillis() + "-" + order.getOrderId();
+
+        Payments payment = new Payments();
+        payment.setOrder(order);
+        payment.setAmount(amount);
+        payment.setPaymentMethod(payMethod);
+        payment.setPaymentStatus(isPending ? Payments.PaymentStatus.PENDING : Payments.PaymentStatus.SUCCESS);
+        payment.setTransactionId(txnId);
+        payment.setPaymentDate(LocalDateTime.now());
+        paymentsRepository.save(payment);
+
+        createTrackingDetail(order, "PENDING", "Order placed successfully. Waiting for processing.");
+    }
+
     public Map<String, Object> getSellerStats(Long sellerId) {
         List<Orders> sellerOrders = ordersRepository.findOrdersBySellerId(sellerId);
 
@@ -426,7 +454,7 @@ public class OrdersService {
                     entry.put("unitsSold", e.getValue());
                     return entry;
                 })
-                .collect(Collectors.toList());
+                .toList();
 
         Map<String, Object> stats = new LinkedHashMap<>();
         stats.put("totalRevenue", totalRevenue);

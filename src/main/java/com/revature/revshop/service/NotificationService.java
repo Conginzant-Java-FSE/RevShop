@@ -17,6 +17,8 @@ import java.util.List;
 public class NotificationService {
 
     private static final Logger log = LoggerFactory.getLogger(NotificationService.class);
+    private static final String USER_NOT_FOUND = "User not found";
+    private static final String NOTIFICATION_NOT_FOUND = "Notification not found";
 
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
@@ -30,7 +32,7 @@ public class NotificationService {
     public void createNotification(Long userId, String title, String message) {
         log.info("Creating notification for userId={} title={}", userId, title);
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
 
         Notification notification = new Notification();
         notification.setRecipient(user);
@@ -42,7 +44,7 @@ public class NotificationService {
     }
 
     public List<Notification> getNotificationsByUserId(Long userId) {
-        return notificationRepository.findByRecipient_UserId(userId)
+        return notificationRepository.findByRecipientUserId(userId)
                 .stream()
                 .sorted((a, b) -> {
                     if (a.getCreatedAt() == null)
@@ -51,13 +53,13 @@ public class NotificationService {
                         return -1;
                     return b.getCreatedAt().compareTo(a.getCreatedAt());
                 })
-                .collect(java.util.stream.Collectors.toList());
+                .toList();
     }
 
     public void markAsRead(Long notificationId) {
         log.info("Marking notification id={} as read", notificationId);
         Notification notification = notificationRepository.findById(notificationId)
-                .orElseThrow(() -> new ResourceNotFoundException("Notification not found"));
+                .orElseThrow(() -> new ResourceNotFoundException(NOTIFICATION_NOT_FOUND));
         notification.setIsRead(true);
         notificationRepository.save(notification);
     }
