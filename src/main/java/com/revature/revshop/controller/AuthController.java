@@ -10,6 +10,8 @@ import com.revature.revshop.model.User;
 import com.revature.revshop.security.CustomUserDetailsService;
 import com.revature.revshop.security.JwtUtil;
 import com.revature.revshop.service.BuyerService;
+import com.revature.revshop.service.EmailService;
+import com.revature.revshop.service.OtpService;
 import com.revature.revshop.service.SellerService;
 import com.revature.revshop.service.ShipperService;
 import com.revature.revshop.service.UserService;
@@ -45,6 +47,8 @@ public class AuthController {
         private final PasswordEncoder passwordEncoder;
         private final CustomUserDetailsService userDetailsService;
         private final UserService userService;
+        private final OtpService otpService;
+        private final EmailService emailService;
 
         public AuthController(BuyerService buyerService,
                         SellerService sellerService,
@@ -53,7 +57,9 @@ public class AuthController {
                         JwtUtil jwtUtil,
                         PasswordEncoder passwordEncoder,
                         CustomUserDetailsService userDetailsService,
-                        UserService userService) {
+                        UserService userService,
+                        OtpService otpService,
+                        EmailService emailService) {
                 this.buyerService = buyerService;
                 this.sellerService = sellerService;
                 this.shipperService = shipperService;
@@ -62,6 +68,8 @@ public class AuthController {
                 this.passwordEncoder = passwordEncoder;
                 this.userDetailsService = userDetailsService;
                 this.userService = userService;
+                this.otpService = otpService;
+                this.emailService = emailService;
         }
 
         @PostMapping("/register/buyer")
@@ -337,5 +345,28 @@ public class AuthController {
                                 request.getSecurityAnswer(),
                                 request.getNewPassword());
                 return ResponseEntity.ok(new ApiResponse<>("Password reset successful", null));
+        }
+
+        // ===================== OTP Verification =====================
+
+        @PostMapping("/request-otp")
+        public ResponseEntity<ApiResponse<String>> requestOtp(@RequestParam String email) {
+                log.info("POST /api/auth/request-otp - email={}", email);
+                String otp = otpService.generateOtp(email);
+                emailService.sendOtp(email, otp);
+                return ResponseEntity.ok(new ApiResponse<>("OTP sent to your email", null));
+        }
+
+        @PostMapping("/verify-otp")
+        public ResponseEntity<ApiResponse<Boolean>> verifyOtp(
+                        @RequestParam String email,
+                        @RequestParam String otp) {
+                log.info("POST /api/auth/verify-otp - email={}", email);
+                boolean isValid = otpService.verifyOtp(email, otp);
+                if (isValid) {
+                        return ResponseEntity.ok(new ApiResponse<>("OTP verified successfully", true));
+                } else {
+                        throw new InvalidInputException("Invalid or expired OTP");
+                }
         }
 }

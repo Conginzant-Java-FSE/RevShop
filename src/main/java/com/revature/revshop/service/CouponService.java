@@ -81,4 +81,9 @@ public class CouponService {
         log.info("Creating coupon code={}", coupon.getCode());
         return couponRepository.save(coupon);
     }
+
+    public java.util.List<Coupon> getAllActiveCoupons() {
+        log.info("Fetching all active coupons");
+        return couponRepository.findAllByIsActiveTrue();
+    }
 }

@@ -10,12 +10,14 @@ public class TrackingDetailsDTO {
     private String description;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
+    private String shipperName;
+    private String vehicleNumber;
 
     public TrackingDetailsDTO() {
     }
 
     public TrackingDetailsDTO(Integer trackingId, Integer orderId, String status, String description,
-                              LocalDateTime updatedAt) {
+            LocalDateTime updatedAt) {
         this.trackingId = trackingId;
         this.orderId = orderId;
         this.status = status;
@@ -69,5 +71,21 @@ public class TrackingDetailsDTO {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getShipperName() {
+        return shipperName;
+    }
+
+    public void setShipperName(String shipperName) {
+        this.shipperName = shipperName;
+    }
+
+    public String getVehicleNumber() {
+        return vehicleNumber;
+    }
+
+    public void setVehicleNumber(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
     }
 }

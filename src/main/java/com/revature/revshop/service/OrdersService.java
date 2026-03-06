@@ -303,6 +303,12 @@ public class OrdersService {
             } catch (Exception e) {
                 log.warn("Email send failed", e);
             }
+        } else {
+            try {
+                emailService.sendStatusUpdate(saved, saved.getUser().getEmail(), newStatus.name());
+            } catch (Exception e) {
+                log.warn("Email send failed", e);
+            }
         }
 
         return new OrderResponseDTO(

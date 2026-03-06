@@ -49,8 +49,12 @@ public class SecurityConfig {
                                 "/api/users",
                                 "/actuator/health",
                                 "/actuator/info",
+                                "/api/coupons/active",
                                 "/api/coupons/validate",
                                 "/api/payments/verify")
+                        .permitAll()
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/products/**",
+                                "/api/categories/**")
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session

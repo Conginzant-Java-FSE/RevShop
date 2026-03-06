@@ -113,8 +113,13 @@ public class TrackingController {
 
                 dto.setTrackingId(tracking.getTrackingId());
 
-                if (tracking.getOrder() != null)
+                if (tracking.getOrder() != null) {
                         dto.setOrderId(tracking.getOrder().getOrderId().intValue());
+                        if (tracking.getOrder().getShipper() != null) {
+                                dto.setShipperName(tracking.getOrder().getShipper().getName());
+                                dto.setVehicleNumber(tracking.getOrder().getShipper().getVehicleNumber());
+                        }
+                }
 
                 dto.setStatus(tracking.getStatus());
                 dto.setDescription(tracking.getDescription());

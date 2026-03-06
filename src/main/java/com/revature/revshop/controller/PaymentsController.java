@@ -20,9 +20,12 @@ public class PaymentsController {
     private static final Logger log = LoggerFactory.getLogger(PaymentsController.class);
 
     private final PaymentsService paymentsService;
+    private final com.revature.revshop.service.OrdersService ordersService;
 
-    public PaymentsController(PaymentsService paymentsService) {
+    public PaymentsController(PaymentsService paymentsService,
+            com.revature.revshop.service.OrdersService ordersService) {
         this.paymentsService = paymentsService;
+        this.ordersService = ordersService;
     }
 
     @PostMapping
@@ -220,6 +223,9 @@ public class PaymentsController {
                 payment.setPaymentStatus(Payments.PaymentStatus.SUCCESS);
                 payment.setTransactionId(razorpayPaymentId);
                 paymentsService.savePayment(payment);
+
+                // Update order status to PROCESSING and trigger confirmation email
+                ordersService.updateOrderStatus(internalOrderId, "PROCESSING", 0L);
             });
 
             return ResponseEntity.ok(new ApiResponse<>("Payment verified successfully", true));

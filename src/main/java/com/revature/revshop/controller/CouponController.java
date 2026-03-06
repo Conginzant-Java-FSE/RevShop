@@ -64,4 +64,11 @@ public class CouponController {
         Coupon created = couponService.createCoupon(coupon);
         return ResponseEntity.ok(new ApiResponse<>("Coupon created successfully", created));
     }
+
+    @GetMapping("/active")
+    public ResponseEntity<ApiResponse<java.util.List<Coupon>>> getActiveCoupons() {
+        log.info("GET /api/coupons/active");
+        java.util.List<Coupon> coupons = couponService.getAllActiveCoupons();
+        return ResponseEntity.ok(new ApiResponse<>("Active coupons fetched", coupons));
+    }
 }
