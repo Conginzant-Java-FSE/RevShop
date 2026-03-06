@@ -42,7 +42,16 @@ public class NotificationService {
     }
 
     public List<Notification> getNotificationsByUserId(Long userId) {
-        return notificationRepository.findByRecipient_UserId(userId);
+        return notificationRepository.findByRecipient_UserId(userId)
+                .stream()
+                .sorted((a, b) -> {
+                    if (a.getCreatedAt() == null)
+                        return 1;
+                    if (b.getCreatedAt() == null)
+                        return -1;
+                    return b.getCreatedAt().compareTo(a.getCreatedAt());
+                })
+                .collect(java.util.stream.Collectors.toList());
     }
 
     public void markAsRead(Long notificationId) {

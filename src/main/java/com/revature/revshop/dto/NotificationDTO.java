@@ -1,5 +1,7 @@
 package com.revature.revshop.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
 public class NotificationDTO {
@@ -7,14 +9,18 @@ public class NotificationDTO {
     private Long userId;
     private String title;
     private String message;
+
+    @JsonProperty("isRead")
     private Boolean isRead;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     public NotificationDTO() {
     }
 
-    public NotificationDTO(Long notificationId, Long userId, String title, String message, Boolean isRead,
-                           LocalDateTime createdAt) {
+    public NotificationDTO(Long notificationId, Long userId, String title, String message,
+            Boolean isRead, LocalDateTime createdAt) {
         this.notificationId = notificationId;
         this.userId = userId;
         this.title = title;
@@ -55,10 +61,12 @@ public class NotificationDTO {
         this.message = message;
     }
 
+    @JsonProperty("isRead")
     public Boolean getIsRead() {
         return isRead;
     }
 
+    @JsonProperty("isRead")
     public void setIsRead(Boolean isRead) {
         this.isRead = isRead;
     }

@@ -155,12 +155,20 @@ public class ShipperService {
         Orders.OrderStatus newStatus = Orders.OrderStatus.valueOf(status.toUpperCase());
         order.setStatus(newStatus);
 
+        if (newStatus == Orders.OrderStatus.OUT_FOR_DELIVERY) {
+            // Notify buyer that order is out for delivery
+            notificationService.createNotification(
+                    order.getUser().getUserId(),
+                    "Out for Delivery 🛵",
+                    "Your order " + order.getOrderNumber() + " is out for delivery and will reach you soon!");
+        }
+
         if (newStatus == Orders.OrderStatus.DELIVERED) {
             // Notify buyer on successful delivery
             notificationService.createNotification(
                     order.getUser().getUserId(),
-                    "Order Delivered!",
-                    "Your order " + order.getOrderNumber() + " has been delivered successfully.");
+                    "Order Delivered! ✅",
+                    "Your order " + order.getOrderNumber() + " has been delivered successfully. Enjoy your purchase!");
             // NOTE: Availability is manually controlled by the shipper — do NOT auto-change
             // it here.
         }
