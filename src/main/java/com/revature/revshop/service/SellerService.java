@@ -58,7 +58,9 @@ public class SellerService {
         notificationService.createNotification(
                 savedUser.getUserId(),
                 "Welcome to RevShop",
-                "Your seller account has been created successfully.");
+                "Your seller account has been created successfully.",
+                "PROFILE",
+                String.valueOf(savedUser.getUserId()));
 
         return savedUser.getSellerProfile();
     }

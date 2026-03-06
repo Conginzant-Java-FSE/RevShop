@@ -26,6 +26,12 @@ public class Notification {
     @JsonProperty("isRead")
     private Boolean isRead = false;
 
+    @Column(length = 50)
+    private String type;
+
+    @Column(name = "target_id", length = 100)
+    private String targetId;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -44,12 +50,14 @@ public class Notification {
     }
 
     public Notification(Long notificationId, User recipient, String title, String message, Boolean isRead,
-            LocalDateTime createdAt) {
+            String type, String targetId, LocalDateTime createdAt) {
         this.notificationId = notificationId;
         this.recipient = recipient;
         this.title = title;
         this.message = message;
         this.isRead = isRead;
+        this.type = type;
+        this.targetId = targetId;
         this.createdAt = createdAt;
     }
 
@@ -99,6 +107,22 @@ public class Notification {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
     }
 
 }

@@ -63,7 +63,9 @@ public class PaymentsService {
         notificationService.createNotification(
                 updated.getOrder().getUser().getUserId(),
                 "Payment Update",
-                "Payment status updated to " + updated.getPaymentStatus().name());
+                "Payment status updated to " + updated.getPaymentStatus().name(),
+                "ORDER",
+                String.valueOf(updated.getOrder().getOrderId()));
 
         return updated;
     }

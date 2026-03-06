@@ -69,7 +69,9 @@ public class FavoriteService {
                                 buyer.getUser().getName() +
                                                 " added your product '" +
                                                 product.getName() +
-                                                "' to favorites.");
+                                                "' to favorites.",
+                                "PRODUCT",
+                                String.valueOf(productId));
         }
 
         public void removeFromFavorite(Long buyerId, Long productId) {

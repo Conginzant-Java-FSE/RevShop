@@ -40,6 +40,7 @@ public class OrdersService {
     private final TrackingDetailsRepository trackingDetailsRepository;
     private final OrderItemService orderItemService;
     private final EmailService emailService;
+    private final WalletService walletService;
 
     public OrdersService(OrdersRepository ordersRepository,
             UserRepository userRepository,
@@ -49,7 +50,8 @@ public class OrdersService {
             PaymentsRepository paymentsRepository,
             TrackingDetailsRepository trackingDetailsRepository,
             OrderItemService orderItemService,
-            EmailService emailService) {
+            EmailService emailService,
+            WalletService walletService) {
         this.ordersRepository = ordersRepository;
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
@@ -59,6 +61,7 @@ public class OrdersService {
         this.trackingDetailsRepository = trackingDetailsRepository;
         this.orderItemService = orderItemService;
         this.emailService = emailService;
+        this.walletService = walletService;
     }
 
     public OrderResponseDTO placeOrder(Long userId, OrderRequestDTO request) {
@@ -103,7 +106,9 @@ public class OrdersService {
         notificationService.createNotification(
                 userId,
                 "Order Placed",
-                "Your order " + finalOrder.getOrderNumber() + " has been placed successfully.");
+                "Your order " + finalOrder.getOrderNumber() + " has been placed successfully.",
+                "ORDER",
+                String.valueOf(finalOrder.getOrderId()));
 
         createTrackingDetail(finalOrder, finalOrder.getStatus().name(),
                 "Order placed successfully. Waiting for processing.");
@@ -114,7 +119,7 @@ public class OrdersService {
             log.warn("Email send failed", e);
         }
 
-        processPaymentAndTracking(finalOrder, totalAmount, request.getPaymentMethod());
+        processPaymentAndTracking(finalOrder, totalAmount, request.getPaymentMethod(), userId);
 
         OrderResponseDTO response = new OrderResponseDTO();
         response.setOrderId(finalOrder.getOrderId());
@@ -149,7 +154,9 @@ public class OrdersService {
         notificationService.createNotification(
                 userId,
                 "Order Cancelled",
-                "Your order " + order.getOrderNumber() + " has been cancelled.");
+                "Your order " + order.getOrderNumber() + " has been cancelled.",
+                "ORDER",
+                String.valueOf(orderId));
     }
 
     public void requestReturn(Long orderId, Long userId, String reason) {
@@ -172,7 +179,9 @@ public class OrdersService {
         notificationService.createNotification(
                 userId,
                 "Return Requested",
-                "Your return for order " + order.getOrderNumber() + " has been submitted.");
+                "Your return for order " + order.getOrderNumber() + " has been submitted.",
+                "ORDER",
+                String.valueOf(orderId));
     }
 
     public List<OrderResponseDTO> getOrdersByUser(Long userId) {
@@ -241,7 +250,9 @@ public class OrdersService {
         notificationService.createNotification(
                 saved.getUser().getUserId(),
                 "Order Status Updated",
-                "Your order " + saved.getOrderNumber() + " is now " + newStatus.name() + ".");
+                "Your order " + saved.getOrderNumber() + " is now " + newStatus.name() + ".",
+                "ORDER",
+                String.valueOf(orderId));
 
         if (newStatus == Orders.OrderStatus.SHIPPED) {
             try {
@@ -370,7 +381,7 @@ public class OrdersService {
                     price,
                     subtotal));
 
-            notifySellerNewOrder(product, itemDTO.getQuantity());
+            notifySellerNewOrder(product, itemDTO.getQuantity(), order.getOrderId());
         }
         return totalAmount;
     }
@@ -382,27 +393,40 @@ public class OrdersService {
                     "Low Stock Alert",
                     "Product '" + product.getName() + "' has low stock: "
                             + product.getStockQuantity()
-                            + " units remaining.");
+                            + " units remaining.",
+                    "PRODUCT",
+                    String.valueOf(product.getProductId()));
         }
     }
 
-    private void notifySellerNewOrder(Product product, int quantity) {
+    private void notifySellerNewOrder(Product product, int quantity, Long orderId) {
         if (product.getSeller() != null && product.getSeller().getUser() != null) {
             notificationService.createNotification(
                     product.getSeller().getUser().getUserId(),
                     "New Order Received",
                     "Your product '" + product.getName() + "' was ordered (Qty: "
-                            + quantity + ").");
+                            + quantity + ").",
+                    "ORDER",
+                    String.valueOf(orderId));
         }
     }
 
-    private void processPaymentAndTracking(Orders order, BigDecimal amount, String paymentMethod) {
+    private void processPaymentAndTracking(Orders order, BigDecimal amount, String paymentMethod, Long userId) {
         String rawMethod = paymentMethod != null ? paymentMethod.toUpperCase() : "COD";
         Payments.PaymentMethod payMethod;
         try {
             payMethod = Payments.PaymentMethod.valueOf(rawMethod);
         } catch (IllegalArgumentException e) {
             payMethod = Payments.PaymentMethod.COD;
+        }
+
+        // Deduct money immediately if paying with WALLET
+        if (payMethod == Payments.PaymentMethod.WALLET) {
+            walletService.deductMoneyFromWallet(
+                    userId,
+                    amount,
+                    "Payment for order " + order.getOrderNumber(),
+                    order.getOrderNumber());
         }
 
         boolean isPending = (payMethod == Payments.PaymentMethod.COD ||

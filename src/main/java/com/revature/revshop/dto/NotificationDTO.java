@@ -12,6 +12,8 @@ public class NotificationDTO {
 
     @JsonProperty("isRead")
     private Boolean isRead;
+    private String type;
+    private String targetId;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
@@ -19,13 +21,15 @@ public class NotificationDTO {
     public NotificationDTO() {
     }
 
-    public NotificationDTO(Long notificationId, Long userId, String title, String message,
-            Boolean isRead, LocalDateTime createdAt) {
+    public NotificationDTO(Long notificationId, Long userId, String title, String message, Boolean isRead,
+            String type, String targetId, LocalDateTime createdAt) {
         this.notificationId = notificationId;
         this.userId = userId;
         this.title = title;
         this.message = message;
         this.isRead = isRead;
+        this.type = type;
+        this.targetId = targetId;
         this.createdAt = createdAt;
     }
 
@@ -77,5 +81,21 @@ public class NotificationDTO {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
     }
 }

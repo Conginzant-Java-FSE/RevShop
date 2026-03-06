@@ -129,7 +129,9 @@ public class ShipperService {
                 order.getUser().getUserId(),
                 "Shipper Assigned",
                 YOUR_ORDER + order.getOrderNumber() + " has been assigned to shipper "
-                        + shipper.getName() + " and will be picked up shortly.");
+                        + shipper.getName() + " and will be picked up shortly.",
+                "ORDER",
+                String.valueOf(orderId));
 
         // Record tracking
         createTrackingDetail(saved, "SHIPPED", "Order has been assigned to a shipper and is on the way.");
@@ -163,7 +165,9 @@ public class ShipperService {
             notificationService.createNotification(
                     order.getUser().getUserId(),
                     "Out for Delivery 🛵",
-                    YOUR_ORDER + order.getOrderNumber() + " is out for delivery and will reach you soon!");
+                    YOUR_ORDER + order.getOrderNumber() + " is out for delivery and will reach you soon!",
+                    "ORDER",
+                    String.valueOf(orderId));
         }
 
         if (newStatus == Orders.OrderStatus.DELIVERED) {
@@ -171,7 +175,9 @@ public class ShipperService {
             notificationService.createNotification(
                     order.getUser().getUserId(),
                     "Order Delivered! ✅",
-                    YOUR_ORDER + order.getOrderNumber() + " has been delivered successfully. Enjoy your purchase!");
+                    YOUR_ORDER + order.getOrderNumber() + " has been delivered successfully. Enjoy your purchase!",
+                    "ORDER",
+                    String.valueOf(orderId));
             // NOTE: Availability is manually controlled by the shipper — do NOT auto-change
             // it here.
         }

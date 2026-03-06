@@ -134,6 +134,13 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+        <!-- Twilio SDK for SMS OTPs -->
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio</artifactId>
+            <version>10.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
