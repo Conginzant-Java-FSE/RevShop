@@ -10,6 +10,8 @@ import com.revature.revshop.model.User;
 import com.revature.revshop.security.CustomUserDetailsService;
 import com.revature.revshop.security.JwtUtil;
 import com.revature.revshop.service.BuyerService;
+import com.revature.revshop.service.EmailService;
+import com.revature.revshop.service.OtpService;
 import com.revature.revshop.service.SellerService;
 import com.revature.revshop.service.ShipperService;
 import com.revature.revshop.service.UserService;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -42,6 +45,8 @@ public class AuthController {
         private final ShipperService shipperService;
         private final AuthenticationManager authenticationManager;
         private final UserService userService;
+        private final EmailService emailService;
+        private final OtpService otpService;
 
         @org.springframework.beans.factory.annotation.Autowired
         private JwtUtil jwtUtil;
@@ -54,12 +59,16 @@ public class AuthController {
                         SellerService sellerService,
                         ShipperService shipperService,
                         AuthenticationManager authenticationManager,
-                        UserService userService) {
+                        UserService userService,
+                        EmailService emailService,
+                        OtpService otpService) {
                 this.buyerService = buyerService;
                 this.sellerService = sellerService;
                 this.shipperService = shipperService;
                 this.authenticationManager = authenticationManager;
                 this.userService = userService;
+                this.emailService = emailService;
+                this.otpService = otpService;
         }
 
         @PostMapping("/register/buyer")
@@ -75,6 +84,9 @@ public class AuthController {
                 User user = buildUserFromBuyerDTO(buyerDTO);
 
                 Buyer buyer = buyerService.registerBuyer(user);
+
+                // Send welcome email
+                emailService.sendUserRegistrationEmail(buyer.getUser().getEmail(), buyer.getUser().getName());
 
                 BuyerDTO responseDTO = convertBuyerToDTO(buyer);
 
@@ -99,6 +111,9 @@ public class AuthController {
                                 sellerDTO.getBusinessName(),
                                 sellerDTO.getBusinessDescription(),
                                 sellerDTO.getTaxId());
+
+                // Send welcome email
+                emailService.sendUserRegistrationEmail(seller.getUser().getEmail(), seller.getUser().getName());
 
                 SellerDTO responseDTO = convertSellerToDTO(seller);
 
@@ -208,6 +223,9 @@ public class AuthController {
                                 req.getPhone(),
                                 req.getVehicleNumber(),
                                 req.getPassword());
+
+                // Send welcome email
+                emailService.sendUserRegistrationEmail(shipper.getEmail(), shipper.getName());
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(req.getEmail());
                 String jwt = jwtUtil.generateToken(userDetails);
@@ -335,5 +353,46 @@ public class AuthController {
                                 request.getSecurityAnswer(),
                                 request.getNewPassword());
                 return ResponseEntity.ok(new ApiResponse<>("Password reset successful", null));
+        }
+
+        // ===================== OTP Verification =====================
+
+        @PostMapping("/otp/send")
+        public ResponseEntity<ApiResponse<String>> sendOtp(@RequestParam String email) {
+                log.info("POST /api/auth/otp/send - email={}", email);
+                otpService.generateOtp(email);
+                return ResponseEntity.ok(new ApiResponse<>("OTP sent successfully to " + email, null));
+        }
+
+        @PostMapping("/otp/verify")
+        public ResponseEntity<ApiResponse<Boolean>> verifyOtp(@RequestBody Map<String, String> body) {
+                String email = body.get("email");
+                String otp = body.get("otp");
+                log.info("POST /api/auth/otp/verify - email={}", email);
+
+                boolean isValid = otpService.verifyOtp(email, otp);
+                if (!isValid) {
+                        return ResponseEntity.badRequest().body(new ApiResponse<>("Invalid or expired OTP", false));
+                }
+                return ResponseEntity.ok(new ApiResponse<>("OTP verified successfully", true));
+        }
+
+        // ===================== Forgot Password / Links =====================
+
+        @PostMapping("/forgot-password/send-link")
+        public ResponseEntity<ApiResponse<String>> sendResetLink(@RequestBody Map<String, String> body) {
+                String email = body.get("email");
+                log.info("POST /api/auth/forgot-password/send-link - email={}", email);
+                userService.generatePasswordResetToken(email);
+                return ResponseEntity.ok(new ApiResponse<>("Password reset link sent to " + email, null));
+        }
+
+        @PostMapping("/forgot-password/reset-via-link")
+        public ResponseEntity<ApiResponse<String>> resetViaLink(@RequestBody Map<String, String> body) {
+                String token = body.get("token");
+                String newPassword = body.get("newPassword");
+                log.info("POST /api/auth/forgot-password/reset-via-link");
+                userService.resetPasswordWithToken(token, newPassword);
+                return ResponseEntity.ok(new ApiResponse<>("Password reset successfully", null));
         }
 }

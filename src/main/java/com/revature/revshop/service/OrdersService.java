@@ -243,9 +243,11 @@ public class OrdersService {
                 "Order Status Updated",
                 "Your order " + saved.getOrderNumber() + " is now " + newStatus.name() + ".");
 
-        if (newStatus == Orders.OrderStatus.SHIPPED) {
+        if (newStatus == Orders.OrderStatus.SHIPPED ||
+                newStatus == Orders.OrderStatus.OUT_FOR_DELIVERY ||
+                newStatus == Orders.OrderStatus.DELIVERED) {
             try {
-                emailService.sendShippingNotification(saved, saved.getUser().getEmail());
+                emailService.sendOrderStatusUpdateEmail(saved, saved.getUser().getEmail());
             } catch (Exception e) {
                 log.warn("Email send failed", e);
             }
