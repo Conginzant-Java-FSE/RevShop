@@ -36,8 +36,13 @@ public class WalletController {
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new RuntimeException("User not authenticated");
         }
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String email = userDetails.getUsername();
+        Object principal = authentication.getPrincipal();
+        String email;
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails) principal).getUsername();
+        } else {
+            email = principal.toString();
+        }
         User loggedInUser = userService.getUserByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return loggedInUser.getUserId();

@@ -6,6 +6,9 @@ public class ApiResponse<T> {
     private String message;
     private T data;
 
+    public ApiResponse() {
+    }
+
     public ApiResponse(String message, T data) {
         this.status = "success";
         this.message = message;
@@ -16,11 +19,23 @@ public class ApiResponse<T> {
         return status;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getMessage() {
         return message;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public T getData() {
         return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }
