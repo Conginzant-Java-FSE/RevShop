@@ -100,19 +100,21 @@ public class ProductService {
             throw new InvalidInputException("Search keyword is required");
         }
 
-        return productRepository.findByNameContainingIgnoreCase(keyword, pageable)
+        return productRepository
+                .findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword, pageable)
                 .map(this::convertToDTO);
     }
 
     public Page<ProductDTO> filterProducts(String keyword, Double minPrice, Double maxPrice, Long categoryId,
-            Pageable pageable) {
+            Integer minRating, Integer minDiscount, Pageable pageable) {
 
         org.springframework.data.jpa.domain.Specification<Product> spec = org.springframework.data.jpa.domain.Specification
                 .where((root, query, cb) -> cb.conjunction());
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            spec = spec
-                    .and((root, query, cb) -> cb.like(cb.lower(root.get("name")), "%" + keyword.toLowerCase() + "%"));
+            spec = spec.and((root, query, cb) -> cb.or(
+                    cb.like(cb.lower(root.get("name")), "%" + keyword.toLowerCase() + "%"),
+                    cb.like(cb.lower(root.get("description")), "%" + keyword.toLowerCase() + "%")));
         }
 
         if (minPrice != null) {
@@ -124,7 +126,35 @@ public class ProductService {
         }
 
         if (categoryId != null) {
-            spec = spec.and((root, query, cb) -> cb.equal(root.get("category").get("categoryId"), categoryId));
+            spec = spec.and((root, query, cb) -> {
+                jakarta.persistence.criteria.Join<Product, Category> categoryJoin = root.join("category");
+                jakarta.persistence.criteria.Path<Category> parentCat = categoryJoin.get("parentCategory");
+                return cb.or(
+                        cb.equal(categoryJoin.get("categoryId"), categoryId),
+                        cb.and(cb.isNotNull(parentCat), cb.equal(parentCat.get("categoryId"), categoryId)));
+            });
+        }
+
+        if (minRating != null) {
+            spec = spec.and((root, query, cb) -> {
+                jakarta.persistence.criteria.Subquery<Double> subquery = query.subquery(Double.class);
+                jakarta.persistence.criteria.Root<com.revature.revshop.model.Review> reviewRoot = subquery
+                        .from(com.revature.revshop.model.Review.class);
+                subquery.select(cb.avg(reviewRoot.get("rating").as(Double.class)))
+                        .where(cb.equal(reviewRoot.get("product"), root));
+                return cb.greaterThanOrEqualTo(cb.coalesce(subquery, 0.0), minRating.doubleValue());
+            });
+        }
+
+        if (minDiscount != null) {
+            spec = spec.and((root, query, cb) -> {
+                jakarta.persistence.criteria.Expression<Double> diff = cb
+                        .diff(root.get("mrp").as(Double.class), root.get("sellingPrice").as(Double.class))
+                        .as(Double.class);
+                jakarta.persistence.criteria.Expression<Double> pct = cb
+                        .prod(cb.quot(diff, root.get("mrp").as(Double.class)), 100.0).as(Double.class);
+                return cb.greaterThanOrEqualTo(pct, minDiscount.doubleValue());
+            });
         }
 
         return productRepository.findAll(spec, pageable)
@@ -162,6 +192,7 @@ public class ProductService {
         product.setThresholdQuantity(dto.getThresholdQuantity());
         product.setIsActive(dto.getIsActive());
         product.setImageUrl(dto.getImageUrl());
+        product.setAdditionalImages(dto.getAdditionalImages());
     }
 
     private ProductDTO convertToDTO(Product product) {
@@ -178,6 +209,7 @@ public class ProductService {
         dto.setCategoryId(product.getCategory().getCategoryId());
         dto.setSellerId(product.getSeller().getUserId());
         dto.setImageUrl(product.getImageUrl());
+        dto.setAdditionalImages(product.getAdditionalImages());
         dto.setCategoryName(product.getCategory().getName());
         dto.setSellerName(product.getSeller().getUser() != null ? product.getSeller().getUser().getName() : "");
 
