@@ -128,7 +128,8 @@ class PaymentsServiceTest {
     void testUpdatePaymentStatus_Success() {
         when(paymentsRepository.findById(1)).thenReturn(Optional.of(samplePayment));
         when(paymentsRepository.save(any(Payments.class))).thenReturn(samplePayment);
-        doNothing().when(notificationService).createNotification(anyLong(), anyString(), anyString());
+        doNothing().when(notificationService).createNotification(anyLong(), anyString(), anyString(), anyString(),
+                anyString());
 
         paymentsService.updatePaymentStatus(1, Payments.PaymentStatus.SUCCESS);
 
@@ -136,14 +137,17 @@ class PaymentsServiceTest {
         verify(notificationService).createNotification(
                 eq(sampleUser.getUserId()),
                 eq("Payment Update"),
-                contains("SUCCESS"));
+                contains("SUCCESS"),
+                anyString(),
+                anyString());
     }
 
     @Test
     void testUpdatePaymentStatus_ToFailed() {
         when(paymentsRepository.findById(1)).thenReturn(Optional.of(samplePayment));
         when(paymentsRepository.save(any(Payments.class))).thenReturn(samplePayment);
-        doNothing().when(notificationService).createNotification(anyLong(), anyString(), anyString());
+        doNothing().when(notificationService).createNotification(anyLong(), anyString(), anyString(), anyString(),
+                anyString());
 
         paymentsService.updatePaymentStatus(1, Payments.PaymentStatus.FAILED);
 
@@ -151,14 +155,17 @@ class PaymentsServiceTest {
         verify(notificationService).createNotification(
                 eq(sampleUser.getUserId()),
                 eq("Payment Update"),
-                contains("FAILED"));
+                contains("FAILED"),
+                anyString(),
+                anyString());
     }
 
     @Test
     void testUpdatePaymentStatus_ToRefunded() {
         when(paymentsRepository.findById(1)).thenReturn(Optional.of(samplePayment));
         when(paymentsRepository.save(any(Payments.class))).thenReturn(samplePayment);
-        doNothing().when(notificationService).createNotification(anyLong(), anyString(), anyString());
+        doNothing().when(notificationService).createNotification(anyLong(), anyString(), anyString(), anyString(),
+                anyString());
 
         paymentsService.updatePaymentStatus(1, Payments.PaymentStatus.REFUNDED);
 
@@ -166,7 +173,9 @@ class PaymentsServiceTest {
         verify(notificationService).createNotification(
                 eq(sampleUser.getUserId()),
                 eq("Payment Update"),
-                contains("REFUNDED"));
+                contains("REFUNDED"),
+                anyString(),
+                anyString());
     }
 
     @Test

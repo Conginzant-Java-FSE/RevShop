@@ -71,7 +71,7 @@ class SellerServiceTest {
         Seller sellerResult = sellerService.registerSeller(newUser, "New Business", "Desc", "TAX6789");
 
         assertNotNull(sellerResult);
-        verify(notificationService).createNotification(eq(2L), anyString(), anyString());
+        verify(notificationService).createNotification(eq(2L), anyString(), anyString(), anyString(), anyString());
         assertEquals(Role.SELLER, newUser.getRole());
         assertEquals("New Business", sellerResult.getBusinessName());
     }

@@ -69,7 +69,7 @@ class BuyerServiceTest {
         Buyer buyerResult = buyerService.registerBuyer(newUser);
 
         assertNotNull(buyerResult);
-        verify(notificationService).createNotification(eq(2L), anyString(), anyString());
+        verify(notificationService).createNotification(eq(2L), anyString(), anyString(), anyString(), anyString());
         assertEquals(Role.BUYER, newUser.getRole());
     }
 
