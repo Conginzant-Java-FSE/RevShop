@@ -68,6 +68,8 @@ public class NotificationController {
                 dto.setTitle(notification.getTitle());
                 dto.setMessage(notification.getMessage());
                 dto.setIsRead(notification.getIsRead());
+                dto.setType(notification.getType());
+                dto.setTargetId(notification.getTargetId());
                 dto.setCreatedAt(notification.getCreatedAt());
                 return dto;
         }

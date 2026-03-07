@@ -29,8 +29,8 @@ public class NotificationService {
         this.userRepository = userRepository;
     }
 
-    public void createNotification(Long userId, String title, String message) {
-        log.info("Creating notification for userId={} title={}", userId, title);
+    public void createNotification(Long userId, String title, String message, String type, String targetId) {
+        log.info("Creating notification for userId={} title={} type={} targetId={}", userId, title, type, targetId);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
 
@@ -38,6 +38,8 @@ public class NotificationService {
         notification.setRecipient(user);
         notification.setTitle(title);
         notification.setMessage(message);
+        notification.setType(type);
+        notification.setTargetId(targetId);
         notification.setIsRead(false);
 
         notificationRepository.save(notification);
