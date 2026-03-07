@@ -114,7 +114,7 @@ public class OrdersService {
                 "Order placed successfully. Waiting for processing.");
 
         try {
-            emailService.sendOrderConfirmation(finalOrder, user.getEmail());
+            emailService.sendOrderConfirmation(finalOrder, user.getEmail(), responseItems);
         } catch (Exception e) {
             log.warn("Email send failed", e);
         }
