@@ -10,7 +10,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -41,7 +43,9 @@ class OrdersControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(ordersController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(ordersController)
+                .setMessageConverters(new MappingJackson2HttpMessageConverter())
+                .build();
 
         OrderItemRequestDTO item = new OrderItemRequestDTO();
         item.setProductId(1L);
@@ -73,6 +77,7 @@ class OrdersControllerTest {
         mockMvc.perform(post("/api/orders/place")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(validRequest)))
+                .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.message").value("Order placed successfully"))
                 .andExpect(jsonPath("$.data.orderNumber").value("ORD-123"));
@@ -83,6 +88,7 @@ class OrdersControllerTest {
         when(ordersService.getOrdersByUser(1L)).thenReturn(Collections.singletonList(mockResponse));
 
         mockMvc.perform(get("/api/orders/user/1"))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].orderNumber").value("ORD-123"));
     }
@@ -96,6 +102,7 @@ class OrdersControllerTest {
         mockMvc.perform(put("/api/orders/101/status")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonBody))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Order status updated"));
     }

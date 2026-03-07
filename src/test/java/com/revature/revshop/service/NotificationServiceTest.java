@@ -54,7 +54,7 @@ class NotificationServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(sampleUser));
         when(notificationRepository.save(any(Notification.class))).thenReturn(sampleNotification);
 
-        assertDoesNotThrow(() -> notificationService.createNotification(1L, "New Title", "New Message"));
+        assertDoesNotThrow(() -> notificationService.createNotification(1L, "New Title", "New Message", "TYPE", "1"));
         verify(notificationRepository).save(any(Notification.class));
     }
 
@@ -62,7 +62,8 @@ class NotificationServiceTest {
     void testCreateNotification_UserNotFound() {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(UserNotFoundException.class, () -> notificationService.createNotification(1L, "Title", "Message"));
+        assertThrows(UserNotFoundException.class,
+                () -> notificationService.createNotification(1L, "Title", "Message", "TYPE", "1"));
     }
 
     @Test

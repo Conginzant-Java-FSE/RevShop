@@ -146,7 +146,8 @@ class OrdersServiceTest {
 
         // Assert
         assertEquals("SHIPPED", response.getStatus());
-        verify(notificationService).createNotification(eq(1L), anyString(), contains("SHIPPED"));
+        verify(notificationService).createNotification(eq(1L), anyString(), contains("SHIPPED"), anyString(),
+                anyString());
     }
 
     @Test
