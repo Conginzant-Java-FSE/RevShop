@@ -1,6 +1,6 @@
 package com.revature.revshop.service;
 
-import com.revature.revshop.model.OrderItems;
+import com.revature.revshop.dto.OrderItemResponseDTO;
 import com.revature.revshop.model.Orders;
 import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class EmailService {
         this.mailSender = mailSender;
     }
 
-    public void sendOrderConfirmation(Orders order, String toEmail) {
+    public void sendOrderConfirmation(Orders order, String toEmail, java.util.List<OrderItemResponseDTO> items) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -38,13 +38,13 @@ public class EmailService {
             helper.setSubject("Order Confirmed - " + order.getOrderNumber());
 
             StringBuilder itemsHtml = new StringBuilder();
-            if (order.getOrderItems() != null) {
-                for (OrderItems item : order.getOrderItems()) {
-                    BigDecimal price = item.getPriceAtPurchase();
-                    BigDecimal subtotal = price.multiply(BigDecimal.valueOf(item.getQuantity()));
+            if (items != null) {
+                for (OrderItemResponseDTO item : items) {
+                    BigDecimal price = item.getPrice();
+                    BigDecimal subtotal = item.getSubtotal();
                     itemsHtml.append("<tr>")
                             .append("<td style='padding:8px;border-bottom:1px solid #eee;'>")
-                            .append(item.getProduct().getName()).append(TD_END)
+                            .append(item.getProductName()).append(TD_END)
                             .append("<td style='padding:8px;border-bottom:1px solid #eee;text-align:center;'>")
                             .append(item.getQuantity()).append(TD_END)
                             .append("<td style='padding:8px;border-bottom:1px solid #eee;text-align:right;'>₹")
@@ -102,6 +102,16 @@ public class EmailService {
             helper.setTo(toEmail);
             helper.setSubject("Your Order " + order.getOrderNumber() + " Has Been Shipped");
 
+            String shipperHtml = "";
+            if (order.getShipper() != null) {
+                shipperHtml = "<div style='background:white;padding:15px;border-radius:8px;margin:15px 0;'>"
+                        + "<h3 style='margin-top:0;'>Delivery Agent Details</h3>"
+                        + "<p><strong>Name:</strong> " + order.getShipper().getName() + "</p>"
+                        + "<p><strong>Vehicle:</strong> " + order.getShipper().getVehicleNumber() + "</p>"
+                        + "<p><strong>Contact:</strong> " + order.getShipper().getPhone() + "</p>"
+                        + "</div>";
+            }
+
             String html = "<div style='font-family:Arial,sans-serif;max-width:600px;margin:0 auto;'>"
                     + "<div style='background:#198754;color:white;padding:20px;text-align:center;border-radius:8px 8px 0 0;'>"
                     + "<h1 style='margin:0;'>Order Shipped! 🚚</h1></div>"
@@ -113,6 +123,7 @@ public class EmailService {
                     + "<p><strong>Order Number:</strong> " + order.getOrderNumber() + "</p>"
                     + "<p><strong>Estimated Delivery:</strong> 3-5 business days</p>"
                     + "</div>"
+                    + shipperHtml
                     + "<p>You will receive another notification once your order is delivered.</p>"
                     + "<hr style='margin:20px 0;'>"
                     + "<p style='text-align:center;color:#6c757d;'>Thank you for shopping with RevShop! 🛍️</p>"
@@ -138,6 +149,16 @@ public class EmailService {
 
             String color = status.equals("DELIVERED") ? "#198754" : "#0dcaf0";
 
+            String shipperHtml = "";
+            if (order.getShipper() != null) {
+                shipperHtml = "<div style='background:white;padding:15px;border-radius:8px;margin:15px 0;'>"
+                        + "<h3 style='margin-top:0;'>Delivery Agent Details</h3>"
+                        + "<p><strong>Name:</strong> " + order.getShipper().getName() + "</p>"
+                        + "<p><strong>Vehicle:</strong> " + order.getShipper().getVehicleNumber() + "</p>"
+                        + "<p><strong>Contact:</strong> " + order.getShipper().getPhone() + "</p>"
+                        + "</div>";
+            }
+
             String html = "<div style='font-family:Arial,sans-serif;max-width:600px;margin:0 auto;'>"
                     + "<div style='background:" + color
                     + ";color:white;padding:20px;text-align:center;border-radius:8px 8px 0 0;'>"
@@ -149,6 +170,7 @@ public class EmailService {
                     + "<p><strong>Current Status:</strong> <span style='color:" + color + ";font-weight:bold;'>"
                     + status + "</span></p>"
                     + "</div>"
+                    + shipperHtml
                     + "<p>You can track your order in your dashboard for more details.</p>"
                     + "<hr style='margin:20px 0;'>"
                     + "<p style='text-align:center;color:#6c757d;'>Thank you for shopping with RevShop! 🛍️</p>"

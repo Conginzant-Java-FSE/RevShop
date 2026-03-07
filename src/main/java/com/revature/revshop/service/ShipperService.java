@@ -29,6 +29,7 @@ public class ShipperService {
     private final NotificationService notificationService;
     private final PasswordEncoder passwordEncoder;
     private final TrackingDetailsRepository trackingDetailsRepository;
+    private final EmailService emailService;
 
     private static final String SHIPPER_NOT_FOUND = "Shipper not found with id: ";
     private static final String YOUR_ORDER = "Your order ";
@@ -37,12 +38,14 @@ public class ShipperService {
             OrdersRepository ordersRepository,
             NotificationService notificationService,
             PasswordEncoder passwordEncoder,
-            TrackingDetailsRepository trackingDetailsRepository) {
+            TrackingDetailsRepository trackingDetailsRepository,
+            EmailService emailService) {
         this.shipperRepository = shipperRepository;
         this.ordersRepository = ordersRepository;
         this.notificationService = notificationService;
         this.passwordEncoder = passwordEncoder;
         this.trackingDetailsRepository = trackingDetailsRepository;
+        this.emailService = emailService;
     }
 
     public List<Shipper> getAllShippers() {
@@ -136,6 +139,13 @@ public class ShipperService {
         // Record tracking
         createTrackingDetail(saved, "SHIPPED", "Order has been assigned to a shipper and is on the way.");
 
+        // Send Email
+        try {
+            emailService.sendShippingNotification(saved, saved.getUser().getEmail());
+        } catch (Exception e) {
+            log.warn("Email send failed for Shipper Assignment", e);
+        }
+
         return saved;
     }
 
@@ -194,6 +204,15 @@ public class ShipperService {
             description = "Order has been delivered successfully.";
         }
         createTrackingDetail(savedOrder, status.toUpperCase(), description);
+
+        // Send Email for OUT_FOR_DELIVERY and DELIVERED
+        if (newStatus == Orders.OrderStatus.OUT_FOR_DELIVERY || newStatus == Orders.OrderStatus.DELIVERED) {
+            try {
+                emailService.sendOrderStatusUpdateEmail(savedOrder, savedOrder.getUser().getEmail());
+            } catch (Exception e) {
+                log.warn("Email send failed for Order Status Update", e);
+            }
+        }
 
         return savedOrder;
     }
