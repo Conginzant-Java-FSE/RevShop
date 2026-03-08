@@ -2,6 +2,8 @@ package com.revature.revshop.dto;
 
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ProductDTO {
 
@@ -37,6 +39,7 @@ public class ProductDTO {
     private Long sellerId;
 
     private String imageUrl;
+    private List<String> additionalImages = new ArrayList<>();
     private String categoryName;
     private String sellerName;
 
@@ -148,5 +151,13 @@ public class ProductDTO {
 
     public void setSellerName(String sellerName) {
         this.sellerName = sellerName;
+    }
+
+    public List<String> getAdditionalImages() {
+        return additionalImages;
+    }
+
+    public void setAdditionalImages(List<String> additionalImages) {
+        this.additionalImages = additionalImages;
     }
 }

@@ -50,7 +50,9 @@ public class SecurityConfig {
                                 "/actuator/health",
                                 "/actuator/info",
                                 "/api/coupons/validate",
-                                "/api/payments/verify")
+                                "/api/payments/verify",
+                                "/api/upload",
+                                "/uploads/**")
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session

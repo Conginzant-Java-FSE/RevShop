@@ -258,7 +258,8 @@ class ProductServiceTest {
     @Test
     void searchProducts_shouldReturnMatchingProducts_whenKeywordIsValid() {
         Page<Product> pagedResponse = new PageImpl<>(List.of(product));
-        when(productRepository.findByNameContainingIgnoreCase(eq("laptop"), any(Pageable.class)))
+        when(productRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(eq("laptop"),
+                eq("laptop"), any(Pageable.class)))
                 .thenReturn(pagedResponse);
 
         Page<ProductDTO> results = productService.searchProducts("laptop", PageRequest.of(0, 10));
@@ -270,7 +271,8 @@ class ProductServiceTest {
     @Test
     void searchProducts_shouldReturnEmptyPage_whenNoMatch() {
         Page<Product> emptyPage = new PageImpl<>(Collections.emptyList());
-        when(productRepository.findByNameContainingIgnoreCase(eq("xyz"), any(Pageable.class)))
+        when(productRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(eq("xyz"), eq("xyz"),
+                any(Pageable.class)))
                 .thenReturn(emptyPage);
 
         Page<ProductDTO> results = productService.searchProducts("xyz", PageRequest.of(0, 10));
@@ -298,7 +300,8 @@ class ProductServiceTest {
         when(productRepository.findAll(ArgumentMatchers.<Specification<Product>>any(), any(Pageable.class)))
                 .thenReturn(pagedResponse);
 
-        Page<ProductDTO> results = productService.filterProducts(null, 100.0, 500000.0, 1L, PageRequest.of(0, 10));
+        Page<ProductDTO> results = productService.filterProducts(null, 100.0, 500000.0, 1L, null, null,
+                PageRequest.of(0, 10));
 
         assertThat(results.getContent()).hasSize(1);
         assertThat(results.getContent().get(0).getName()).isEqualTo("Laptop");

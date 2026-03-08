@@ -36,3 +36,13 @@ build/
 .vscode/
 
 logs/
+
+
+ compile_errors.txt
+ curl_out.txt
+ err.json
+ error.json
+ products.json
+ revshop_realworld_data.sql
+
+ uploads/
