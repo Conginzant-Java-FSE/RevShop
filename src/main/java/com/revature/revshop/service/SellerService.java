@@ -65,12 +65,15 @@ public class SellerService {
         return savedUser.getSellerProfile();
     }
 
+    public Optional<Seller> getSellerByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(User::getSellerProfile);
+    }
+
     public Optional<Seller> loginSeller(String email, String password) {
         log.info("Seller login attempt email={}", email);
-        return userRepository.findByEmail(email)
-                .filter(user -> com.revature.revshop.model.Role.SELLER.equals(user.getRole()))
-                .filter(user -> passwordEncoder.matches(password, user.getPassword()))
-                .map(User::getSellerProfile);
+        return getSellerByEmail(email)
+                .filter(seller -> passwordEncoder.matches(password, seller.getUser().getPassword()));
     }
 
     public Optional<Seller> getSellerById(Long sellerId) {

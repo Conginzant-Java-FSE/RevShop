@@ -60,12 +60,15 @@ public class BuyerService {
         return savedUser.getBuyerProfile();
     }
 
+    public Optional<Buyer> getBuyerByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(User::getBuyerProfile);
+    }
+
     public Optional<Buyer> loginBuyer(String email, String password) {
         log.info("Buyer login attempt email={}", email);
-        return userRepository.findByEmail(email)
-                .filter(user -> com.revature.revshop.model.Role.BUYER.equals(user.getRole()))
-                .filter(user -> passwordEncoder.matches(password, user.getPassword()))
-                .map(User::getBuyerProfile);
+        return getBuyerByEmail(email)
+                .filter(buyer -> passwordEncoder.matches(password, buyer.getUser().getPassword()));
     }
 
     public Buyer updateBuyerProfile(Long buyerId, User updatedUserData) {

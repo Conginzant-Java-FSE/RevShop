@@ -140,6 +140,14 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
+    public User reactivateUser(Long userId) {
+        log.info("Reactivating user id={}", userId);
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
+        existingUser.setActive(true);
+        return userRepository.save(existingUser);
+    }
+
     public User deleteUser(Long userId) {
         log.info("Deleting user id={}", userId);
         User existingUser = userRepository.findById(userId)
