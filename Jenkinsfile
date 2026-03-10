@@ -12,7 +12,8 @@ pipeline{
 
     environment{
         JAR_NAME = "RevShop-0.0.1-SNAPSHOT.jar"
-        REMOTE_DIR = "/home/ec2-user"
+//         REMOTE_DIR = "/home/ec2-user"
+        REMOTE_DIR = "."
         APP_PORT = "8080"
     }
 
