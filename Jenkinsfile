@@ -85,7 +85,7 @@ pipeline{
                                         cd /home/ec2-user
 
                                         echo "Stopping old application"
-                                        pkill -f ${JAR_NAME} || true
+                                        pkill -f "java -jar.*${JAR_NAME}" || true
 
                                         echo "Starting new application"
                                         setsid nohup java -jar ${JAR_NAME} --spring.profiles.active=aws > application.log 2>&1 < /dev/null &
