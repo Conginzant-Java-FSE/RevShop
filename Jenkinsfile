@@ -82,7 +82,7 @@ pipeline{
                                     remoteDirectory:"${REMOTE_DIR}",
                                     flatten: true,
                                     execCommand: """
-                                        cd ${REMOTE_DIR}
+                                        cd /home/ec2-user
 
                                         echo "Stopping old application"
                                         pkill -f ${JAR_NAME} || true
@@ -92,9 +92,10 @@ pipeline{
 
                                         sleep 5
 
-                                        echo "Deployment completed"
+                                        echo "Checking application process"
+                                        ps -ef | grep ${JAR_NAME} | grep -v grep || true
 
-                                        exit 0
+                                        echo "Deployment completed"
                                     """
                                 )
                             ]
