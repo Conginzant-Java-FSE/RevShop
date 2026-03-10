@@ -132,6 +132,25 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User deactivateUser(Long userId) {
+        log.info("Deactivating user id={}", userId);
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
+        existingUser.setActive(false);
+        return userRepository.save(existingUser);
+    }
+
+    public User deleteUser(Long userId) {
+        log.info("Deleting user id={}", userId);
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
+        existingUser.setActive(false);
+        existingUser.setName("Deleted User");
+        existingUser.setEmail("deleted_" + UUID.randomUUID().toString() + "@revshop.com");
+        existingUser.setPhone(null);
+        return userRepository.save(existingUser);
+    }
+
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
