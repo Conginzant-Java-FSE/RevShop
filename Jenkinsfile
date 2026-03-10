@@ -81,9 +81,19 @@ pipeline{
                                     remoteDirectory:"${REMOTE_DIR}",
                                     flatten: true,
                                     execCommand: """
-                                        pkill -f "java -jar" || true
+                                        cd ${REMOTE_DIR}
 
-                                        nohup java -jar ${REMOTE_DIR}/${JAR_NAME} --spring.profiles.active=aws > application.log 2>&1 &
+                                        echo "Stopping old application"
+                                        pkill -f ${JAR_NAME} || true
+
+                                        echo "Starting new application"
+                                        nohup java -jar ${JAR_NAME} --spring.profiles.active=aws > application.log 2>&1 &
+
+                                        sleep 5
+
+                                        echo "Deployment completed"
+
+                                        exit 0
                                     """
                                 )
                             ]
