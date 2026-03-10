@@ -83,7 +83,7 @@ pipeline{
                                     execCommand:"""
                                         pkill -f "java -jar" || true
 
-                                        nohup java -jar *.jar > application.log 2>&1&
+                                        nohup java -jar *.jar --spring.profiles.active=aws > application.log 2>&1&
                                     """
                                 )
                             ]
