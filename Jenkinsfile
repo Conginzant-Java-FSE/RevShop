@@ -85,7 +85,8 @@ pipeline{
                                         cd /home/ec2-user
 
                                         echo "Stopping old application"
-                                        pkill -f "[j]ava -jar.*${JAR_NAME}" || true
+                                        PID=\$(ps -ef | grep "java -jar.*${JAR_NAME}" | grep -v grep | awk '{print \$2}')
+                                        if [ ! -z "\$PID" ]; then kill -9 \$PID; fi
 
                                         echo "Starting new application"
                                         setsid nohup java -jar ${JAR_NAME} --spring.profiles.active=aws > application.log 2>&1 < /dev/null &
