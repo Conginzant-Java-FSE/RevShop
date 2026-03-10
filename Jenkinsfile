@@ -80,10 +80,10 @@ pipeline{
                                     removePrefix: "target/",
                                     remoteDirectory:"${REMOTE_DIR}",
                                     flatten: true,
-                                    execCommand:"""
+                                    execCommand: """
                                         pkill -f "java -jar" || true
 
-                                        nohup java -jar *.jar --spring.profiles.active=aws > application.log 2>&1&
+                                        nohup java -jar ${REMOTE_DIR}/${JAR_NAME} --spring.profiles.active=aws > application.log 2>&1 &
                                     """
                                 )
                             ]
