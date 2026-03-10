@@ -48,8 +48,12 @@ class WalletControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         WalletController walletController = new WalletController(walletService, userService);
+
         mockMvc = MockMvcBuilders.standaloneSetup(walletController)
+                .setCustomArgumentResolvers(
+                        new org.springframework.web.method.support.HandlerMethodArgumentResolver[] {})
                 .setMessageConverters(new MappingJackson2HttpMessageConverter())
+                .addPlaceholderValue("app.cors.allowed-origins", "*")
                 .build();
 
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken("user@example.com", null,
