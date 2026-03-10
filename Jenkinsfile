@@ -88,14 +88,16 @@ pipeline{
                                         pkill -f ${JAR_NAME} || true
 
                                         echo "Starting new application"
-                                        nohup java -jar ${JAR_NAME} --spring.profiles.active=aws > application.log 2>&1 &
+                                        nohup java -jar ${JAR_NAME} --spring.profiles.active=aws > application.log 2>&1 < /dev/null &
 
-                                        sleep 5
+                                        echo "Waiting for application to start..."
+                                        sleep 15
 
-                                        echo "Checking application process"
-                                        ps -ef | grep ${JAR_NAME} | grep -v grep || true
+                                        echo "Checking health endpoint"
 
-                                        echo "Deployment completed"
+                                        curl -f http://localhost:8080/actuator/health
+
+                                        echo "Deployment successful"
                                     """
                                 )
                             ]
