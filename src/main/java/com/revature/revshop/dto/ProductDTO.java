@@ -4,6 +4,8 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 public class ProductDTO {
 
@@ -42,6 +44,7 @@ public class ProductDTO {
     private List<String> additionalImages = new ArrayList<>();
     private String categoryName;
     private String sellerName;
+    private Map<String, String> attributes = new HashMap<>();
 
     /**
      * Default constructor for Jackson deserialization.
@@ -159,5 +162,13 @@ public class ProductDTO {
 
     public void setAdditionalImages(List<String> additionalImages) {
         this.additionalImages = additionalImages;
+    }
+
+    public Map<String, String> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Map<String, String> attributes) {
+        this.attributes = attributes;
     }
 }

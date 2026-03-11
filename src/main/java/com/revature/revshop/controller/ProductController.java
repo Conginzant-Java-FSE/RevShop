@@ -123,12 +123,7 @@ public class ProductController {
 
         @GetMapping("/filter")
         public ResponseEntity<ApiResponse<Page<ProductDTO>>> filter(
-                        @RequestParam(required = false) String keyword,
-                        @RequestParam(required = false) Double minPrice,
-                        @RequestParam(required = false) Double maxPrice,
-                        @RequestParam(required = false) Long categoryId,
-                        @RequestParam(required = false) Integer minRating,
-                        @RequestParam(required = false) Integer minDiscount,
+                        @RequestParam java.util.Map<String, String> allParams,
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "10") int size,
                         @RequestParam(defaultValue = "productId") String sortBy,
@@ -138,11 +133,27 @@ public class ProductController {
                                 : Sort.by(sortBy).descending();
                 Pageable pageable = PageRequest.of(page, size, sort);
 
-                log.info("GET /api/products/filter - keyword={} minPrice={} maxPrice={} categoryId={} minRating={} minDiscount={}",
-                                keyword,
-                                minPrice, maxPrice, categoryId, minRating, minDiscount);
+                String keyword = allParams.get("keyword");
+                Double minPrice = allParams.containsKey("minPrice") ? Double.valueOf(allParams.get("minPrice")) : null;
+                Double maxPrice = allParams.containsKey("maxPrice") ? Double.valueOf(allParams.get("maxPrice")) : null;
+                Long categoryId = allParams.containsKey("categoryId") ? Long.valueOf(allParams.get("categoryId"))
+                                : null;
+                Integer minRating = allParams.containsKey("minRating") ? Integer.valueOf(allParams.get("minRating"))
+                                : null;
+                Integer minDiscount = allParams.containsKey("minDiscount")
+                                ? Integer.valueOf(allParams.get("minDiscount"))
+                                : null;
+
+                // Extract dynamic filters (exclude known standard query params)
+                java.util.Map<String, String> dynamicFilters = new java.util.HashMap<>(allParams);
+                dynamicFilters.keySet().removeAll(java.util.Arrays.asList(
+                                "keyword", "minPrice", "maxPrice", "categoryId", "minRating", "minDiscount",
+                                "page", "size", "sortBy", "direction"));
+
+                log.info("GET /api/products/filter - keyword={} categoryId={} dynamicFilters={}", keyword, categoryId,
+                                dynamicFilters);
                 Page<ProductDTO> products = productService.filterProducts(keyword, minPrice, maxPrice, categoryId,
-                                minRating, minDiscount, pageable);
+                                minRating, minDiscount, dynamicFilters, pageable);
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>(

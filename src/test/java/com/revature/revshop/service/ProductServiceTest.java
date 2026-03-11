@@ -301,7 +301,7 @@ class ProductServiceTest {
                 .thenReturn(pagedResponse);
 
         Page<ProductDTO> results = productService.filterProducts(null, 100.0, 500000.0, 1L, null, null,
-                PageRequest.of(0, 10));
+                java.util.Collections.emptyMap(), PageRequest.of(0, 10));
 
         assertThat(results.getContent()).hasSize(1);
         assertThat(results.getContent().get(0).getName()).isEqualTo("Laptop");
