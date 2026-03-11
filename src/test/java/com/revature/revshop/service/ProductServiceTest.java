@@ -101,6 +101,7 @@ class ProductServiceTest {
 
     @Test
     void createProduct_shouldSaveAndReturnDTO_whenValidInput() {
+        product.setAdditionalImages(Arrays.asList("img1.jpg", "img2.jpg"));
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
         when(sellerRepository.findById(10L)).thenReturn(Optional.of(seller));
         when(productRepository.save(any(Product.class))).thenReturn(product);
@@ -343,10 +344,12 @@ class ProductServiceTest {
         similarProduct.setProductId(101L);
         similarProduct.setName("Similar Laptop");
         similarProduct.setCategory(category);
+        similarProduct.setSeller(seller);
         similarProduct.setIsActive(true);
 
         category.setProducts(Arrays.asList(product, similarProduct));
         when(productRepository.findById(100L)).thenReturn(Optional.of(product));
+        when(productRepository.findByCategory(category)).thenReturn(Arrays.asList(product, similarProduct));
 
         List<ProductDTO> results = productService.getSimilarProducts(100L);
 
@@ -368,7 +371,7 @@ class ProductServiceTest {
     void getProductVideos_shouldReturnVideos_forProductId() {
         ProductVideo video = new ProductVideo();
         video.setVideoUrl("http://youtube.com/v1");
-        when(productVideoRepository.findByProductId(100L)).thenReturn(Arrays.asList(video));
+        when(productVideoRepository.findByProductProductId(100L)).thenReturn(Arrays.asList(video));
 
         List<ProductVideo> results = productService.getProductVideos(100L);
 
@@ -379,10 +382,11 @@ class ProductServiceTest {
     @Test
     void addProductVideo_shouldSaveAndReturnVideo() {
         ProductVideo video = new ProductVideo();
-        video.setProductId(100L);
+        video.setProduct(product);
         video.setVideoUrl("http://youtube.com/v2");
         video.setVideoType("YOUTUBE");
 
+        when(productRepository.findById(100L)).thenReturn(Optional.of(product));
         when(productVideoRepository.save(any(ProductVideo.class))).thenReturn(video);
 
         ProductVideo result = productService.addProductVideo(100L, "http://youtube.com/v2", "YOUTUBE");
