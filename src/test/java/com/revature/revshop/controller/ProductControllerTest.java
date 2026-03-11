@@ -232,7 +232,8 @@ class ProductControllerTest {
         @Test
         void filterProducts_shouldReturn200_withFilteredProductPage() throws Exception {
                 Page<ProductDTO> productPage = new PageImpl<>(List.of(sampleDTO));
-                when(productService.filterProducts(isNull(), eq(3000.0), eq(5000.0), eq(1L), isNull(), isNull(), any(Pageable.class)))
+                when(productService.filterProducts(isNull(), eq(3000.0), eq(5000.0), eq(1L), isNull(), isNull(), any(),
+                                any(Pageable.class)))
                                 .thenReturn(productPage);
 
                 mockMvc.perform(get("/api/products/filter")

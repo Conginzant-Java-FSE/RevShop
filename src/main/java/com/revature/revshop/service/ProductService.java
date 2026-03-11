@@ -106,7 +106,7 @@ public class ProductService {
     }
 
     public Page<ProductDTO> filterProducts(String keyword, Double minPrice, Double maxPrice, Long categoryId,
-            Integer minRating, Integer minDiscount, Pageable pageable) {
+            Integer minRating, Integer minDiscount, java.util.Map<String, String> dynamicFilters, Pageable pageable) {
 
         org.springframework.data.jpa.domain.Specification<Product> spec = org.springframework.data.jpa.domain.Specification
                 .where((root, query, cb) -> cb.conjunction());
@@ -157,6 +157,23 @@ public class ProductService {
             });
         }
 
+        if (dynamicFilters != null && !dynamicFilters.isEmpty()) {
+            for (java.util.Map.Entry<String, String> entry : dynamicFilters.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                spec = spec.and((root, query, cb) -> {
+                    // JSON path querying for Hibernate 6
+                    // Wrap the key in double quotes to handle space-separated keys (ex: 'Device
+                    // Type')
+                    return cb.equal(
+                            cb.function("JSON_UNQUOTE", String.class,
+                                    cb.function("JSON_EXTRACT", String.class, root.get("attributes"),
+                                            cb.literal("$.\"" + key + "\""))),
+                            cb.literal(value));
+                });
+            }
+        }
+
         return productRepository.findAll(spec, pageable)
                 .map(this::convertToDTO);
     }
@@ -193,6 +210,9 @@ public class ProductService {
         product.setIsActive(dto.getIsActive());
         product.setImageUrl(dto.getImageUrl());
         product.setAdditionalImages(dto.getAdditionalImages());
+        if (dto.getAttributes() != null) {
+            product.setAttributes(dto.getAttributes());
+        }
     }
 
     private ProductDTO convertToDTO(Product product) {
@@ -210,6 +230,9 @@ public class ProductService {
         dto.setSellerId(product.getSeller().getUserId());
         dto.setImageUrl(product.getImageUrl());
         dto.setAdditionalImages(product.getAdditionalImages());
+        if (product.getAttributes() != null) {
+            dto.setAttributes(product.getAttributes());
+        }
         dto.setCategoryName(product.getCategory().getName());
         dto.setSellerName(product.getSeller().getUser() != null ? product.getSeller().getUser().getName() : "");
 
