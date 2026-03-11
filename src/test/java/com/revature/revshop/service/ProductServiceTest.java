@@ -11,6 +11,8 @@ import com.revature.revshop.model.User;
 import com.revature.revshop.repository.CategoryRepository;
 import com.revature.revshop.repository.ProductRepository;
 import com.revature.revshop.repository.SellerRepository;
+import com.revature.revshop.repository.ProductVideoRepository;
+import com.revature.revshop.model.ProductVideo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,6 +46,8 @@ class ProductServiceTest {
     private CategoryRepository categoryRepository;
     @Mock
     private SellerRepository sellerRepository;
+    @Mock
+    private ProductVideoRepository productVideoRepository;
 
     @InjectMocks
     private ProductService productService;
@@ -92,6 +96,7 @@ class ProductServiceTest {
         productDTO.setIsActive(true);
         productDTO.setCategoryId(1L);
         productDTO.setSellerId(10L);
+        productDTO.setAdditionalImages(Arrays.asList("img1.jpg", "img2.jpg"));
     }
 
     @Test
@@ -107,6 +112,7 @@ class ProductServiceTest {
         assertThat(result.getCategoryId()).isEqualTo(1L);
         assertThat(result.getSellerId()).isEqualTo(10L);
         assertThat(result.getSellingPrice()).isEqualByComparingTo(new BigDecimal("70000"));
+        assertThat(result.getAdditionalImages()).hasSize(2).contains("img1.jpg", "img2.jpg");
 
         verify(productRepository, times(1)).save(any(Product.class));
     }
@@ -176,6 +182,16 @@ class ProductServiceTest {
 
         assertThat(result.getProductId()).isEqualTo(100L);
         assertThat(result.getName()).isEqualTo("Laptop");
+    }
+
+    @Test
+    void getProductById_shouldIncludeAdditionalImages_whenFound() {
+        product.setAdditionalImages(Arrays.asList("img1.jpg", "img2.jpg"));
+        when(productRepository.findById(100L)).thenReturn(Optional.of(product));
+
+        ProductDTO result = productService.getProductById(100L);
+
+        assertThat(result.getAdditionalImages()).hasSize(2).contains("img1.jpg", "img2.jpg");
     }
 
     @Test
@@ -319,5 +335,59 @@ class ProductServiceTest {
         assertThat(result.getStockQuantity()).isEqualTo(50);
         assertThat(result.getThresholdQuantity()).isEqualTo(5);
         assertThat(result.getIsActive()).isTrue();
+    }
+
+    @Test
+    void getSimilarProducts_shouldReturnSimilarProducts_whenCategoryMatches() {
+        Product similarProduct = new Product();
+        similarProduct.setProductId(101L);
+        similarProduct.setName("Similar Laptop");
+        similarProduct.setCategory(category);
+        similarProduct.setIsActive(true);
+
+        category.setProducts(Arrays.asList(product, similarProduct));
+        when(productRepository.findById(100L)).thenReturn(Optional.of(product));
+
+        List<ProductDTO> results = productService.getSimilarProducts(100L);
+
+        assertThat(results).hasSize(1);
+        assertThat(results.get(0).getProductId()).isEqualTo(101L);
+    }
+
+    @Test
+    void getComparisonProducts_shouldReturnProductDTOs_forGivenIds() {
+        when(productRepository.findAllById(anyList())).thenReturn(Arrays.asList(product));
+
+        List<ProductDTO> results = productService.getComparisonProducts(Arrays.asList(100L));
+
+        assertThat(results).hasSize(1);
+        assertThat(results.get(0).getName()).isEqualTo("Laptop");
+    }
+
+    @Test
+    void getProductVideos_shouldReturnVideos_forProductId() {
+        ProductVideo video = new ProductVideo();
+        video.setVideoUrl("http://youtube.com/v1");
+        when(productVideoRepository.findByProductId(100L)).thenReturn(Arrays.asList(video));
+
+        List<ProductVideo> results = productService.getProductVideos(100L);
+
+        assertThat(results).hasSize(1);
+        assertThat(results.get(0).getVideoUrl()).isEqualTo("http://youtube.com/v1");
+    }
+
+    @Test
+    void addProductVideo_shouldSaveAndReturnVideo() {
+        ProductVideo video = new ProductVideo();
+        video.setProductId(100L);
+        video.setVideoUrl("http://youtube.com/v2");
+        video.setVideoType("YOUTUBE");
+
+        when(productVideoRepository.save(any(ProductVideo.class))).thenReturn(video);
+
+        ProductVideo result = productService.addProductVideo(100L, "http://youtube.com/v2", "YOUTUBE");
+
+        assertThat(result.getVideoUrl()).isEqualTo("http://youtube.com/v2");
+        verify(productVideoRepository, times(1)).save(any(ProductVideo.class));
     }
 }

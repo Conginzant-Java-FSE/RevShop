@@ -185,4 +185,37 @@ public class ProductController {
                 ProductDTO updated = productService.toggleActive(id);
                 return ResponseEntity.ok(new ApiResponse<>("Product status toggled", updated));
         }
-}
+
+        @GetMapping("/{id}/similar")
+        public ResponseEntity<ApiResponse<java.util.List<ProductDTO>>> getSimilarProducts(@PathVariable Long id) {
+                log.info("GET /api/products/{}/similar", id);
+                java.util.List<ProductDTO> products = productService.getSimilarProducts(id);
+                return ResponseEntity.ok(new ApiResponse<>("Similar products fetched successfully", products));
+        }
+
+        @GetMapping("/compare")
+        public ResponseEntity<ApiResponse<java.util.List<ProductDTO>>> compareProducts(@RequestParam java.util.List<Long> ids) {
+                log.info("GET /api/products/compare?ids={}", ids);
+                java.util.List<ProductDTO> products = productService.getComparisonProducts(ids);
+                return ResponseEntity.ok(new ApiResponse<>("Comparison products fetched successfully", products));
+        }
+
+        @GetMapping("/{id}/videos")
+        public ResponseEntity<ApiResponse<java.util.List<com.revature.revshop.model.ProductVideo>>> getProductVideos(
+                        @PathVariable Long id) {
+                log.info("GET /api/products/{}/videos", id);
+                java.util.List<com.revature.revshop.model.ProductVideo> videos = productService.getProductVideos(id);
+                return ResponseEntity.ok(new ApiResponse<>("Product videos fetched successfully", videos));
+        }
+
+        @PostMapping("/{id}/videos")
+        public ResponseEntity<ApiResponse<com.revature.revshop.model.ProductVideo>> addProductVideo(
+                        @PathVariable Long id,
+                        @RequestBody java.util.Map<String, String> videoData) {
+                log.info("POST /api/products/{}/videos", id);
+                com.revature.revshop.model.ProductVideo video = productService.addProductVideo(
+                                id, videoData.get("videoUrl"), videoData.get("videoType"));
+                return ResponseEntity.status(HttpStatus.CREATED)
+                                .body(new ApiResponse<>("Video added successfully", video));
+        }
+}
