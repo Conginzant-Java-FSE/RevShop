@@ -12,6 +12,10 @@ import com.revature.revshop.repository.ProductRepository;
 import com.revature.revshop.repository.SellerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.List;
+import java.util.stream.Collectors;
+import com.revature.revshop.model.ProductVideo;
+import com.revature.revshop.repository.ProductVideoRepository;
 import org.springframework.data.domain.Page;
 
 import org.springframework.data.domain.Pageable;
@@ -29,13 +33,16 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final SellerRepository sellerRepository;
+    private final ProductVideoRepository productVideoRepository;
 
     public ProductService(ProductRepository productRepository,
             CategoryRepository categoryRepository,
-            SellerRepository sellerRepository) {
+            SellerRepository sellerRepository,
+            ProductVideoRepository productVideoRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.sellerRepository = sellerRepository;
+        this.productVideoRepository = productVideoRepository;
     }
 
     public ProductDTO createProduct(ProductDTO dto) {
@@ -198,6 +205,42 @@ public class ProductService {
         Product saved = productRepository.save(product);
 
         return convertToDTO(saved);
+    }
+
+    public List<ProductDTO> getSimilarProducts(Long productId) {
+        log.info("Fetching similar products for productId={}", productId);
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
+
+        return productRepository.findByCategory(product.getCategory())
+                .stream()
+                .filter(p -> !p.getProductId().equals(productId) && p.getIsActive())
+                .limit(5)
+                .map(this::convertToDTO)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    public List<ProductDTO> getComparisonProducts(List<Long> productIds) {
+        log.info("Fetching products for comparison: {}", productIds);
+        return productRepository.findAllById(productIds)
+                .stream()
+                .filter(Product::getIsActive)
+                .map(this::convertToDTO)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    public List<ProductVideo> getProductVideos(Long productId) {
+        log.info("Fetching videos for productId={}", productId);
+        return productVideoRepository.findByProductProductId(productId);
+    }
+
+    public ProductVideo addProductVideo(Long productId, String videoUrl, String videoType) {
+        log.info("Adding video for productId={}, type={}", productId, videoType);
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException(PRODUCT_NOT_FOUND));
+
+        ProductVideo video = new ProductVideo(product, videoUrl, videoType);
+        return productVideoRepository.save(video);
     }
 
     private void mapDtoToEntity(ProductDTO dto, Product product) {

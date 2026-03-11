@@ -40,8 +40,9 @@ public class ImageUploadController {
             // Validate file type
             String contentType = file.getContentType();
             if (contentType == null || !(contentType.equals("image/jpeg") || contentType.equals("image/png")
-                    || contentType.equals("image/webp"))) {
-                return ResponseEntity.badRequest().body("Only JPG, PNG and WEBP images are allowed.");
+                    || contentType.equals("image/webp") || contentType.equals("video/mp4")
+                    || contentType.equals("video/webm") || contentType.equals("video/ogg"))) {
+                return ResponseEntity.badRequest().body("Only JPG, PNG, WEBP images and MP4, WEBM, OGG videos are allowed.");
             }
 
             // Generate unique filename

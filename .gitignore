@@ -46,3 +46,14 @@ logs/
  revshop_realworld_data.sql
 
  uploads/
+
+ # Ignore everything in resources
+ src/main/resources/*
+
+ # Allow application.properties
+ !src/main/resources/application.properties
+
+ # Allow db migration folder
+ !src/main/resources/db/
+ !src/main/resources/db/migration/
+ !src/main/resources/db/migration/*.sql

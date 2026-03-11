@@ -61,6 +61,7 @@ class ProductControllerTest {
                 sampleDTO.setIsActive(true);
                 sampleDTO.setCategoryId(1L);
                 sampleDTO.setSellerId(10L);
+                sampleDTO.setAdditionalImages(Arrays.asList("img1.jpg", "img2.jpg"));
         }
 
         @Test
@@ -247,11 +248,47 @@ class ProductControllerTest {
         }
 
         @Test
-        void apiResponse_shouldContainStatusSuccessField() throws Exception {
-                when(productService.getProductById(1L)).thenReturn(sampleDTO);
+        void getSimilarProducts_shouldReturn200_withSimilarProducts() throws Exception {
+                when(productService.getSimilarProducts(1L)).thenReturn(List.of(sampleDTO));
 
-                mockMvc.perform(get("/api/products/1"))
+                mockMvc.perform(get("/api/products/1/similar"))
                                 .andExpect(status().isOk())
-                                .andExpect(jsonPath("$.status").value("success"));
+                                .andExpect(jsonPath("$.message").value("Similar products fetched successfully"))
+                                .andExpect(jsonPath("$.data", hasSize(1)));
+        }
+
+        @Test
+        void compareProducts_shouldReturn200_withComparisonData() throws Exception {
+                when(productService.getComparisonProducts(anyList())).thenReturn(List.of(sampleDTO));
+
+                mockMvc.perform(get("/api/products/compare").param("ids", "1,2"))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.message").value("Comparison products fetched successfully"));
+        }
+
+        @Test
+        void getProductVideos_shouldReturn200_withVideos() throws Exception {
+                com.revature.revshop.model.ProductVideo video = new com.revature.revshop.model.ProductVideo();
+                video.setVideoUrl("http://test.com");
+                when(productService.getProductVideos(1L)).thenReturn(List.of(video));
+
+                mockMvc.perform(get("/api/products/1/videos"))
+                                .andExpect(status().isOk())
+                                .andExpect(jsonPath("$.message").value("Product videos fetched successfully"));
+        }
+
+        @Test
+        void addProductVideo_shouldReturn201_whenVideoAdded() throws Exception {
+                com.revature.revshop.model.ProductVideo video = new com.revature.revshop.model.ProductVideo();
+                video.setVideoUrl("http://test.com");
+                when(productService.addProductVideo(eq(1L), anyString(), anyString())).thenReturn(video);
+
+                java.util.Map<String, String> body = java.util.Map.of("videoUrl", "http://test.com", "videoType", "YOUTUBE");
+
+                mockMvc.perform(post("/api/products/1/videos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(body)))
+                                .andExpect(status().isCreated())
+                                .andExpect(jsonPath("$.message").value("Video added successfully"));
         }
 }
