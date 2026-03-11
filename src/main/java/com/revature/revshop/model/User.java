@@ -41,6 +41,9 @@ public class User {
     @Column(name = "security_answer")
     private String securityAnswer;
 
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = true;
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -141,6 +144,14 @@ public class User {
 
     public void setSecurityAnswer(String securityAnswer) {
         this.securityAnswer = securityAnswer;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     public LocalDateTime getCreatedAt() {

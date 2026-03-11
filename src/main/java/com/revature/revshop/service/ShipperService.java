@@ -93,19 +93,17 @@ public class ShipperService {
         shipperRepository.deleteById(id);
     }
 
+    public Optional<Shipper> getShipperByEmail(String email) {
+        return shipperRepository.findByEmail(email);
+    }
+
     /**
      * Authenticate a shipper by email and password.
      */
     public Optional<Shipper> loginShipper(String email, String password) {
-        Optional<Shipper> shipperOpt = shipperRepository.findByEmail(email);
-        if (shipperOpt.isEmpty()) {
-            return Optional.empty();
-        }
-        Shipper shipper = shipperOpt.get();
-        if (shipper.getPassword() == null || !passwordEncoder.matches(password, shipper.getPassword())) {
-            return Optional.empty();
-        }
-        return Optional.of(shipper);
+        return getShipperByEmail(email)
+                .filter(shipper -> shipper.getPassword() != null
+                        && passwordEncoder.matches(password, shipper.getPassword()));
     }
 
     /**

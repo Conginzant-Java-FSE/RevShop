@@ -21,8 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -132,21 +131,31 @@ public class AuthController {
                                         new UsernamePasswordAuthenticationToken(
                                                         loginRequest.getEmail(),
                                                         loginRequest.getPassword()));
+                } catch (BadCredentialsException e) {
+                        log.warn("Login failed for buyer email={}: Invalid credentials", loginRequest.getEmail());
+                        throw new InvalidInputException(INVALID_CREDENTIALS);
+                } catch (DisabledException e) {
+                        log.warn("Login failed for buyer email={}: Account is inactive", loginRequest.getEmail());
+                        throw new InvalidInputException("Account is inactive. Please contact support.");
                 } catch (AuthenticationException e) {
+                        log.error("Authentication error for buyer email={}: {}", loginRequest.getEmail(),
+                                        e.getMessage());
                         throw new InvalidInputException(INVALID_CREDENTIALS);
                 }
 
-                UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
-
-                String jwt = jwtUtil.generateToken(userDetails);
-
-                Buyer buyer = buyerService.loginBuyer(
-                                loginRequest.getEmail(),
-                                loginRequest.getPassword())
+                User user = userService.getUserByEmail(loginRequest.getEmail())
                                 .orElseThrow(() -> new InvalidInputException(INVALID_CREDENTIALS));
 
-                LoginResponse response = buildLoginResponse(
-                                buyer.getUser(), jwt);
+                if (!com.revature.revshop.model.Role.BUYER.equals(user.getRole())) {
+                        log.warn("Login failed for buyer email={}: Role mismatch. Expected BUYER, found {}",
+                                        loginRequest.getEmail(), user.getRole());
+                        throw new InvalidInputException("This account is not registered as a Buyer.");
+                }
+
+                UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
+                String jwt = jwtUtil.generateToken(userDetails);
+
+                LoginResponse response = buildLoginResponse(user, jwt);
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>(LOGIN_SUCCESSFUL, response));
@@ -163,24 +172,80 @@ public class AuthController {
                                         new UsernamePasswordAuthenticationToken(
                                                         loginRequest.getEmail(),
                                                         loginRequest.getPassword()));
+                } catch (BadCredentialsException e) {
+                        log.warn("Login failed for seller email={}: Invalid credentials", loginRequest.getEmail());
+                        throw new InvalidInputException(INVALID_CREDENTIALS);
+                } catch (DisabledException e) {
+                        log.warn("Login failed for seller email={}: Account is inactive", loginRequest.getEmail());
+                        throw new InvalidInputException("Account is inactive. Please contact support.");
                 } catch (AuthenticationException e) {
+                        log.error("Authentication error for seller email={}: {}", loginRequest.getEmail(),
+                                        e.getMessage());
                         throw new InvalidInputException(INVALID_CREDENTIALS);
                 }
 
-                UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
-
-                String jwt = jwtUtil.generateToken(userDetails);
-
-                Seller seller = sellerService.loginSeller(
-                                loginRequest.getEmail(),
-                                loginRequest.getPassword())
+                User user = userService.getUserByEmail(loginRequest.getEmail())
                                 .orElseThrow(() -> new InvalidInputException(INVALID_CREDENTIALS));
 
-                LoginResponse response = buildLoginResponse(
-                                seller.getUser(), jwt);
+                if (!com.revature.revshop.model.Role.SELLER.equals(user.getRole())) {
+                        log.warn("Login failed for seller email={}: Role mismatch. Expected SELLER, found {}",
+                                        loginRequest.getEmail(), user.getRole());
+                        throw new InvalidInputException("This account is not registered as a Seller.");
+                }
+
+                UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
+                String jwt = jwtUtil.generateToken(userDetails);
+
+                LoginResponse response = buildLoginResponse(user, jwt);
 
                 return ResponseEntity.ok(
                                 new ApiResponse<>(LOGIN_SUCCESSFUL, response));
+        }
+
+        @PostMapping("/reactivate")
+        public ResponseEntity<ApiResponse<LoginResponse>> reactivateAccount(
+                        @Valid @RequestBody LoginRequest loginRequest) {
+
+                log.info("POST /api/auth/reactivate - email={}", loginRequest.getEmail());
+
+                try {
+                        authenticationManager.authenticate(
+                                        new UsernamePasswordAuthenticationToken(
+                                                        loginRequest.getEmail(),
+                                                        loginRequest.getPassword()));
+                } catch (BadCredentialsException e) {
+                        log.warn("Reactivation failed for email={}: Invalid credentials", loginRequest.getEmail());
+                        throw new InvalidInputException(INVALID_CREDENTIALS);
+                } catch (DisabledException e) {
+                        log.info("Credentials verified for disabled account email={}. Reactivating...",
+                                        loginRequest.getEmail());
+                        User user = userService.getUserByEmail(loginRequest.getEmail())
+                                        .orElseThrow(() -> new InvalidInputException(INVALID_CREDENTIALS));
+
+                        // Reactivate user
+                        user = userService.reactivateUser(user.getUserId());
+
+                        UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
+                        String jwt = jwtUtil.generateToken(userDetails);
+
+                        LoginResponse response = buildLoginResponse(user, jwt);
+
+                        return ResponseEntity.ok(
+                                        new ApiResponse<>("Account successfully reactivated", response));
+                } catch (AuthenticationException e) {
+                        log.error("Authentication error for email={}: {}", loginRequest.getEmail(),
+                                        e.getMessage());
+                        throw new InvalidInputException(INVALID_CREDENTIALS);
+                }
+
+                // If authenticate succeeded, user was already active!
+                User user = userService.getUserByEmail(loginRequest.getEmail())
+                                .orElseThrow(() -> new InvalidInputException(INVALID_CREDENTIALS));
+                UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
+                String jwt = jwtUtil.generateToken(userDetails);
+                LoginResponse response = buildLoginResponse(user, jwt);
+                return ResponseEntity.ok(
+                                new ApiResponse<>("Account successfully reactivated", response));
         }
 
         @PostMapping("/login/shipper")
@@ -189,10 +254,30 @@ public class AuthController {
 
                 log.info("POST /api/auth/login/shipper - email={}", loginRequest.getEmail());
 
-                Shipper shipper = shipperService.loginShipper(
-                                loginRequest.getEmail(),
-                                loginRequest.getPassword())
-                                .orElseThrow(() -> new InvalidInputException(INVALID_CREDENTIALS));
+                try {
+                        authenticationManager.authenticate(
+                                        new UsernamePasswordAuthenticationToken(
+                                                        loginRequest.getEmail(),
+                                                        loginRequest.getPassword()));
+                } catch (BadCredentialsException e) {
+                        log.warn("Login failed for shipper email={}: Invalid credentials", loginRequest.getEmail());
+                        throw new InvalidInputException(INVALID_CREDENTIALS);
+                } catch (AuthenticationException e) {
+                        log.error("Authentication error for shipper email={}: {}", loginRequest.getEmail(),
+                                        e.getMessage());
+                        throw new InvalidInputException(INVALID_CREDENTIALS);
+                }
+
+                // In this architecture, shippers might not be in the User table but in Shipper
+                // table.
+                // However CustomUserDetailsService handles both.
+                // Let's get shipper details.
+                Shipper shipper = shipperService.getShipperByEmail(loginRequest.getEmail())
+                                .orElseThrow(() -> {
+                                        log.warn("Login failed for shipper email={}: Shipper profile not found",
+                                                        loginRequest.getEmail());
+                                        return new InvalidInputException(INVALID_CREDENTIALS);
+                                });
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
                 String jwt = jwtUtil.generateToken(userDetails);

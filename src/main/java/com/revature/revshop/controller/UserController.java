@@ -155,6 +155,34 @@ public class UserController {
                                                 convertToDTO(updatedUser)));
         }
 
+        @PatchMapping("/{id}/deactivate")
+        public ResponseEntity<ApiResponse<Void>> deactivateUser(@PathVariable Long id) {
+                log.info("PATCH /api/users/{}/deactivate", id);
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                User loggedInUser = userService.getUserByEmail(userDetails.getUsername())
+                                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
+                if (!loggedInUser.getUserId().equals(id)) {
+                        throw new InvalidInputException("You cannot deactivate another user's profile");
+                }
+                userService.deactivateUser(id);
+                return ResponseEntity.ok(new ApiResponse<>("Account deactivated successfully", null));
+        }
+
+        @DeleteMapping("/{id}/delete")
+        public ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable Long id) {
+                log.info("DELETE /api/users/{}/delete", id);
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                User loggedInUser = userService.getUserByEmail(userDetails.getUsername())
+                                .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
+                if (!loggedInUser.getUserId().equals(id)) {
+                        throw new InvalidInputException("You cannot delete another user's profile");
+                }
+                userService.deleteUser(id);
+                return ResponseEntity.ok(new ApiResponse<>("Account deleted successfully", null));
+        }
+
         private User convertToEntity(UserDTO dto) {
                 User user = new User();
                 user.setName(dto.getName());
