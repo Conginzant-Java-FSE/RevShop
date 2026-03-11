@@ -48,6 +48,11 @@ public class CartController {
                 User user = userRepository.findById(userId)
                                 .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND));
 
+                if (user.getRole() == Role.SELLER) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                        .body(new ApiResponse<>("Sellers are not allowed to add items to cart", null));
+                }
+
                 Product product = productRepository.findById(request.getProductId())
                                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 

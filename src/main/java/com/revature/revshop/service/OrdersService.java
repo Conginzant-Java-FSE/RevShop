@@ -70,6 +70,10 @@ public class OrdersService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(USER_NOT_FOUND));
 
+        if (user.getRole() == Role.SELLER) {
+            throw new AccessDeniedException("Sellers are not allowed to place orders.");
+        }
+
         Address shippingAddress = addressRepository.findById(request.getShippingAddressId())
                 .orElseThrow(() -> new ResourceNotFoundException(SHIPPING_ADDRESS_NOT_FOUND));
 

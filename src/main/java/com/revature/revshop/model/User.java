@@ -41,7 +41,7 @@ public class User {
     @Column(name = "security_answer")
     private String securityAnswer;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active", nullable = false, columnDefinition = "boolean default true")
     private boolean isActive = true;
 
     @Column(name = "created_at", updatable = false)
